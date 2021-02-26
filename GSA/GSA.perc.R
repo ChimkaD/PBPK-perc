@@ -1,6 +1,3 @@
-#-------------Set drive------------------------------------
-setwd("C:/MinGW/msys/1.0/home/wchiulab/mcsim-5.6.5/ChiuGinsbergPercModelFiles/GSA")
-setwd("C:/MinGW/msys/1.0/home/chimka/Perc/GSA")
 #-------------Call required packages------------------------------------
 install.packages("devtools")
 install.packages("glue") #rlang
@@ -179,9 +176,9 @@ n <- 10000 #2^9 #5000  sample number
 x <- rfast99(params = factors, n = n, q = q, q.arg = q.arg, rep = 5)
 # dim(x$a)
 #*--------------------------------------------------*---------------------
-#----------- Generate dat file for setpoint ------------------------------------------
+#----------- Generate dat file for setpoint model------------------------------------------
 X <- cbind(1, apply(x$a, 3L, c))
-write.table(X, file="perc.f.58p.3strains.ci95.10k.4t.dat", row.names=F, sep="\t") # generate "perc.f.58p.dat"
+write.table(X, file="perc.f.58p.3strains.ci95.10k.4t.dat", row.names=F, sep="\t") # generate setpoint file
 #*--------------------------------------------------*---------------------
 #-----------Solve PK Model Through GNU MCSim--------------------------
 y<-solve_mcsim(x, mName = mName, params = factors, 
