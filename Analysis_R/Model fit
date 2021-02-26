@@ -1,0 +1,71 @@
+setwd("C:/Users/wchiulab/Documents/Tasks of prof Chiu/PBPK practice/PERC")
+
+Percdata <- read.csv("PERCTCA.csv",header = TRUE, na.strings = "NA")
+
+summary(Percdata)
+class(Percdata$TCA.liver)
+#Percdata$Liv.W <- as.numeric(levels(Percdata$Liver.wt))[Percdata$Liver.wt]
+#Percdata$Liver.wt <-as.character(levels(Percdata$Liver.wt))[Percdata$Liver.wt]
+
+##**create average data for strains**##
+attach(Percdata)
+aggdata.sd <-aggregate(Percdata, by=list(Alias), 
+                    FUN=sd, na.rm=TRUE)
+detach(Percdata)
+
+rm(list = ls())
+
+
+##Creating a summary statistical table from a data frame
+my.summary <- function(x){
+  c(mean=mean(x),
+    sd=sd(x),
+    median=median(x),
+    min=min(x),
+    max=max(x), 
+    n=length(x), na.rm=TRUE)
+}
+
+apply(Percdata, 2, my.summary)
+sapply(df, my.summary)
+do.call(cbind,lapply(df, my.summary))
+
+apply(Percdata, 2, mean)
+apply(Percdata, 2, sd)
+apply(Percdata, 2, median)
+apply(Percdata, 2, min)
+apply(Percdata, 2, max)
+apply(Percdata, 2, length)
+
+basicStats(Percdata[5:23])
+
+## Plot distribution of BW##
+boxplot(Percdata$BW ~ Percdata$Alias)
+boxplot(Percdata$BW ~ Percdata$Alias, main='Body weight of mice',  #log="y", 
+        xlab="strains",
+        ylab="BW (kg)")
+
+# ggplot2 boxplot
+par(mfrow=c(2,1))
+boxplot(BW ~ Sex + Alias, data = Percdata)
+
+ggplot(data=Percdata, aes(Alias, BW)) +
+  aes(Sex, y=BW)) + #aes(x=data, BW) +
+  ggtitle("Body weight of mice") +
+  labs(x="Strains", y="BW (kg)") +
+  geom_boxplot() + coord_flip()
+
+ggplot(data=Percdata, aes(factor(0), BW)) +
+    labs(x="All mice", y="BW (kg)") +
+  geom_boxplot() + coord_flip()
+
+## plot Chemical concentrations#
+Percdata.chem <- subset(Percdata, Percdata$PERC > 0)
+summary(Percdata.chem)
+Percdata.chem$PC.Liv.Bld[Percdata.chem$TCA.liver == 1] <- "AU18042"
+
+
+ggplot(data=Percdata.chem, aes(factor(Time), TCA.liver)) +
+  ggtitle("Liver TCA") +
+  labs(x="Intake", y="Concentraions (nmol/g)") +
+  geom_boxplot() + coord_flip()
