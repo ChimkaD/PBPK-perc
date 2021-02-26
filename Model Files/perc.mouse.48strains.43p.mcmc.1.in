@@ -1,0 +1,3296 @@
+# USEPA Perc Model version for 48 mouse strains
+# Priors of Perc.mouse.3strains.58p.mcmc.out and posteriors of TCE-2014 were used for Population mean distributions
+# Uodated distributions of M_lnkUrnTCAC and M_lnkMetTCAC
+Integrate(Lsodes, 0.3e-8, 1e-11 , 1)
+MCMC ("perc.mouse.48strains.43p.mcmc.4.test.out","perc.mouse.48strains.43p.mcmc.4.50L.out","",
+	100000, 1, 10, 100000, 27852702); #7852702 #8527021 #17852702
+
+Level { # for MCMC in Population level
+# Run 3.1.1: 
+## Population means 
+# Flows
+Distrib(	M_lnQCC	TruncNormal	0.152	0.11	-0.183	0.487	); #v2	#posterior of TCE, 2014
+Distrib(	M_lnVPRC	TruncNormal	-0.319 0.141 -0.744 0.105	);	#v1	#posterior of TCE, 2014; 
+# Blood Flows to Tissues
+Distrib(	M_QGutC	TruncNormal	 1.0	0.17	0.66	1.34	);
+Distrib(	M_QSlwC	TruncNormal	 1.0	0.29	0.42	1.58	);
+# Volumes
+Distrib(	M_VFatC	TruncNormal	1.0	0.45	0.1	1.9	);	#prior of TCE, 2014
+Distrib(	M_VRapC	TruncNormal	1.0	0.1	0.8	1.2	); #(v3.2)  prior of TCE, 2014
+Distrib(	M_VKidC	TruncNormal	1.0	0.1	0.8	1.2	); #(v3.2)  prior of TCE, 2014
+# Absorption parameters
+Distrib(	M_lnkTSD	Uniform	-6.571	7.244	);
+Distrib(	M_lnkAS	Uniform	-6.571	7.244	);
+Distrib(	M_lnkAD	Uniform	-7.195	6.62	);
+Distrib(	M_lnkASAq	Uniform	-6.571	7.244	); 
+Distrib(	M_lnkTSDAq	Uniform	-6.571	7.244	);
+Distrib(	M_lnkADAq	Uniform	-7.195	6.62	);
+# Partition coefficients		
+Distrib(	M_PBC	TruncNormal 1.0 0.25	0.25 1.75	); 
+Distrib(	M_PFatC	TruncNormal 1.0 0.3	0.1 1.9 ); 
+Distrib(	M_lnPLivC	TruncNormal 0.0	0.4	-1.2 1.2 ); 
+Distrib(	M_lnPRapC	TruncNormal 0.0 0.4	-1.2 1.2 ); 	#(v3.2) prior of TCE, 2014
+Distrib(	M_lnPRespC	TruncNormal 0.0 0.4	-1.2 1.2 ); 	#(v3.2) prior of TCE, 2014
+Distrib(	M_lnPKidC	TruncNormal 0.0	0.4	-1.2 1.2 ); 
+Distrib(	M_lnPRBCPlasTCAC	TruncNormal	0.889	0.5	-0.605	2.383	);	#v1
+Distrib(	M_lnPKidTCAC	TruncNormal 0.0 0.4	-1.2 1.2	); 
+#Distrib(	M_lnPBrnTCAC	TruncNormal 0.0 0.4	-1.2 1.2	); 	#(v3.2) posterior of Perc, 2018
+Distrib(	M_lnPBodTCAC	TruncNormal 0.0 0.336	-1.008 1.008	); 
+Distrib(	M_lnPLivTCAC	TruncNormal 0.0 0.336	-1.008 1.008	); 
+#Distrib(	M_lnPBodTCVGC	TruncNormal	0.0 1.5	-5.0 3.0	); 	# prior of Perc, 2018
+Distrib(	M_lnPLivTCVGC	TruncNormal	0.0 1.5	-5.0 3.0	); 
+Distrib(	M_lnPKidTCVGC	TruncNormal	0.0 1.5	-5.0 3.0	); 
+Distrib(	M_lnPBodTCVCC	TruncNormal	0.0 1.5	-5.0 3.0	);
+Distrib(	M_lnPLivTCVCC	TruncNormal	0.0 1.5	-5.0 3.0	); 
+Distrib(	M_lnPKidTCVCC	TruncNormal	0.0 1.5	-5.0 3.0	); 
+Distrib(	M_lnPBodNATC	TruncNormal	0.0 1.5	-5.0 3.0	); 
+Distrib(	M_lnPLivNATC	TruncNormal	0.0 1.5	-5.0 3.0	); 
+Distrib(	M_lnPKidNATC	TruncNormal	0.0 1.5	-5.0 3.0	); 
+#Binding to blood plasma
+Distrib(	M_lnkDissocC	TruncNormal	0.467	0.636	-1.44	2.375	); #v1#(v3.2) posterior of TCE, 2014; 
+Distrib(	M_lnBMaxkDC	TruncNormal	0.421 0.26	-0.352 1.2	); #v1#(v3.2) posterior of TCE, 2014; 
+# Metabolism/Clearance parameters
+Distrib(	M_lnKMC	Uniform	-6.909	6.909	);
+Distrib(	M_lnClC	Uniform	-6.909	6.909	);	
+Distrib(	M_lnClTCVGC	Uniform	-13.8	10.203	); 	
+Distrib(	M_lnCl2OxC	Uniform	-6.909	6.909	);	
+#Distrib(	M_lnFracOtherC	TruncNormal	-6.701	-1.679	);	# posterior of TCE, 2014
+Distrib(	M_lnkUrnTCAC	TruncNormal	-2.11	0.482	-3.556	-0.663	); #v2	#v1	Uniform	-4.04	-0.181	posterior of TCE, 2014
+Distrib(	M_lnkMetTCAC	TruncNormal	-0.698	0.346	-1.735	0.4	);	#v2	#v1	Uniform	-2.08	0.685	posterior of TCE, 2014
+Distrib(	M_lnkKidTCVCC	Uniform	-6.909	6.909	);	
+Distrib(	M_lnkKidNATC	Uniform	-6.909	6.909	);	
+Distrib(	M_lnkDCAC	Uniform	-6.909	6.909	);		#(v3.1)
+Distrib(	M_lnkUrnNATC	Uniform	-6.909	6.909	);	
+
+## Population variances
+## Flows
+Distrib(	V_lnQCC	InvGamma	2.25	0.05	);
+Distrib(	V_lnVPRC	InvGamma	2.25	0.05	);
+# Blood Flows to Tissues
+Distrib(	V_QGutC	InvGamma	6	0.1445	);
+Distrib(	V_QSlwC	InvGamma	6	0.4205	);
+## Volumes
+Distrib(	V_VFatC	InvGamma	6	1.0125	); #(v3.2)  prior of TCE, 2014
+Distrib(	V_VRapC	InvGamma	6	0.0500	);
+Distrib(	V_VKidC	InvGamma	6	0.0500	);
+# Absorption parameters
+Distrib(	V_lnkTSD	InvGamma	2.25	5.0	);
+Distrib(	V_lnkAS	InvGamma	2.25	5.0	);
+Distrib(	V_lnkAD		InvGamma	2.25	5.0	);
+Distrib(	V_lnkASAq	InvGamma	2.25	5.0	);
+Distrib(	V_lnkTSDAq	InvGamma	2.25	5.0	);
+Distrib(	V_lnkADAq	InvGamma	2.25	5.0	);
+# New parameters: Partition coefficients											#(v2.1.1)
+Distrib(	V_PBC	InvGamma	9.488	1.0812	); 			#(v3.2)  prior of TCE, 2014
+Distrib(	V_PFatC	InvGamma	9.488	1.119 ); 	#(v3.2) prior of TCE, 2014
+Distrib(	V_lnPLivC	InvGamma	2.25	0.2 ); 	#(v3.2) prior of TCE, 2014
+Distrib(	V_lnPRapC	InvGamma	2.25	0.2	);
+Distrib(	V_lnPRespC	InvGamma	2.25	0.2	);
+Distrib(	V_lnPKidC	InvGamma	2.25	0.2 ); 	#(v3.2) prior of TCE, 2014
+Distrib(	V_lnPRBCPlasTCAC	InvGamma	2.25	0.1411	);		#(v3.2) posterior of TCE, 2014
+Distrib(	V_lnPKidTCAC	InvGamma	2.25	0.2	); 
+#Distrib(	V_lnPBrnTCAC	InvGamma	2.25	0.2	); 
+Distrib(	V_lnPBodTCAC	InvGamma	2.25	0.2	); 
+Distrib(	V_lnPLivTCAC	InvGamma	2.25	0.2	); 
+#Distrib(	V_lnPBodTCVGC	InvGamma	2.25	0.2	); 
+Distrib(	V_lnPLivTCVGC	InvGamma	2.25	0.2	); 
+Distrib(	V_lnPKidTCVGC	InvGamma	2.25	0.2	); 
+Distrib(	V_lnPBodTCVCC	InvGamma	2.25	0.2	); 
+Distrib(	V_lnPLivTCVCC	InvGamma	2.25	0.2	); 
+Distrib(	V_lnPKidTCVCC	InvGamma	2.25	0.2	); 
+Distrib(	V_lnPBodNATC	InvGamma	2.25	0.2	); 
+Distrib(	V_lnPLivNATC	InvGamma	2.25	0.2	); 
+Distrib(	V_lnPKidNATC	InvGamma	2.25	0.2	); 
+#Binding to blood plasma
+Distrib(	V_lnkDissocC	InvGamma	2.25	0.2	); 
+Distrib(	V_lnBMaxkDC	InvGamma	2.25	0.2	); 
+# Metabolism/Clearance parameters	
+Distrib(	V_lnKMC	InvGamma	2.25	0.3125	);				
+Distrib(	V_lnClC	InvGamma	2.25	0.3125	);
+Distrib(	V_lnClTCVGC	InvGamma	2.25	0.3125	);
+Distrib(	V_lnCl2OxC	InvGamma	2.25	0.3125 );
+#Distrib(	V_lnFracOtherC	InvGamma	2.25	0.3125	);
+Distrib(	V_lnkUrnTCAC	InvGamma	2.25	0.3125	);
+Distrib(	V_lnkMetTCAC	InvGamma	2.25	0.3125	);
+Distrib(	V_lnkKidTCVCC	InvGamma	2.25	0.3125	);		#(v2.1.1)
+Distrib(	V_lnkKidNATC	InvGamma	2.25	0.3125	);		#(v2.1.1)
+Distrib(	V_lnkDCAC	InvGamma	2.25	0.3125	);		#(v2.1.1)
+Distrib(	V_lnkUrnNATC	InvGamma	2.25	0.3125	);		#(v2.1.1)
+
+## Error variances										#values(v3.1)
+Distrib(	Ve_CInhPPM	LogUniform	0.01	3.3	);
+Distrib(	Ve_CVen	LogUniform	0.01	3.3	);
+Distrib(	Ve_CBldTCA	LogUniform	0.01	3.3	);
+Distrib(	Ve_CPlasTCA	LogUniform	0.01	3.3	);		#(v2.1.1)
+Distrib(	Ve_CPlasTCAfree	LogUniform	0.01	3.3	);		#(v2.1.1)
+Distrib(	Ve_RetDose	LogUniform	0.01	3.3	);
+Distrib(	Ve_FracRetMetab	LogUniform	0.01	3.3	);
+Distrib(	Ve_zRAExh	LogUniform	0.01	3.3	);
+Distrib(	Ve_CFat	LogUniform	0.01	3.3	);		#(v2.1.1)
+Distrib(	Ve_CLiv	LogUniform	0.01	3.3	);
+Distrib(	Ve_CKid	LogUniform	0.01	3.3	);
+Distrib(	Ve_CBrn	LogUniform	0.01	3.3	);		#(v2.1.1)
+Distrib(	Ve_CLivTCA	LogUniform	0.01	3.3	);
+Distrib(	Ve_CKidTCA	LogUniform	0.01	3.3	);		#(v2.1.1)
+Distrib(	Ve_CBrnTCA	LogUniform	0.01	3.3	);		#(v2.1.1)
+Distrib(	Ve_CBldTCVG	LogUniform	0.01	3.3	);		#(v2.1.1)
+Distrib(	Ve_CLivTCVG	LogUniform	0.01	3.3	);		#(v2.1.1)
+Distrib(	Ve_CKidTCVG	LogUniform	0.01	3.3	);		#(v2.1.1)
+Distrib(	Ve_CBldTCVC	LogUniform	0.01	3.3	);		#(v2.1.1)
+Distrib(	Ve_CLivTCVC	LogUniform	0.01	3.3	);		#(v2.1.1)
+Distrib(	Ve_CKidTCVC	LogUniform	0.01	3.3	);		#(v2.1.1)
+Distrib(	Ve_CBldNAT	LogUniform	0.01	3.3	);		#(v2.1.1)
+Distrib(	Ve_CLivNAT	LogUniform	0.01	3.3	);		#(v2.1.1)
+Distrib(	Ve_CKidNAT	LogUniform	0.01	3.3	);		#(v2.1.1)
+
+## Add any parameters that are fixed at something other than the “default”
+lnDRespC  = 	0.83; 		#(v3.1)
+FracPlasC =	0.874; 
+#lnkDissocC	= 	0.467; 		#(v3.1)
+lnVMaxTCVGC = 10.2;
+lnKM2C = 15;
+lnkTCVCC = -15.2;	#(v3.1)
+lnkNATC = -15.2;	#(v3.1)
+# QFatC = 0.831;
+# VLivC = 0.872;
+# lnkTSD = -0.253;
+# lnkAS = -2.158;
+# lnkAD = -0.025;
+# lnPGutC = -0.087;
+# lnPRapC = 0.072;
+# lnPRespC = 0.227;
+# lnPSlwC = 0.029;
+# lnPBrnC = 0.003;
+# lnPBrnTCAC = -0.001;
+# lnPBodTCVGC = -1.224;
+lnFracOtherC = -2.197; # Baseline #-4.454;
+#lnkDCAC = -2.338;
+
+Level { ## Group level – strains 
+# Flows
+Distrib(	lnQCC	TruncNormal_v	M_lnQCC	V_lnQCC	-0.183	0.487	); #v2
+Distrib(	lnVPRC	TruncNormal_v	 M_lnVPRC	V_lnVPRC	-0.744 0.105	);	#v1
+# Blood Flows to Tissues
+Distrib(	QGutC	TruncNormal_v	 M_QGutC	V_QGutC	0.66	1.34	);
+Distrib(	QSlwC	TruncNormal_v	 M_QSlwC	V_QSlwC	0.42	1.58	);
+# Volumes
+Distrib(	VFatC	TruncNormal_v	M_VFatC	V_VFatC	0.1	1.9	);
+Distrib(	VRapC	TruncNormal_v	M_VRapC	V_VRapC	0.8	1.2	); 
+Distrib(	VKidC	TruncNormal_v	M_VKidC	V_VKidC	0.8	1.2	); 
+# Absorption parameters
+Distrib(	lnkTSD	TruncNormal_v	M_lnkTSD	V_lnkTSD	-6.571	7.244	);
+Distrib(	lnkAS	TruncNormal_v	M_lnkAS	V_lnkAS	-6.571	7.244	);
+Distrib(	lnkAD	TruncNormal_v	M_lnkAD	V_lnkAD	-7.195	6.62	);
+Distrib(	lnkASAq	TruncNormal_v	M_lnkASAq	V_lnkASAq	-6.571	7.244	);
+Distrib(	lnkTSDAq	TruncNormal_v	M_lnkTSDAq	V_lnkTSDAq	-6.571	7.244	);
+Distrib(	lnkADAq	TruncNormal_v	M_lnkADAq	V_lnkADAq	-7.195	6.62	);
+# Partition coefficients	
+Distrib(	PBC	TruncNormal_v	M_PBC	V_PBC	0.25 1.75 ); 
+Distrib(	PFatC	TruncNormal_v	M_PFatC	V_PFatC	0.1 1.9 ); 
+Distrib(	lnPLivC	TruncNormal_v	M_lnPLivC	V_lnPLivC	-1.2 1.2 ); 
+Distrib(	lnPRapC	TruncNormal_v M_lnPRapC V_lnPRapC	-1.2 1.2 ); 	
+Distrib(	lnPRespC	TruncNormal_v M_lnPRespC V_lnPRespC	-1.2 1.2 );
+Distrib(	lnPKidC	TruncNormal_v	M_lnPKidC	V_lnPKidC	-1.2 1.2 ); 
+Distrib(	lnPRBCPlasTCAC	TruncNormal_v	M_lnPRBCPlasTCAC	V_lnPRBCPlasTCAC	-0.605	2.383	); #v1
+Distrib(	lnPKidTCAC	TruncNormal_v	M_lnPKidTCAC	V_lnPKidTCAC	-1.2 1.2	); 
+#Distrib(	lnPBrnTCAC	TruncNormal_v	M_lnPBrnTCAC	V_lnPBrnTCAC	-1.2 1.2	); 
+Distrib(	lnPBodTCAC	TruncNormal_v	M_lnPBodTCAC	V_lnPBodTCAC	-1.008 1.008	); 
+Distrib(	lnPLivTCAC	TruncNormal_v	M_lnPLivTCAC	V_lnPLivTCAC	-1.008 1.008	);
+#Distrib(	lnPBodTCVGC	TruncNormal_v	M_lnPBodTCVGC	V_lnPBodTCVGC	-5.0 3.0	); 
+Distrib(	lnPLivTCVGC	TruncNormal_v	M_lnPLivTCVGC	V_lnPLivTCVGC	-5.0 3.0	); 
+Distrib(	lnPKidTCVGC	TruncNormal_v	M_lnPKidTCVGC	V_lnPKidTCVGC	-5.0 3.0	); 
+Distrib(	lnPBodTCVCC	TruncNormal_v	M_lnPBodTCVCC	V_lnPBodTCVCC	-5.0 3.0	); 
+Distrib(	lnPLivTCVCC	TruncNormal_v	M_lnPLivTCVCC	V_lnPLivTCVCC	-5.0 3.0	); 
+Distrib(	lnPKidTCVCC	TruncNormal_v	M_lnPKidTCVCC	V_lnPKidTCVCC	-5.0 3.0	); 
+Distrib(	lnPBodNATC	TruncNormal_v	M_lnPBodNATC	V_lnPBodNATC	-5.0 3.0	); 
+Distrib(	lnPLivNATC	TruncNormal_v	M_lnPLivNATC	V_lnPLivNATC	-5.0 3.0	); 
+Distrib(	lnPKidNATC	TruncNormal_v	M_lnPKidNATC	V_lnPKidNATC	-5.0 3.0	); 
+#Binding to blood plasma
+Distrib(	lnkDissocC	TruncNormal_v	M_lnkDissocC	V_lnkDissocC	-1.44	2.375	);	#v1
+Distrib(	lnBMaxkDC	TruncNormal_v	M_lnBMaxkDC	V_lnBMaxkDC	-0.352 1.2	);				#v1
+# Metabolism/Clearance parameters						
+Distrib(	lnKMC		TruncNormal_v	M_lnKMC	V_lnKMC	-6.909	6.909	);
+Distrib(	lnClC	TruncNormal_v	M_lnClC	V_lnClC	-6.909	6.909	);
+Distrib(	lnClTCVGC	TruncNormal_v	M_lnClTCVGC	V_lnClTCVGC	-13.8	10.203	);	
+Distrib(	lnCl2OxC	TruncNormal_v	M_lnCl2OxC		V_lnCl2OxC	-6.909	6.909	);
+#Distrib(	lnFracOtherC	TruncNormal_v	M_lnFracOtherC	V_lnFracOtherC	-6.701	-1.679	); 
+Distrib(	lnkUrnTCAC	TruncNormal_v	M_lnkUrnTCAC	V_lnkUrnTCAC	-3.556	-0.663	); #v2
+Distrib(	lnkMetTCAC	TruncNormal_v	M_lnkMetTCAC	V_lnkMetTCAC	-1.735	0.4	); #v2
+Distrib(	lnkKidTCVCC	TruncNormal_v	M_lnkKidTCVCC	V_lnkKidTCVCC	-6.909	6.909	);
+Distrib(	lnkKidNATC	TruncNormal_v	M_lnkKidNATC	V_lnkKidNATC	-6.909	6.909	);
+Distrib(	lnkDCAC	TruncNormal_v	M_lnkDCAC	V_lnkDCAC	-6.909	6.909	);				#(v3.1)
+Distrib(	lnkUrnNATC	TruncNormal_v	M_lnkUrnNATC	V_lnkUrnNATC	-6.909	6.909	);
+
+
+Level { ## Strain 1 Strain = B6C3F1
+Level { ## Subgroup 1 of Strain 1	# Gearhart et al. (1993)
+
+#Likelihoods
+
+	Likelihood( CInhPPM , LogNormal_v , Prediction( CInhPPM )  , Ve_CInhPPM );
+	Likelihood( CVen , LogNormal_v , Prediction( CVen )  , Ve_CVen );
+	Likelihood( CBldTCA , LogNormal_v , Prediction( CBldTCA )  , Ve_CBldTCA );
+	
+Experiment {
+Species = 3;
+# 1 M B6C3F1 mice	
+# Closed chamber; 0.7 L volume	
+Male = 1.0;
+BWmeas=0.0325; # range 0.030 to 0.035	
+CC = 200; 
+NRodents = 1;	
+VChC = 0.7;	
+lnkLossC =  -3.912 ;	
+Print(	CVen	1	);
+Data(	CVen	-1	);
+Print(	CBldTCA	1	);
+Data(	CBldTCA	-1	);
+Print(	CInhPPM	0.001	0.002	0.050489922	0.057830505	0.126910324	0.1879683	0.21801189	0.287015068	0.309454087	0.317714371	0.385678626	0.431876607	0.439123516	0.500402902	0.523046299	0.568469346	0.622050488	0.629876468	0.697891818	0.743868389	0.782036011	0.796921554	0.880648475	0.933931565	0.949464306	1.154779202	1.19261471	1.413300548	1.413513442	1.664523889	1.679545684	1.938194766	1.938356565	2.2121126	2.42506613	);
+Data(	CInhPPM	192.0093699	172.3043669	120.7051272	153.4143459	85.87708162	70.22724192	98.69822572	59.23192467	83.24588433	45.8860518	70.75905918	42.13846034	58.31402846	38.99916081	45.52343273	54.80788307	39.91007699	32.63873022	48.04827682	34.98811522	30.6756418	41.15730995	38.38633591	36.6435473	27.31061072	27.51722633	32.62097537	28.37487417	23.38553408	22.14754781	26.25593656	24.10820145	20.81301306	20.96908403	20.4838528	);
+}
+Experiment {
+Species = 3;
+# 1 M B6C3F1 mice	
+# Closed chamber; 0.7 L volume	
+Male = 1.0;
+BWmeas=0.0325; # range 0.030 to 0.035	
+CC = 1000; 
+NRodents = 1;	
+VChC = 0.7;	
+lnkLossC =  -3.912 ;	
+Print(	CVen	1	);
+Data(	CVen	-1	);
+Print(	CBldTCA	1	);
+Data(	CBldTCA	-1	);
+Print(	CInhPPM	0.001	0.025376955	0.116819152	0.131909073	0.139811695	0.177723845	0.193120333	0.231270923	0.284298541	0.299618388	0.322542805	0.390932848	0.398682187	0.497635281	0.535819934	0.612214789	0.665191312	0.74145843	0.764152922	0.764425426	0.810129493	0.878315158	0.909125166	0.954931422	0.969646649	1.053765295	1.145181944	1.159999361	1.236479373	1.358195085	1.39593692	1.403907668	1.53327053	1.654713738	1.66255675	1.754118167	1.784212851	1.905749733	1.91354165	2.042759744	2.195055539	2.438359227	2.43857212	2.704638426	2.94806985	3.183862641	3.449928947	4.438650891	4.644085009	4.895325382	4.910338661	5.359204203	5.381813537	5.914346389	6.165195037	6.408626462	6.925626573	6.93352068	7.184216045	7.435226493	7.44301841	7.716757413	7.975389463	);
+Data(	CInhPPM	1257.967677	974.5208495	821.9484122	915.9477473	698.69268	772.5796866	651.6713751	580.2573989	698.5950733	631.7511962	571.2989605	598.3998687	524.6592971	481.8165706	415.9450017	302.8767017	381.9684526	312.3557058	348.0746445	271.7499508	253.46332	319.6467995	223.9350881	190.3505781	298.123935	194.8009561	168.160081	240.0225028	161.7660037	155.6104762	200.8562013	144.020731	133.2833998	164.2217029	132.2398379	100.0882761	134.285817	151.9604281	128.1796441	135.2947785	112.3543735	116.7575904	96.22733804	104.7468157	96.92682337	92.50989491	100.7002491	89.58254799	80.99610413	62.24964821	74.3700775	62.22173308	74.91343458	61.7091435	67.69517711	62.64131688	69.23357953	53.22206814	67.10738966	63.55485044	53.60894422	54.85303852	51.15132869	);
+}
+Experiment {
+Species = 3;
+# 1 M B6C3F1 mice	
+# Closed chamber; 0.7 L volume	
+Male = 1.0;
+BWmeas=0.0325; # range 0.030 to 0.035	
+CC = 3500; 
+NRodents = 1;	
+VChC = 0.7;	
+lnkLossC =  -3.912 ;	
+Print(	CVen	1	);
+Data(	CVen	-1	);
+Print(	CBldTCA	1	);
+Data(	CBldTCA	-1	);
+Print(	CInhPPM	0.001	0.023997403	0.05456897	0.077757375	0.115533273	0.161807895	0.207026564	0.245279343	0.329219158	0.359535253	0.428163737	0.473952961	0.542504803	0.633861842	0.687161964	0.694885756	0.808962834	0.862262956	0.862322566	0.900456125	0.961190503	1.144040833	1.166675715	1.379986907	1.410183781	1.630869618	1.631048449	1.866943429	1.889484637	2.14843177	2.155755321	2.437149989	2.65044415	2.657801764	2.901199125	2.901420535	3.175278758	3.411046001	3.418284394	3.646855823	3.90545381	4.384558804	4.399444347	4.878506762	4.886486026	5.357611756	5.365633599	5.874756636	5.897979104	6.384714217	6.39949757	6.901433308	6.916957533	7.42648081	7.433778814	7.951145103	);
+Data(	CInhPPM	3412.348492	3412.122677	2968.53022	2112.10443	2643.162939	1468.200457	2128.239824	1727.026553	1327.52296	1456.608568	1228.58686	1060.612767	959.0804783	873.9833066	821.4952472	737.1728586	731.4118119	687.4860455	651.2498329	588.923113	646.1697821	474.1233674	557.7384268	393.6997863	481.3916169	418.7313961	355.9481481	309.6116922	396.5616261	277.7580612	358.5302951	350.210614	251.0630776	314.1985457	299.8784001	245.244382	225.1800847	219.9644941	306.7654406	206.7177932	198.8254408	195.6824319	262.5458516	268.5853832	191.1008742	264.3396174	180.9444333	256.1575973	176.7027424	169.9188583	250.1546025	242.4152116	182.0762236	179.1927138	236.7325257	187.6103519	);
+}
+Experiment {
+# Oil Gavage 
+# 100 mg/kg dose group
+Species = 3;
+Male = 1.0;
+BWmeas=0.0325;
+PDose  = NDoses(  2  , 100 0  , 0 0.05  );
+TChng =  0.05 ;
+Print(	CVen	#0.5	0.857142857	1.5	
+2.785714286	4.642857143	6.714285714	11.64285714	#23.5	
+);	
+Data(	CVen	#8.341708543	15.1758794	12.26130653	
+7.035175879	3.819095477	2.110552764	0.703517588	#0.100502513 
+);	
+Print(	CBldTCA	#1.060151614	1.833969233	
+3.249532918	5.2420596	6.951831464	12.09045291	23.99264122	28.33954917	);
+Data(	CBldTCA	#5.89046293	13.12249607	
+19.81507596	21.14442925	20.86725795	13.06751994	7.375581914	5.744241704	);
+Print(	CInhPPM	1	);	
+Data(	CInhPPM	-1	);	
+}
+Experiment {
+# Oil Gavage 
+# 536 mg/kg dose group
+Species = 3;
+Male = 1.0;
+BWmeas=0.0325;
+PDose  = NDoses(  2  , 536 0  , 0 0.05  );
+TChng =  0.05 ;
+Print(	CVen	#0.214285714	1.071428571	
+2.714285714	4.785714286	5.857142857	7.285714286	#23.57142857	24.64285714	29.78571429	31.42857143	46.71428571	
+);
+Data(	CVen	#11.45728643	21.90954774	
+22.21105528	15.47738693	13.16582915	7.638190955	#3.115577889	3.216080402	1.005025126	1.809045226	4.32160804	
+);
+Print(	CBldTCA	#0.815693966	1.322147219	1.73733151	
+3.210877828	5.063458771	5.950020401	7.457926799	25.10039586	29.65775929	32.37650057	47.77482695	);
+Data(	CBldTCA	#28.94034947	23.04148741	32.15148977	
+48.76000678	48.21406329	77.69004822	68.56973784	31.22224052	32.00183254	22.87503191	12.60824022	);
+Print(	CInhPPM	1	);	
+Data(	CInhPPM	-1	);	
+}
+Experiment {
+# Oil Gavage 
+# 1072 mg/kg dose group
+Species = 3;
+Male = 1.0;
+BWmeas=0.0325;
+PDose  = NDoses(  2  , 1072 0  , 0 0.05  );
+TChng =  0.05 ;
+Print(	CVen	#0.285714286	0.714285714	
+2	3.142857143	5.071428571	6.571428571	#22.28571429	25.21428571	27.64285714	32.14285714	47.78571429	
+);
+Data(	CVen	#29.34673367	32.46231156	
+44.32160804	51.85929648	40.50251256	34.17085427	#4.824120603	5.125628141	2.010050251	6.231155779	6.331658291	
+);
+Print(	CBldTCA	#0.953492201	
+2.36261337	3.330422271	5.253870878	6.558480139	22.42961553	23.65405127	24.22671926	27.41290078	31.12343143	46.87287486	);
+Data(	CBldTCA	#85.75703129	
+97.27376632	119.2451281	118.9668115	155.4087298	111.1025529	100.9117352	98.76461198	112.9518887	54.50653915	47.98995922	);
+Print(	CInhPPM	1	);	
+Data(	CInhPPM	-1	);	
+}
+} ## End Subgroup 1 of Strain 1 # Gearhart
+
+Level { ## Subgroup 2 of Strain 1	# Odum et al. (1998)
+
+#Likelihoods
+	Likelihood( CBldTCA , LogNormal_v , Prediction( CBldTCA )  , Ve_CBldTCA );
+	
+Experiment {
+Species = 3;
+# Odum et al. (1998)
+# M/F B6C3F1 mice (23-28 g)
+# 6 hr exposure
+Male = 0.5; # mixed males and females
+BWmeas=0.0255;
+Conc=NDoses(2, 400 0 , 0 6 );
+Print(	CBldTCA	1	2	3	4	5	6	7	8	9	10	11	12	13.06506894	14.07527905	15.07514773	16.14238345	17.14963887	18.15659882	20.09665135	22.17793828	24.11592252	25.99126724	28.15617203	30.15915955	32.11250821	34.05551543	36.07268549	38.09458306	42.12065003	46.0054826	50.11753119	54	);
+Data(	CBldTCA	32.05	47.19	52.46	59.28	70.1	108.61	108.6679629	109.9501226	130.9301998	128.8235128	114.7197565	103.9969566	85.21416065	86.05334865	76.85177282	63.05860144	61.02899978	58.71251915	52.35981615	43.13525936	34.77440359	35.59520683	37.55739768	22.30991464	28.86676516	25.38285183	23.9055592	27.01833005	16.03113373	7.915791202	10.41037426	8.604836945	);
+}
+} ## End Subgroup 2 of Strain 1 # Odum et al. (1998)
+
+Level {	## Subgroup 3 of Strain 1 # Reitz et al. -- from Gargas
+
+#Likelihoods
+	Likelihood( CInhPPM , LogNormal_v , Prediction( CInhPPM )  , Ve_CInhPPM );
+	
+Experiment {
+Species = 3;
+# Reitz et al. (1996) -- from Gargas	
+# 13 M B6C3F1 mice	
+# Closed chamber; 9.1 L volume	
+Male = 1.0;
+CC = 1.5; # from Sweeney et al. (2009)	
+NRodents = 13;	
+VChC = 9.11;	
+lnkLossC =  -3.912 ;	
+Print(	CInhPPM	0.077250414	0.174231799	0.327808237	0.497449955	0.667091674	0.828621063	0.998183093	1.16784075	);
+Data(	CInhPPM	1.5	0.946857416	0.573975402	0.381090101	0.253024197	0.179862536	0.133808041	0.086843072	);
+}
+
+Experiment {
+Species = 3;
+# Reitz et al. (1996) -- from Gargas	
+# 13 M B6C3F1 mice	
+# Closed chamber; 9.1 L volume	
+Male = 1.0;
+CC = 4.5;	
+NRodents = 13;	
+VChC = 9.11;	
+lnkLossC =  -3.912 ;	
+Print(	CInhPPM	0.083694444	0.156489749	0.320953218	0.482720564	0.668753012	0.830520358	0.997679949	1.159447295	1.321214641	1.485678109	1.655533823	1.836174026	1.997941372	2.167797085	2.329564431	2.4940279	2.658491368	);
+Data(	CInhPPM	3.639897631	3.048610114	2.272145695	1.806956821	1.400229838	1.162777563	0.949034939	0.801851235	0.692306265	0.572424574	0.498521241	0.432290361	0.388049525	0.335039036	0.286775949	0.258543823	0.231083248	);
+}
+
+Experiment {
+Species = 3;
+# Reitz et al. (1996) -- from Gargas	
+# 13 M B6C3F1 mice	
+# Closed chamber; 9.1 L volume	
+Male = 1.0;
+CC = 20;	
+NRodents = 13;	
+VChC = 9.11;	
+lnkLossC =  -3.912 ;	
+Print(	CInhPPM	0.086390566	0.153793627	0.318257095	0.480024441	0.668753012	0.83321648	0.997679949	1.159447295	1.326606886	1.496462599	1.660926068	1.838870148	2.006029739	2.165100963	2.332260554	2.491331777	2.655795246	2.839131571	3.00359504	3.168058508	3.332521977	3.494289323	3.656056669	3.828608505	4.003856463	4.165623809	4.3327834	4.494550746	4.659014214	4.823477683	4.985245029	5.168581355	5.335740945	);
+Data(	CInhPPM	16.1182937	12.06386282	7.30548819	5.015213288	3.937113551	3.340945401	2.798498647	2.567021836	2.274615433	2.159955534	1.905651113	1.873322673	1.688905284	1.660219983	1.660519807	1.569991345	1.440134269	1.30401279	1.238272278	1.13094974	1.1608922	1.126465216	1.107335933	1.069871882	1.042659638	0.985818639	0.98599667	0.98616899	1.043397835	0.957096346	0.986691877	0.932923719	0.933092198	);
+}
+
+Experiment {
+Species = 3;
+# Reitz et al. (1996) -- from Gargas	
+# 13 M B6C3F1 mice	
+# Closed chamber; 9.1 L volume	
+Male = 1.0;
+CC = 100;	
+NRodents = 13;	
+VChC = 9.11;	
+lnkLossC =  -3.912 ;	
+Print(	CInhPPM	0.083694444	0.156489749	0.318257095	0.488112809	0.668753012	0.83321648	0.994983826	1.159447295	1.329303008	1.496462599	1.658229945	1.841566271	2.003333617	2.167797085	2.332260554	2.491331777	2.655795246	2.839131571	3.00359504	3.168058508	3.332521977	3.494289323	3.661448914	3.828608505	4.009248708	4.171016054	4.3327834	4.494550746	4.659014214	4.826173805	4.998725641	5.176669722	5.34113319	5.500204414	5.667364005	5.829131351	5.996290942	);
+Data(	CInhPPM	79.5262896	59.78044546	38.62774084	28.66537034	22.50309716	19.59770259	16.99370964	15.05793254	13.87241828	13.11623436	12.03132974	11.62441402	10.75555126	10.302061	9.867691412	9.533702937	9.013995632	8.822882553	8.27006804	7.819244808	7.854536109	7.621604928	7.331919906	7.2074535	6.814675276	6.360099564	6.225108853	6.040499357	5.861381643	5.565902112	5.354382258	4.911582281	4.912454971	4.808175966	4.64547582	4.626233253	4.647126783	);
+}
+
+Experiment {
+Species = 3;
+# Reitz et al. (1996) -- from Gargas	
+# 13 M B6C3F1 mice	
+# Closed chamber; 9.1 L volume	
+Male = 1.0;
+CC = 480;	
+NRodents = 13;	
+VChC = 9.11;	
+lnkLossC =  -3.912 ;	
+Print(	CInhPPM	0.156489749	0.320953218	0.490808931	0.674145257	0.83321648	0.994983826	1.162143417	1.326606886	1.496462599	1.655533823	1.838870148	2.003333617	2.165100963	2.332260554	2.491331777	2.658491368	2.836435449	3.00359504	3.165362386	3.329825854	3.50237769	3.661448914	3.828608505	4.003856463	4.168319931	4.335479522	4.494550746	4.659014214	4.828869928	4.996029519	5.173973599	5.338437068	5.500204414	5.667364005	5.829131351	5.993594819	);
+Data(	CInhPPM	310.666859	214.1977613	165.9811967	140.2428122	115.9572989	103.6408873	95.48093987	87.20549273	82.45217149	78.29497097	73.70889114	70.90712748	67.33221887	63.93791806	61.77383258	59.9422401	58.16563193	55.47286375	53.13378625	51.78172253	50.6832655	47.71327365	46.49927791	44.73230552	43.59402927	42.66901102	42.86134323	41.41087079	40.00971691	39.1607539	38.33025152	38.17159049	36.87971675	36.72716691	36.89282349	35.64433197	);
+}
+} ## End Subgroup 3 of Strain 1 #Reitz et al. -- from Gargas
+
+Level {	## Subgroup 4 of Strain 1 ## Reitz et al. (1996) Mice
+
+#Likelihoods
+	Likelihood( RetDose , LogNormal_v , Prediction( RetDose )  , Ve_RetDose );
+	Likelihood( FracRetMetab , LogNormal_v , Prediction( FracRetMetab )  , Ve_FracRetMetab );
+	Likelihood( zRAExh , LogNormal_v , Prediction( zRAExh )  , Ve_zRAExh );
+	
+Experiment {
+Species = 3;
+# Reitz et al. (1996)
+# M B6C3F1 mice
+# Flow rate of 0.45 l/min
+Male = 1.0;
+Conc = NDoses( 2 , 11 0 , 0 6 );
+CC = 1e-10;
+NRodents = 4;
+VChC = 6.1;
+lnkLossC =  1.4875 ;
+BWmeas=0.0325;
+# 1.5193 mg metabolites/4 mice/11.7 mg/kg = 0.0325 kg
+Print(	zRAExh	6.432309612	7.467791093	8.476332524	10.43930308	13.46403172	18.96931824	);
+Data(	zRAExh	0.020477053	0.011804158	0.007654849	0.004732535	0.002300618	0.000579615	);
+Print(	RetDose	6	);					
+Data(	RetDose	0.447025	); # 1.7881/4 mice					
+Print(	FracRetMetab	62.5	); # middle of range (48-65 hr post-exposure)					
+Data(	FracRetMetab	0.8497	);					
+}
+
+Experiment {
+Species = 3;
+# Reitz et al. (1996)
+# M B6C3F1 mice
+# Flow rate of 0.45 l/min 
+Male = 1.0;
+Conc = NDoses( 2 , 365 0 , 0 6 );
+CC = 1e-10;
+NRodents = 4;
+VChC = 6.1;
+lnkLossC =  1.4875 ;
+BWmeas=0.0246;
+# 12.326 mg metabolites/4 mice/125.2 mg/kg = 0.0246 kg
+Print(	zRAExh	6.470088709	7.506009723	9.01445764	10.9417431	13.49434291	16.46562269	21.49829108	);
+Data(	zRAExh	1.667299481	0.723740302	0.355387878	0.220890871	0.073417874	0.034193741	0.008077191	);
+Print(	RetDose	6	);						
+Data(	RetDose	7.03565	); # 28.1426/4 mice
+Print(	FracRetMetab	62.5	); # middle of range (48-65 hr post-exposure)
+Data(	FracRetMetab	0.438	);
+}
+
+Experiment {
+Species = 3;
+# Reitz et al. (1996)
+# M B6C3F1 mice
+# Flow rate of 0.45 l/min 
+Male = 1.0;
+Conc = NDoses( 2 , 1201 0 , 0 6 );
+CC = 1e-10;
+NRodents = 4;
+VChC = 6.1;
+lnkLossC =  1.4875 ;
+BWmeas=0.0297;
+# 12.6746 mg metabolites/4 mice/182.4 mg/kg = 0.0297 kg
+Print(	zRAExh	6.432504499	7.467911343	8.4585812	10.44892305	13.47440636	18.97067415	);
+Data(	zRAExh	5.710073944	3.454059339	2.288369253	0.952084253	0.284378449	0.076398346	);
+Print(	RetDose	6	);
+Data(	RetDose	21.1129	); # 84.4516/4 mice
+Print(	FracRetMetab	62.5	); # middle of range (48-65 hr post-exposure)
+Data(	FracRetMetab	0.2576	);
+}
+} ## End Subgroup 4	of Strain 1 # Reitz et al. (1996)
+}  # End Strain 1 # Strain = B6C3F1
+
+Level { ## Strain 2	Strain = SW	
+# Philip et al. (2007)	
+
+#Likelihoods
+	Likelihood( CVen , LogNormal_v , Prediction( CVen )  , Ve_CVen );
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CBldTCA , LogNormal_v , Prediction( CBldTCA )  , Ve_CBldTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	
+Experiment {
+Species = 3;
+# Philip et al. (2007)
+# M SW mice 25-29 g
+#
+Male = 1.0;
+BWmeas=0.027;
+PDoseAq  = NDoses(  2  , 150 0  , 0 0.05  );
+TChng =  0.05 ;
+Print(	CBldTCA	0.25	0.5	1	2	4	6	12	24	);
+Data(	CBldTCA	143.09	105.98	58.59	64.63	94.65	141.79	151.94	57.29	);
+Print(	CVen	0.25	0.5	1	2	4	6	);	
+Data(	CVen	15.32	10.63	6.21	4.803	2.85	0.347	);	
+Print(	CLiv	0.25	0.5	1	2	4	6	);	
+Data(	CLiv	45.82	35.23	10.85	9.44	8.038	2.04	);	
+Print(	CKid	0.25	0.5	1	2	4	6	12	);	
+Data(	CKid	33.55	30.26	14.47	10.53	7.89	1.97	1.97	);	
+Print(	CLivTCA	0.25	0.5	1	2	4	6	12	24	);
+Data(	CLivTCA	14.067	19.91	26.42	44.41	55.66	52.03	49.08	15.05	);
+}
+
+Experiment {
+Species = 3;
+# Philip et al. (2007)
+# M SW mice 25-29 g
+#
+Male = 1.0;
+BWmeas=0.027;
+PDoseAq  = NDoses(  2  , 500 0  , 0 0.05  );
+TChng =  0.05 ;
+Print(	CBldTCA	0.25	0.5	1	2	4	6	12	24	);
+Data(	CBldTCA	17.05	34.77	55.22	58.64	111.14	161.59	109.77	44.32	);
+Print(	CVen	0.25	0.5	1	2	4	6	12	);	
+Data(	CVen	42.45	62.07	37.17	8.639	10.79	8.018	0.311	);	
+Print(	CLiv	0.25	0.5	1	2	4	6	12	24	);
+Data(	CLiv	119.33	163.87	149.82	39.29	63.15	22.68	2.89	1.48	);
+Print(	CKid	0.25	0.5	1	2	4	6	12	24	);
+Data(	CKid	88.06	102.35	51.5	15.79	46.52	16.73	4.04	1.87	);
+Print(	CLivTCA	0.25	0.5	1	2	4	6	12	24	);
+Data(	CLivTCA	21.5	28.01	35.87	89.005	77.28	104.73	83.54	40.72	);
+}
+
+Experiment {
+Species = 3;
+# Philip et al. (2007)
+# M SW mice 25-29 g
+#
+Male = 1.0;
+BWmeas=0.027;
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );
+TChng =  0.05 ;
+Print(	CBldTCA	0.25	0.5	1	2	4	6	12	24	);
+Data(	CBldTCA	24.55	26.59	34.77	94.09	119.32	168.41	139.77	143.18	);
+Print(	CVen	0.25	0.5	1	2	4	6	12	24	);
+Data(	CVen	73.13	59.95	53.88	40.42	20.66	21.72	3.872	0.274	);
+Print(	CLiv	0.25	0.5	1	2	4	6	12	24	);
+Data(	CLiv	297.37	324.68	272.73	138.08	70.05	67.48	43.1	3.79	);
+Print(	CKid	0.25	0.5	1	2	4	6	12	24	);
+Data(	CKid	167.67	149.06	139.001	131.58	74.81	77.91	27.06	3.19	);
+Print(	CLivTCA	0.25	0.5	1	2	4	6	12	24	);
+Data(	CLivTCA	51.97	42.38	53.75	98.9	109.58	175.68	135.69	135.57	);
+}
+} ## End Strain 2 # Strain = SW # Philip et al. (2007)	
+
+Level { ## Strain 3 # LFD of Strain = C57Bl/6J  # Cichocki et al. (2017)
+
+#Likelihoods
+	Likelihood( CVen , LogNormal_v , Prediction( CVen )  , Ve_CVen );
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CFat , LogNormal_v , Prediction( CFat )  , Ve_CFat );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CPlasTCA , LogNormal_v , Prediction( CPlasTCA )  , Ve_CPlasTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	Likelihood( CKidTCA , LogNormal_v , Prediction( CKidTCA )  , Ve_CKidTCA );
+	Likelihood( CBldTCVG , LogNormal_v , Prediction( CBldTCVG )  , Ve_CBldTCVG );
+	Likelihood( CLivTCVG , LogNormal_v , Prediction( CLivTCVG )  , Ve_CLivTCVG );
+	Likelihood( CKidTCVG , LogNormal_v , Prediction( CKidTCVG )  , Ve_CKidTCVG );
+	Likelihood( CBldTCVC , LogNormal_v , Prediction( CBldTCVC )  , Ve_CBldTCVC );
+	Likelihood( CLivTCVC , LogNormal_v , Prediction( CLivTCVC )  , Ve_CLivTCVC );
+	Likelihood( CKidTCVC , LogNormal_v , Prediction( CKidTCVC )  , Ve_CKidTCVC );
+	Likelihood( CBldNAT , LogNormal_v , Prediction( CBldNAT )  , Ve_CBldNAT );
+	Likelihood( CLivNAT , LogNormal_v , Prediction( CLivNAT )  , Ve_CLivNAT );
+	Likelihood( CKidNAT , LogNormal_v , Prediction( CKidNAT )  , Ve_CKidNAT );
+	Likelihood( CVen_ND , StudentT, 5 , Prediction(CVen_ND)	, 1.38E-04 );
+	#Likelihood( CLiv_ND , StudentT, 5 , Prediction(CLiv_ND)	, 2.76E-04 );
+	Likelihood( CBldTCVG_ND , StudentT, 5 , Prediction(CBldTCVG_ND)	, 4.95E-05 );
+	Likelihood( CLivTCVG_ND , StudentT, 5 , Prediction(CLivTCVG_ND)	, 6.55E-05 );
+	Likelihood( CKidTCVG_ND , StudentT, 5 , Prediction(CKidTCVG_ND)	, 6.11E-05 );
+	Likelihood( CBldTCVC_ND , StudentT, 5 , Prediction(CBldTCVC_ND)	, 7.85E-05 );
+	Likelihood( CLivTCVC_ND , StudentT, 5 , Prediction(CLivTCVC_ND)	, 1.90E-04 );
+	Likelihood( CKidTCVC_ND , StudentT, 5 , Prediction(CKidTCVC_ND)	, 5.70E-04 );
+	Likelihood( CBldNAT_ND , StudentT, 5 , Prediction(CBldNAT_ND)	, 5.27E-05 );
+	Likelihood( CLivNAT_ND , StudentT, 5 , Prediction(CLivNAT_ND)	, 3.05E-04 );
+	Likelihood( CKidNAT_ND , StudentT, 5 , Prediction(CKidNAT_ND)	, 1.74E-04 );
+
+Experiment {	# Joe300
+Species = 3;
+# M C57Bl/6J mice 24-31.8 g
+# Aqueous Gavage 
+# 300 mg/kg dose group
+#
+Male = 1.0;
+BWmeas=0.027;
+PDoseAq  = NDoses(  2  , 300 0  , 0 0.05  );
+TChng =  0.05 ;
+
+Print(	CVen	1	1.001	1.002	1.003	1.005	2	2.001	2.002	2.003	2.005	4	4.001	4.002	4.003	4.005	12	12.001	12.003	24	24.001	24.002	24.003	24.005	);
+Data(	CVen	4.493	6.306	4.589	4.578	4.807	3.863	4.436	5.962	3.436	5.561	3.125	3.895	2.199	2.126	3.327	0.587	0.113	0.625	0.041	0.017	0.069	0.323	0.041	);
+Print(	CLiv	1	1.001	1.002	1.003	1.005	2	2.001	2.002	2.003	2.005	4	4.001	4.002	4.003	4.005	12	12.001	12.003	24	24.001	24.002	24.003	24.005	36	36.001	36.002	36.003	);
+Data(	CLiv	29.1929	33.9743	14.8852	18.1006	18.7983	16.1503	22.0193	16.3832	12.1230	19.4501	15.3777	12.2679	6.7841	14.2875	23.5439	4.8999	0.8459	6.1365	0.3321	0.1769	0.5602	5.1441	0.3895	0.0355	0.0586	0.0179	0.0938	);
+Print(	CKid	1	1.001	1.002	1.003	1.005	2	2.001	2.002	2.003	2.005	4	4.001	4.002	4.003	4.005	12	12.001	12.003	24	24.001	24.002	24.003	24.005	36	36.001	36.002	36.003	);
+Data(	CKid	49.552	46.917	37.962	30.638	48.894	29.38	32.879	49.745	22.471	26.994	11.348	25.89	14.854	12.522	2.658	4.945	1.462	5.578	1.013	0.855	1.064	2.792	0.998	0.817	0.811	0.813	0.816	);
+Print(	CFat	1	1.001	1.002	1.003	1.005	2	2.001	2.002	2.003	2.005	4	4.001	4.002	4.003	4.005	12	12.001	12.003	24	24.001	24.002	24.003	24.005	36	36.001	36.002	36.003	);
+Data(	CFat	130.68	155.19	178.7	70.49	215.52	169.14	151.05	237.06	111.29	182.11	137.03	335.34	201.94	198.69	162.87	119.13	102.58	156.36	13.62	22.73	60.82	59.62	58.96	0.48	0.32	0.32	0.76	);
+Print(	CPlasTCA	1	1.001	1.002	1.003	1.005	2	2.001	2.002	2.003	2.005	4	4.001	4.002	4.003	4.005	12	12.001	12.003	24	24.001	24.002	24.003	24.005	36	36.001	36.002	36.003	);
+Data(	CPlasTCA	48.67	46.82	43.87	40.25	62.16	59.66	68.88	73.45	73.47	83.59	110.01	113.42	104.98	82.31	139.12	139.02	97.81	136.75	60.06	25.52	38.45	146.62	53.72	16.6	4.54	11.5	12.85	);
+Print(	CLivTCA	1	1.001	1.002	1.003	1.005	2	2.001	2.002	2.003	2.005	4	4.001	4.002	4.003	4.005	12	12.001	12.003	24	24.001	24.002	24.003	24.005	36	36.001	36.002	36.003	);
+Data(	CLivTCA	21.24	30.91	29.36	14.66	26.42	30.37	39.42	26.74	40.7	45.01	53.45	59.27	49.75	54.79	77.88	74.39	59.3	58.63	29.03	13.65	17.68	58.96	22.45	6.81	3.14	4.93	4.6	);
+Print(	CKidTCA	1	1.001	1.002	1.003	1.005	2	2.001	2.002	2.003	2.005	4	4.001	4.002	4.003	4.005	12	12.001	12.003	24	24.001	24.002	24.003	24.005	36	36.001	36.002	36.003	);
+Data(	CKidTCA	13.73	14.63	14.05	11.94	14.46	16.34	-1	25.79	23.22	24.25	43.42	38.05	40.7	36.12	33.75	50.15	38.83	42.19	16.87	9.95	12.04	36.01	12.69	5.38	0.86	2.63	3.7	);
+Print(	CBldTCVG	1	1.001	1.002	1.003	1.005	2	2.001	2.002	2.003	2.005	4	4.001	4.002	4.003	4.005	12	24	24.001	24.002	24.003	24.005	);						
+Data(	CBldTCVG	0.00209	0.00253	0.00193	0.00253	0.00276	0.00106	0.00124	0.00303	0.00125	0.00234	0.00114	0.0014	0.00071	0.00131	0.00156	0.000180985	-1	-1	-1	-1	-1	);						
+Print(	CLivTCVG	1	1.001	1.002	1.003	1.005	2	2.001	2.002	2.003	2.005	4	4.002	4.003	4.005	12	12.001	12.003	24	24.001	24.002	24.003	24.005	);					
+Data(	CLivTCVG	0.05916	0.09554	0.06937	0.0538	0.05254	0.03243	0.03642	0.07254	0.0565	0.01288	0.02389	0.02674	0.06323	0.05705	0.00761	0.00488	0.00983	-1	-1	-1	-1	-1	);					
+Print(	CKidTCVG	1	1.001	1.002	1.003	1.005	2	2.001	2.002	2.003	2.005	4	4.001	4.002	4.003	4.005	24	24.001	24.002	24.003	24.005	);							
+Data(	CKidTCVG	0.00238	0.00373	0.00331	0.00351	0.00304	0.0026	0.0031	0.00424	0.00293	0.00346	0.00214	0.00202	0.0021	0.00215	0.00305	-1	-1	-1	-1	-1	);							
+Print(	CBldTCVC	1	1.001	1.002	1.003	1.005	2	2.001	2.002	2.003	2.005	4	4.001	4.002	4.003	4.005	12	12.003	24	24.001	24.002	24.003	24.005	);					
+Data(	CBldTCVC	0.00332	0.00608	0.00419	0.00449	0.00342	0.0019	0.00331	0.0043	0.00216	0.00526	0.00205	0.00196	0.00128	0.00165	0.00263	0.0005	0.0005	-1	-1	-1	-1	-1	);					
+Print(	CLivTCVC	1	1.001	1.002	1.003	1.005	2.001	2.002	2.003	4	4.001	4.002	4.003	4.005	24	24.001	24.002	24.003	24.005	);									
+Data(	CLivTCVC	0.00594	0.00933	0.00776	0.00485	0.00906	0.00533	0.00674	0.00362	0.0012	0.00608	0.00115	0.00117	0.008	-1	-1	-1	-1	-1	);									
+Print(	CKidTCVC	1	1.001	1.002	1.003	1.005	2	2.001	2.002	2.003	2.005	4	4.001	4.003	4.005	24	24.001	24.002	24.003	24.005	);								
+Data(	CKidTCVC	0.00775	0.01219	0.00824	0.00826	0.00651	0.00749	0.00602	0.00867	0.00373	0.00978	0.00454	0.0052	0.00334	0.00448	-1	-1	-1	-1	-1	);								
+Print(	CBldNAT	1	1.001	1.002	1.003	1.005	2	2.001	2.002	2.003	2.005	4	4.001	4.002	4.003	4.005	12	12.001	12.003	24	24.001	24.002	24.003	24.005	);				
+Data(	CBldNAT	0.01374	0.02086	0.02035	0.0195	0.01958	0.01085	0.01189	0.02255	0.01006	0.02995	0.00854	0.01027	0.00512	0.00805	0.01378	0.00251	0.00023	0.00338	-1	-1	-1	-1	-1	);				
+Print(	CLivNAT	1	1.001	1.002	1.003	1.005	2	2.001	2.002	2.003	2.005	4	4.002	4.003	4.005	12.003	24	24.001	24.002	24.003	24.005	);							
+Data(	CLivNAT	0.01328	0.0201	0.01906	0.01367	0.02615	0.00312	0.01126	0.018	0.00969	0.00521	0.00566	0.00376	0.00512	0.02093	0.00174	-1	-1	-1	-1	-1	);							
+Print(	CKidNAT	1	1.001	1.002	1.003	1.005	2	2.001	2.002	2.003	2.005	4	4.001	4.003	4.005	24	24.001	24.002	24.003	24.005	);								
+Data(	CKidNAT	0.00333	0.00309	0.00388	0.00246	0.00287	0.00615	0.00226	0.00321	0.0018	0.00466	0.00152	0.00227	0.00136	0.00169	-1	-1	-1	-1	-1	);								
+Print(	CVen_ND	36	36.001	36.002	36.003	);
+Data(	CVen_ND	0	0	0	0	);
+Print(	CBldTCVG_ND	12.001	12.003	36	36.001	36.002	36.003	);																					
+Data(	CBldTCVG_ND	0	0	0	0	0	0	);																					
+Print(	CLivTCVG_ND	4.001	36	36.001	36.002	36.003	);																						
+Data(	CLivTCVG_ND	0	0	0	0	0	);																						
+Print(	CKidTCVG_ND	12	12.001	12.003	36	36.001	36.002	36.003	);																				
+Data(	CKidTCVG_ND	0	0	0	0	0	0	0	);																				
+Print(	CBldTCVC_ND	12.001	36	36.001	36.002	36.003	);																						
+Data(	CBldTCVC_ND	0	0	0	0	0	);																						
+Print(	CLivTCVC_ND	2	2.005	12	12.001	12.003	36	36.001	36.002	36.003	);																		
+Data(	CLivTCVC_ND	0	0	0	0	0	0	0	0	0	);																		
+Print(	CKidTCVC_ND	4.002	12	12.001	12.003	36	36.001	36.002	36.003	);																		
+Data(	CKidTCVC_ND	0.00097	0	0	0	0	0	0	0	);																		
+Print(	CBldNAT_ND	36	36.001	36.002	36.003	);																							
+Data(	CBldNAT_ND	0	0	0	0	);																							
+Print(	CLivNAT_ND	4.001	12	12.001	36	36.001	36.002	36.003	);																				
+Data(	CLivNAT_ND	0	0.00091	0.00013	0	0	0	0	);																				
+Print(	CKidNAT_ND	4.002	12	12.001	12.003	36	36.001	36.002	36.003	);																			
+Data(	CKidNAT_ND	0	0	0	0	0	0	0	0	);																			
+}
+} ## Strain 3 LFD of Strain = C57Bl/6J	# Cichocki et al. (2017)
+
+Level { ## Strain 4 # Strain = CC001/Unc	# Cichocki, 2017-1000
+#Likelihoods
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CPlasTCA , LogNormal_v , Prediction( CPlasTCA )  , Ve_CPlasTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	Likelihood( CKidTCA , LogNormal_v , Prediction( CKidTCA )  , Ve_CKidTCA );
+	Likelihood( CBldTCVG , LogNormal_v , Prediction( CBldTCVG )  , Ve_CBldTCVG );
+	Likelihood( CLivTCVG , LogNormal_v , Prediction( CLivTCVG )  , Ve_CLivTCVG );
+	Likelihood( CKidTCVG , LogNormal_v , Prediction( CKidTCVG )  , Ve_CKidTCVG );
+	Likelihood( CBldTCVC , LogNormal_v , Prediction( CBldTCVC )  , Ve_CBldTCVC );
+	Likelihood( CLivTCVC , LogNormal_v , Prediction( CLivTCVC )  , Ve_CLivTCVC );
+	Likelihood( CKidTCVC , LogNormal_v , Prediction( CKidTCVC )  , Ve_CKidTCVC );
+	Likelihood( CBldNAT , LogNormal_v , Prediction( CBldNAT )  , Ve_CBldNAT );
+	Likelihood( CLivNAT , LogNormal_v , Prediction( CLivNAT )  , Ve_CLivNAT );
+	Likelihood( CKidNAT , LogNormal_v , Prediction( CKidNAT )  , Ve_CKidNAT );
+	Likelihood( CLivTCVC_ND , StudentT, 5 , Prediction(CLivTCVC_ND)	, 1.90E-04 );
+
+Experiment {		# CC001/Unc					
+Species = 3;							
+# Aqueous Gavage 	# 1000 mg/kg dose group					
+Male = 1.0;							
+BWmeas=0.0257;							
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );							
+TChng =  0.05 ;							
+Print(	CLiv	1	2	4	12	24	);
+Data(	CLiv	107.3214257	136.5510833	56.02324773	67.26414824	5.841417708	);
+Print(	CKid	1	2	4	12	24	);
+Data(	CKid	271.1968998	120.0892546	111.9309333	41.36716106	3.277730324	);
+Print(	CPlasTCA	1	2	4	12	24	);
+Data(	CPlasTCA	157.7976498	122.293449	246.778006	215.6301805	300.9478132	);
+Print(	CLivTCA	1	2	4	12	24	);
+Data(	CLivTCA	69.21598933	94.15189913	115.8700813	146.1972236	145.7411038	);
+Print(	CKidTCA	1	2	4	12	24	);
+Data(	CKidTCA	33.26956777	58.4205543	58.38801148	109.8315926	68.74379985	);
+Print(	CBldTCVG	1	2	4	12	);	
+Data(	CBldTCVG	0.003833921	0.005647502	0.003579601	0.002679382	);	
+Print(	CLivTCVG	1	2	4	12	);	
+Data(	CLivTCVG	0.057823567	0.077967231	0.034641923	0.014529903	);	
+Print(	CKidTCVG	1	2	4	12	);	
+Data(	CKidTCVG	0.009468297	0.018911951	0.009079517	0.00475292	);	
+Print(	CBldTCVC	1	2	4	12	);	
+Data(	CBldTCVC	0.06483217	0.004859343	0.026044045	0.001397502	);	
+Print(	CLivTCVC	1	2	4	);		
+Data(	CLivTCVC	0.001018934	0.001739344	0.000722303	);		
+Print(	CKidTCVC	1	2	4	12	);	
+Data(	CKidTCVC	0.027998016	0.05310481	0.023598228	0.007906796	);	
+Print(	CBldNAT	1	2	4	12	);	
+Data(	CBldNAT	0.076071026	0.023737723	0.077740804	0.003825801	);	
+Print(	CLivNAT	1	2	4	12	);	
+Data(	CLivNAT	0.039440429	0.065645019	0.03234567	0.01195279	);	
+Print(	CKidNAT	1	2	4	12	);	
+Data(	CKidNAT	0.01153034	0.022090405	0.009254213	0.002987667	);	
+Print(	CLivTCVC_ND	12	);				
+Data(	CLivTCVC_ND	0.000199276	);				
+}	# CC001/Unc						
+}	# End Strain 4	# Strain = CC001/Unc	# Cichocki, 2017-1000
+
+Level { ## Strain 5 # Strain = # CC002/Unc	# Cichocki, 2017-1000
+#Likelihoods
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CPlasTCA , LogNormal_v , Prediction( CPlasTCA )  , Ve_CPlasTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	Likelihood( CKidTCA , LogNormal_v , Prediction( CKidTCA )  , Ve_CKidTCA );
+	Likelihood( CBldTCVG , LogNormal_v , Prediction( CBldTCVG )  , Ve_CBldTCVG );
+	Likelihood( CLivTCVG , LogNormal_v , Prediction( CLivTCVG )  , Ve_CLivTCVG );
+	Likelihood( CKidTCVG , LogNormal_v , Prediction( CKidTCVG )  , Ve_CKidTCVG );
+	Likelihood( CBldTCVC , LogNormal_v , Prediction( CBldTCVC )  , Ve_CBldTCVC );
+	#Likelihood( CLivTCVC , LogNormal_v , Prediction( CLivTCVC )  , Ve_CLivTCVC );
+	Likelihood( CKidTCVC , LogNormal_v , Prediction( CKidTCVC )  , Ve_CKidTCVC );
+	Likelihood( CBldNAT , LogNormal_v , Prediction( CBldNAT )  , Ve_CBldNAT );
+	Likelihood( CLivNAT , LogNormal_v , Prediction( CLivNAT )  , Ve_CLivNAT );
+	Likelihood( CKidNAT , LogNormal_v , Prediction( CKidNAT )  , Ve_CKidNAT );
+	#Likelihood( CLivTCVC_ND , StudentT, 5 , Prediction(CLivTCVC_ND)	, 1.90E-04 );
+	Likelihood( CKidTCVC_ND , StudentT, 5 , Prediction(CKidTCVC_ND)	, 5.70E-04 );
+
+Experiment {		# CC002/Unc					
+Species = 3;							
+# Aqueous Gavage 		# 1000 mg/kg dose group					
+Male = 1.0;							
+BWmeas=0.0291;							
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );							
+TChng =  0.05 ;							
+Print(	CLiv	1	2	);			
+Data(	CLiv	99.65716797	93.27742585	);			
+Print(	CKid	1	2	4	12	24	);
+Data(	CKid	49.47268527	64.79469269	42.91371943	13.56490292	5.013697959	);
+Print(	CPlasTCA	1	2	4	12	24	);
+Data(	CPlasTCA	82.99405929	76.14294913	105.0776582	284.0323389	245.056359	);
+Print(	CLivTCA	1	2	4	12	24	);
+Data(	CLivTCA	35.19870283	59.89049724	94.12542641	128.2181301	155.4530022	);
+Print(	CKidTCA	1	2	24	);		
+Data(	CKidTCA	10.73147325	14.82464277	59.78596253	);		
+Print(	CBldTCVG	1	2	4	12	);	
+Data(	CBldTCVG	0.003822552	0.003167235	0.001716063	0.00157949	);	
+Print(	CLivTCVG	1	2	4	12	24	);
+Data(	CLivTCVG	0.034297855	0.032155388	0.015562642	0.008947341	0.005223844	);
+Print(	CKidTCVG	1	2	4	12	);	
+Data(	CKidTCVG	0.008910653	0.00959003	0.085734586	0.003342112	);	
+Print(	CBldTCVC	1	2	4	12	);	
+Data(	CBldTCVC	0.005484035	0.004672533	0.004126844	0.001942171	);	
+Print(	CKidTCVC	1	2	12	);		
+Data(	CKidTCVC	0.034785716	0.023654431	0.012407133	);		
+Print(	CBldNAT	1	2	4	12	);	
+Data(	CBldNAT	0.012995166	0.012352055	0.00747904	0.003998494	);	
+Print(	CLivNAT	1	2	4	12	24	);
+Data(	CLivNAT	0.020491019	0.022410527	0.013683027	0.007114334	0.004109201	);
+Print(	CKidNAT	1	2	4	12	);	
+Data(	CKidNAT	0.030189221	0.013876837	0.042588705	0.007937921	);	
+#Print(	CLivTCVC_ND	1	2	4	12	24	);
+#Data(	CLivTCVC_ND	0.000218451	0.000324208	0.000206251	0.000192508	0.000122871	);
+Print(	CKidTCVC_ND	4	);				
+Data(	CKidTCVC_ND	0.000947441	);				
+}	# CC002/Unc						
+}	# End Strain 5	# Strain = # CC002/Unc	# Cichocki, 2017-1000
+
+Level { ## Strain 6 # Strain = # CC003/Unc	# Cichocki, 2017-1000
+#Likelihoods
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CPlasTCA , LogNormal_v , Prediction( CPlasTCA )  , Ve_CPlasTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	Likelihood( CKidTCA , LogNormal_v , Prediction( CKidTCA )  , Ve_CKidTCA );
+	Likelihood( CBldTCVG , LogNormal_v , Prediction( CBldTCVG )  , Ve_CBldTCVG );
+	Likelihood( CLivTCVG , LogNormal_v , Prediction( CLivTCVG )  , Ve_CLivTCVG );
+	Likelihood( CKidTCVG , LogNormal_v , Prediction( CKidTCVG )  , Ve_CKidTCVG );
+	Likelihood( CBldTCVC , LogNormal_v , Prediction( CBldTCVC )  , Ve_CBldTCVC );
+	Likelihood( CLivTCVC , LogNormal_v , Prediction( CLivTCVC )  , Ve_CLivTCVC );
+	Likelihood( CKidTCVC , LogNormal_v , Prediction( CKidTCVC )  , Ve_CKidTCVC );
+	Likelihood( CBldNAT , LogNormal_v , Prediction( CBldNAT )  , Ve_CBldNAT );
+	Likelihood( CLivNAT , LogNormal_v , Prediction( CLivNAT )  , Ve_CLivNAT );
+	Likelihood( CKidNAT , LogNormal_v , Prediction( CKidNAT )  , Ve_CKidNAT );
+	Likelihood( CLivTCVC_ND , StudentT, 5 , Prediction(CLivTCVC_ND)	, 1.90E-04 );
+
+Experiment {		# CC003/Unc					
+Species = 3;							
+# Aqueous Gavage 		# 1000 mg/kg dose group					
+Male = 1.0;							
+BWmeas=0.0273;							
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );							
+TChng =  0.05 ;							
+Print(	CLiv	1	2	4	12	24	);
+Data(	CLiv	105.3122357	40.47039173	90.71122073	41.07598138	1.765330131	);
+Print(	CKid	1	2	4	12	24	);
+Data(	CKid	183.3565546	155.5975205	119.4384586	14.06146364	0.457855701	);
+Print(	CPlasTCA	1	2	4	12	24	);
+Data(	CPlasTCA	69.52785873	92.61081108	152.4274913	337.5420394	150.9158285	);
+Print(	CLivTCA	1	2	4	12	24	);
+Data(	CLivTCA	31.06819646	97.07597753	104.5033927	183.3594123	78.08204605	);
+Print(	CKidTCA	1	2	4	12	24	);
+Data(	CKidTCA	21.09640163	34.63848628	54.19645243	42.57842078	8.035403606	);
+Print(	CBldTCVG	1	2	4	12	);	
+Data(	CBldTCVG	0.01218323	0.006598106	0.006346262	0.001027975	);	
+Print(	CLivTCVG	1	2	4	12	24	);
+Data(	CLivTCVG	0.226128092	0.115730424	0.084623646	0.011906235	0.001674053	);
+Print(	CKidTCVG	1	2	4	12	);	
+Data(	CKidTCVG	0.02109937	0.010881416	0.010193089	0.003948637	);	
+Print(	CBldTCVC	1	2	4	12	);	
+Data(	CBldTCVC	0.010793521	0.010699953	0.005871198	0.000624197	);	
+Print(	CLivTCVC	1	2	4	12	);	
+Data(	CLivTCVC	0.00202072	0.001827176	0.00293065	0.000849566	);	
+Print(	CKidTCVC	1	2	4	12	);	
+Data(	CKidTCVC	0.106313771	0.071146749	0.04618749	0.008858002	);	
+Print(	CBldNAT	1	2	4	12	);	
+Data(	CBldNAT	0.047638887	0.053379318	0.042084119	0.00177275	);	
+Print(	CLivNAT	1	2	4	12	24	);
+Data(	CLivNAT	0.111911011	0.110317414	0.131777435	0.005361343	0.002539273	);
+Print(	CKidNAT	1	2	4	12	);	
+Data(	CKidNAT	0.068471948	0.035856058	0.024657121	0.006301978	);	
+Print(	CLivTCVC_ND	24	);				
+Data(	CLivTCVC_ND	2.25E-05	);				
+}	# CC003/Unc						
+}	# End Strain 6	# Strain = # CC003/Unc	# Cichocki, 2017-1000
+
+Level { ## Strain 7 # Strain = # CC004/TauUnc	# Cichocki, 2017-1000
+#Likelihoods
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CPlasTCA , LogNormal_v , Prediction( CPlasTCA )  , Ve_CPlasTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	Likelihood( CKidTCA , LogNormal_v , Prediction( CKidTCA )  , Ve_CKidTCA );
+	Likelihood( CBldTCVG , LogNormal_v , Prediction( CBldTCVG )  , Ve_CBldTCVG );
+	Likelihood( CLivTCVG , LogNormal_v , Prediction( CLivTCVG )  , Ve_CLivTCVG );
+	Likelihood( CKidTCVG , LogNormal_v , Prediction( CKidTCVG )  , Ve_CKidTCVG );
+	Likelihood( CBldTCVC , LogNormal_v , Prediction( CBldTCVC )  , Ve_CBldTCVC );
+	Likelihood( CLivTCVC , LogNormal_v , Prediction( CLivTCVC )  , Ve_CLivTCVC );
+	Likelihood( CKidTCVC , LogNormal_v , Prediction( CKidTCVC )  , Ve_CKidTCVC );
+	Likelihood( CBldNAT , LogNormal_v , Prediction( CBldNAT )  , Ve_CBldNAT );
+	Likelihood( CLivNAT , LogNormal_v , Prediction( CLivNAT )  , Ve_CLivNAT );
+	Likelihood( CKidNAT , LogNormal_v , Prediction( CKidNAT )  , Ve_CKidNAT );
+	Likelihood( CLivTCVC_ND , StudentT, 5 , Prediction(CLivTCVC_ND)	, 1.90E-04 );
+
+Experiment {		# CC004/TauUnc					
+Species = 3;							
+# Aqueous Gavage 		# 1000 mg/kg dose group					
+Male = 1.0;							
+BWmeas=0.0269;							
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );							
+TChng =  0.05 ;							
+Print(	CLiv	1	2	4	12	24	);
+Data(	CLiv	74.27731516	41.63152399	42.91283421	49.94753414	38.26977284	);
+Print(	CKid	1	2	4	12	24	);
+Data(	CKid	182.8955499	69.41371624	56.5864217	28.52199708	33.34664347	);
+Print(	CPlasTCA	1	2	4	24	);	
+Data(	CPlasTCA	130.4823721	141.3259125	261.9294529	141.1542228	);	
+Print(	CLivTCA	1	2	4	12	24	);
+Data(	CLivTCA	25.45284107	39.38968697	39.91756764	93.34071131	82.60374255	);
+Print(	CKidTCA	1	2	4	12	24	);
+Data(	CKidTCA	11.80832126	18.27916741	59.72204769	52.32028737	61.78931416	);
+Print(	CBldTCVG	1	2	4	12	);	
+Data(	CBldTCVG	0.014009788	0.003647718	0.001679706	0.001408182	);	
+Print(	CLivTCVG	1	2	4	12	24	);
+Data(	CLivTCVG	0.152034293	0.05458722	0.0246341	0.018112848	0.013359264	);
+Print(	CKidTCVG	1	2	4	12	);	
+Data(	CKidTCVG	0.032461	0.01707758	0.00985341	0.010438947	);	
+Print(	CBldTCVC	1	2	4	12	);	
+Data(	CBldTCVC	0.008999688	0.009711406	0.003297405	0.002745391	);	
+Print(	CLivTCVC	1	2	);			
+Data(	CLivTCVC	0.001059919	0.000884394	);			
+Print(	CKidTCVC	1	2	12	24	);	
+Data(	CKidTCVC	0.096189453	0.053529702	0.028568752	0.024240171	);	
+Print(	CBldNAT	1	2	4	12	);	
+Data(	CBldNAT	0.055010435	0.021557853	0.00731998	0.007699055	);	
+Print(	CLivNAT	1	2	4	12	24	);
+Data(	CLivNAT	0.08736447	0.053839568	0.021898474	0.01386325	0.009580567	);
+Print(	CKidNAT	1	2	4	12	);	
+Data(	CKidNAT	0.028323197	0.012530628	0.006867368	0.007359728	);	
+Print(	CLivTCVC_ND	4	12	24	);		
+Data(	CLivTCVC_ND	0.000490857	0.000359394	0.000247322	);		
+}	# CC004/TauUnc						
+}	# End Strain 7	# Strain = # CC004/TauUnc	# Cichocki, 2017-1000
+
+Level { ## Strain 8 # Strain = # # CC005/TauUnc	# Cichocki, 2017-1000
+#Likelihoods
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CPlasTCA , LogNormal_v , Prediction( CPlasTCA )  , Ve_CPlasTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	Likelihood( CKidTCA , LogNormal_v , Prediction( CKidTCA )  , Ve_CKidTCA );
+	Likelihood( CBldTCVG , LogNormal_v , Prediction( CBldTCVG )  , Ve_CBldTCVG );
+	Likelihood( CLivTCVG , LogNormal_v , Prediction( CLivTCVG )  , Ve_CLivTCVG );
+	Likelihood( CKidTCVG , LogNormal_v , Prediction( CKidTCVG )  , Ve_CKidTCVG );
+	Likelihood( CBldTCVC , LogNormal_v , Prediction( CBldTCVC )  , Ve_CBldTCVC );
+	Likelihood( CLivTCVC , LogNormal_v , Prediction( CLivTCVC )  , Ve_CLivTCVC );
+	Likelihood( CKidTCVC , LogNormal_v , Prediction( CKidTCVC )  , Ve_CKidTCVC );
+	Likelihood( CBldNAT , LogNormal_v , Prediction( CBldNAT )  , Ve_CBldNAT );
+	Likelihood( CLivNAT , LogNormal_v , Prediction( CLivNAT )  , Ve_CLivNAT );
+	Likelihood( CKidNAT , LogNormal_v , Prediction( CKidNAT )  , Ve_CKidNAT );
+	Likelihood( CLivTCVC_ND , StudentT, 5 , Prediction(CLivTCVC_ND)	, 1.90E-04 );
+
+Experiment {		# CC005/TauUnc					
+Species = 3;							
+# Aqueous Gavage 		# 1000 mg/kg dose group					
+Male = 1.0;							
+BWmeas=0.0225;							
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );							
+TChng =  0.05 ;							
+Print(	CLiv	1	2	4	12	24	);
+Data(	CLiv	132.9498979	97.58712709	136.4819941	46.10576956	7.248718214	);
+Print(	CKid	1	2	4	12	24	);
+Data(	CKid	131.2894387	262.3905313	125.187125	61.24416111	2.078599423	);
+Print(	CPlasTCA	2	4	12	24	);	
+Data(	CPlasTCA	61.71712589	53.51166522	268.6661614	179.5396433	);	
+Print(	CLivTCA	1	2	4	12	24	);
+Data(	CLivTCA	27.68275771	77.71767698	64.0492416	374.9907051	263.1976309	);
+Print(	CKidTCA	1	2	4	12	24	);
+Data(	CKidTCA	18.86429056	37.73850851	57.87428851	82.44279837	80.61471367	);
+Print(	CBldTCVG	1	2	4	);		
+Data(	CBldTCVG	0.008083655	0.005967911	0.0021504	);		
+Print(	CLivTCVG	1	2	4	12	);	
+Data(	CLivTCVG	0.05814313	0.059684746	0.040499951	0.011837868	);	
+Print(	CKidTCVG	1	2	4	12	);	
+Data(	CKidTCVG	0.01589339	0.014315377	0.009452081	0.003574784	);	
+Print(	CBldTCVC	1	2	4	);		
+Data(	CBldTCVC	0.018677185	0.009894622	0.001703872	);		
+Print(	CLivTCVC	1	4	);			
+Data(	CLivTCVC	0.000784851	0.000750636	);			
+Print(	CKidTCVC	1	2	12	24	);	
+Data(	CKidTCVC	0.020896687	0.029603127	0.025124644	0.005668839	);	
+Print(	CBldNAT	1	2	4	);		
+Data(	CBldNAT	0.074935329	0.02581736	0.005253798	);		
+Print(	CLivNAT	1	2	4	12	);	
+Data(	CLivNAT	0.070062256	0.043897169	0.049878015	0.00980089	);	
+Print(	CKidNAT	1	2	4	12	);	
+Data(	CKidNAT	0.009498458	0.006063429	0.005637062	0.001671632	);	
+Print(	CLivTCVC_ND	2	12	);			
+Data(	CLivTCVC_ND	0.000531228	0.000146538	);			
+}	# CC005/TauUnc						
+}	# End Strain 8	# Strain = # CC005/TauUnc	# Cichocki, 2017-1000
+
+Level { ## Strain 9 # Strain = # CC006/TauUnc	# Cichocki, 2017-1000
+#Likelihoods
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CPlasTCA , LogNormal_v , Prediction( CPlasTCA )  , Ve_CPlasTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	Likelihood( CKidTCA , LogNormal_v , Prediction( CKidTCA )  , Ve_CKidTCA );
+	Likelihood( CBldTCVG , LogNormal_v , Prediction( CBldTCVG )  , Ve_CBldTCVG );
+	Likelihood( CLivTCVG , LogNormal_v , Prediction( CLivTCVG )  , Ve_CLivTCVG );
+	Likelihood( CKidTCVG , LogNormal_v , Prediction( CKidTCVG )  , Ve_CKidTCVG );
+	Likelihood( CBldTCVC , LogNormal_v , Prediction( CBldTCVC )  , Ve_CBldTCVC );
+	Likelihood( CLivTCVC , LogNormal_v , Prediction( CLivTCVC )  , Ve_CLivTCVC );
+	Likelihood( CKidTCVC , LogNormal_v , Prediction( CKidTCVC )  , Ve_CKidTCVC );
+	Likelihood( CBldNAT , LogNormal_v , Prediction( CBldNAT )  , Ve_CBldNAT );
+	Likelihood( CLivNAT , LogNormal_v , Prediction( CLivNAT )  , Ve_CLivNAT );
+	Likelihood( CKidNAT , LogNormal_v , Prediction( CKidNAT )  , Ve_CKidNAT );
+	Likelihood( CLivTCVC_ND , StudentT, 5 , Prediction(CLivTCVC_ND)	, 1.90E-04 );
+
+Experiment {		# CC006/TauUnc					
+Species = 3;							
+# Aqueous Gavage 		# 1000 mg/kg dose group					
+Male = 1.0;							
+BWmeas=0.0262;							
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );							
+TChng =  0.05 ;							
+Print(	CLiv	1	2	4	12	24	);
+Data(	CLiv	47.30555161	151.6044047	163.5491942	103.2999119	2.698643675	);
+Print(	CKid	1	2	4	12	24	);
+Data(	CKid	76.80184591	79.7640492	95.1391165	54.65707937	3.719641894	);
+Print(	CPlasTCA	1	2	12	24	);	
+Data(	CPlasTCA	115.9930864	142.7379659	177.8756238	125.0021638	);	
+Print(	CLivTCA	1	2	4	12	24	);
+Data(	CLivTCA	19.24996144	32.81339901	66.48974604	92.79715602	37.2305034	);
+Print(	CKidTCA	1	2	4	12	24	);
+Data(	CKidTCA	13.43793487	38.2773642	68.04130862	150.8781475	18.51513086	);
+Print(	CBldTCVG	1	2	4	);		
+Data(	CBldTCVG	0.009718858	0.00219475	0.002981986	);		
+Print(	CLivTCVG	1	2	4	12	24	);
+Data(	CLivTCVG	0.100330818	0.164604606	0.165746351	0.064427083	0.003746817	);
+Print(	CKidTCVG	1	4	12	24	);	
+Data(	CKidTCVG	0.023983037	0.017648406	0.024935573	0.010057126	);	
+Print(	CBldTCVC	1	2	4	12	);	
+Data(	CBldTCVC	0.008999688	0.009711406	0.003297405	0.002745391	);	
+Print(	CLivTCVC	2	4	12	);		
+Data(	CLivTCVC	0.00163622	0.000713235	0.001287598	);		
+Print(	CKidTCVC	1	2	12	24	);	
+Data(	CKidTCVC	0.057250393	0.060199515	0.073308481	0.022595468	);	
+Print(	CBldNAT	1	2	4	);		
+Data(	CBldNAT	0.033708496	0.007632971	0.012820032	);		
+Print(	CLivNAT	1	2	4	12	24	);
+Data(	CLivNAT	0.059329602	0.080981031	0.08460121	0.022097533	0.004067595	);
+Print(	CKidNAT	1	2	4	12	);	
+Data(	CKidNAT	0.015064967	0.015838168	0.02055165	0.007084743	);	
+Print(	CLivTCVC_ND	1	24	);			
+Data(	CLivTCVC_ND	0.000509082	8.46E-05	);			
+}	# CC006/TauUnc						
+}	# End Strain 9	# Strain = # CC006/TauUnc	# Cichocki, 2017-1000
+
+Level { ## Strain 10 # Strain = # CC007/Unc	# Cichocki, 2017-1000
+#Likelihoods
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CPlasTCA , LogNormal_v , Prediction( CPlasTCA )  , Ve_CPlasTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	Likelihood( CKidTCA , LogNormal_v , Prediction( CKidTCA )  , Ve_CKidTCA );
+	Likelihood( CBldTCVG , LogNormal_v , Prediction( CBldTCVG )  , Ve_CBldTCVG );
+	Likelihood( CLivTCVG , LogNormal_v , Prediction( CLivTCVG )  , Ve_CLivTCVG );
+	Likelihood( CKidTCVG , LogNormal_v , Prediction( CKidTCVG )  , Ve_CKidTCVG );
+	Likelihood( CBldTCVC , LogNormal_v , Prediction( CBldTCVC )  , Ve_CBldTCVC );
+	Likelihood( CLivTCVC , LogNormal_v , Prediction( CLivTCVC )  , Ve_CLivTCVC );
+	Likelihood( CKidTCVC , LogNormal_v , Prediction( CKidTCVC )  , Ve_CKidTCVC );
+	Likelihood( CBldNAT , LogNormal_v , Prediction( CBldNAT )  , Ve_CBldNAT );
+	Likelihood( CLivNAT , LogNormal_v , Prediction( CLivNAT )  , Ve_CLivNAT );
+	Likelihood( CKidNAT , LogNormal_v , Prediction( CKidNAT )  , Ve_CKidNAT );
+	Likelihood( CKidTCA_ND , StudentT, 5 , Prediction(CKidTCA_ND)	, 1.09E-04 );
+	Likelihood( CLivTCVC_ND , StudentT, 5 , Prediction(CLivTCVC_ND)	, 1.90E-04 );
+
+Experiment {		# CC007/Unc					
+Species = 3;							
+# Aqueous Gavage 		# 1000 mg/kg dose group					
+Male = 1.0;							
+BWmeas=0.0284;							
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );							
+TChng =  0.05 ;							
+Print(	CLiv	2	4	12	24	);	
+Data(	CLiv	61.59529145	41.21161238	33.17244233	30.73344616	);	
+Print(	CKid	1	2	4	12	24	);
+Data(	CKid	83.75287209	141.6775643	45.45364319	39.11750672	19.90291853	);
+Print(	CPlasTCA	1	2	4	12	24	);
+Data(	CPlasTCA	59.55529881	90.51156969	143.7717984	92.36005071	282.8006094	);
+Print(	CLivTCA	1	2	4	12	24	);
+Data(	CLivTCA	41.2561802	36.2716647	64.71641444	139.0177609	165.2926756	);
+Print(	CKidTCA	2	4	12	);		
+Data(	CKidTCA	8.669971782	56.63836301	44.04250892	);		
+Print(	CBldTCVG	1	2	4	12	);	
+Data(	CBldTCVG	0.004566005	0.00318606	0.003003248	0.001600987	);	
+Print(	CLivTCVG	1	2	4	12	24	);
+Data(	CLivTCVG	0.035691652	0.025748482	0.029577532	0.015781567	0.00942104	);
+Print(	CKidTCVG	1	2	4	12	);	
+Data(	CKidTCVG	0.009703148	0.00782287	0.00893322	0.00771141	);	
+Print(	CBldTCVC	1	2	4	12	);	
+Data(	CBldTCVC	0.006891363	0.004597926	0.003778743	0.001940216	);	
+Print(	CLivTCVC	1	4	);			
+Data(	CLivTCVC	0.000878813	0.000752097	);			
+Print(	CKidTCVC	1	2	12	24	);	
+Data(	CKidTCVC	0.033544151	0.02933289	0.014524783	0.015691167	);
+Print(	CBldNAT	1	2	4	12	);	
+Data(	CBldNAT	0.020072454	0.013030652	0.011087003	0.00588516	);	
+Print(	CLivNAT	1	2	4	12	24	);
+Data(	CLivNAT	0.066746968	0.036408588	0.039253461	0.011744123	0.006280553	);
+Print(	CKidNAT	1	2	4	12	);	
+Data(	CKidNAT	0.006221999	0.003646466	0.003956229	0.003459411	);	
+Print(	CKidTCA_ND	24	);				
+Data(	CKidTCA_ND	0	);				
+Print(	CLivTCVC_ND	2	12	24	);		
+Data(	CLivTCVC_ND	0.000485034	0.000244786	0.000186861	);		
+}	# CC007/Unc						
+}	# End Strain 10	# Strain = # CC007/Unc	# Cichocki, 2017-1000
+
+Level { ## Strain 11 # Strain = # CC008/GeniUnc	# Cichocki, 2017-1000
+#Likelihoods
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CPlasTCA , LogNormal_v , Prediction( CPlasTCA )  , Ve_CPlasTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	Likelihood( CKidTCA , LogNormal_v , Prediction( CKidTCA )  , Ve_CKidTCA );
+	Likelihood( CBldTCVG , LogNormal_v , Prediction( CBldTCVG )  , Ve_CBldTCVG );
+	Likelihood( CLivTCVG , LogNormal_v , Prediction( CLivTCVG )  , Ve_CLivTCVG );
+	Likelihood( CKidTCVG , LogNormal_v , Prediction( CKidTCVG )  , Ve_CKidTCVG );
+	Likelihood( CBldTCVC , LogNormal_v , Prediction( CBldTCVC )  , Ve_CBldTCVC );
+	Likelihood( CLivTCVC , LogNormal_v , Prediction( CLivTCVC )  , Ve_CLivTCVC );
+	Likelihood( CKidTCVC , LogNormal_v , Prediction( CKidTCVC )  , Ve_CKidTCVC );
+	Likelihood( CBldNAT , LogNormal_v , Prediction( CBldNAT )  , Ve_CBldNAT );
+	Likelihood( CLivNAT , LogNormal_v , Prediction( CLivNAT )  , Ve_CLivNAT );
+	Likelihood( CKidNAT , LogNormal_v , Prediction( CKidNAT )  , Ve_CKidNAT );
+	Likelihood( CBldTCVC_ND , StudentT, 5 , Prediction(CBldTCVC_ND)	, 7.85E-05 );
+	Likelihood( CBldNAT_ND , StudentT, 5 , Prediction(CBldNAT_ND)	, 5.27E-05 );
+
+Experiment {		# CC008/GeniUnc					
+Species = 3;							
+# Aqueous Gavage 		# 1000 mg/kg dose group					
+Male = 1.0;							
+BWmeas=0.0254;							
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );							
+TChng =  0.05 ;							
+Print(	CLiv	2	4	12	24	);	
+Data(	CLiv	77.1480983	76.36108899	16.36478526	10.58214077	);	
+Print(	CKid	1	2	4	12	24	);
+Data(	CKid	80.06043854	110.0547881	79.62769661	4.477457547	3.682289755	);
+Print(	CPlasTCA	1	2	4	12	24	);
+Data(	CPlasTCA	85.62962992	180.1485657	251.794491	344.2164537	165.446021	);
+Print(	CLivTCA	1	2	12	);		
+Data(	CLivTCA	37.52677707	60.27454666	111.7394897	);		
+Print(	CKidTCA	1	2	4	12	24	);
+Data(	CKidTCA	22.96520281	31.89604692	45.7762316	55.41367999	49.76513004	);
+Print(	CBldTCVG	1	2	4	12	);	
+Data(	CBldTCVG	0.004264428	0.003201985	0.002462586	0.000668976	);	
+Print(	CLivTCVG	1	2	4	12	);	
+Data(	CLivTCVG	0.036964703	0.026259798	0.010274031	0.003254148	);	
+Print(	CKidTCVG	1	2	4	12	);	
+Data(	CKidTCVG	0.008517247	0.013895011	0.010011584	0.002380298	);	
+Print(	CBldTCVC	1	2	4	);		
+Data(	CBldTCVC	0.001737156	0.002274321	0.001629781	);		
+Print(	CLivTCVC	1	2	4	12	);	
+Data(	CLivTCVC	0.000945538	0.000874902	0.000981061	0.000805629	);	
+Print(	CKidTCVC	1	2	4	12	);	
+Data(	CKidTCVC	0.022039309	0.032500836	0.029832497	0.010640609	);	
+Print(	CBldNAT	1	2	4	);		
+Data(	CBldNAT	0.011597437	0.008370986	0.007112656	);		
+Print(	CLivNAT	1	2	4	12	);	
+Data(	CLivNAT	0.01957802	0.018461377	0.020996806	0.001297196	);	
+Print(	CKidNAT	1	2	4	12	);	
+Data(	CKidNAT	0.009553163	0.018090845	0.01732607	0.003139289	);	
+Data(	CBldTCVC_ND	12	);				
+Print(	CBldTCVC_ND	0.000219822	);				
+Print(	CBldNAT_ND	12	);				
+Data(	CBldNAT_ND	2.38E-05	);				
+}	# CC008/GeniUnc						
+}	# End Strain 11	# Strain = # CC008/GeniUnc	# Cichocki, 2017-1000
+
+Level { ## Strain 12 # Strain = # CC011	# Cichocki, 2017-1000
+#Likelihoods
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CPlasTCA , LogNormal_v , Prediction( CPlasTCA )  , Ve_CPlasTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	Likelihood( CKidTCA , LogNormal_v , Prediction( CKidTCA )  , Ve_CKidTCA );
+	Likelihood( CBldTCVG , LogNormal_v , Prediction( CBldTCVG )  , Ve_CBldTCVG );
+	Likelihood( CLivTCVG , LogNormal_v , Prediction( CLivTCVG )  , Ve_CLivTCVG );
+	Likelihood( CKidTCVG , LogNormal_v , Prediction( CKidTCVG )  , Ve_CKidTCVG );
+	Likelihood( CBldTCVC , LogNormal_v , Prediction( CBldTCVC )  , Ve_CBldTCVC );
+	Likelihood( CLivTCVC , LogNormal_v , Prediction( CLivTCVC )  , Ve_CLivTCVC );
+	Likelihood( CKidTCVC , LogNormal_v , Prediction( CKidTCVC )  , Ve_CKidTCVC );
+	Likelihood( CBldNAT , LogNormal_v , Prediction( CBldNAT )  , Ve_CBldNAT );
+	Likelihood( CLivNAT , LogNormal_v , Prediction( CLivNAT )  , Ve_CLivNAT );
+	Likelihood( CKidNAT , LogNormal_v , Prediction( CKidNAT )  , Ve_CKidNAT );
+	Likelihood( CLivTCVC_ND , StudentT, 5 , Prediction(CLivTCVC_ND)	, 1.90E-04 );
+
+Experiment {		# CC011			
+Species = 3;					
+# Aqueous Gavage 		# 1000 mg/kg dose group			
+Male = 1.0;					
+BWmeas=0.0305;					
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );					
+TChng =  0.05 ;					
+Print(	CLiv	2	4	24	);
+Data(	CLiv	133.0661639	65.06368938	83.60910309	);
+Print(	CKid	2	4	24	);
+Data(	CKid	76.34755844	35.78355063	10.41556311	);
+Print(	CPlasTCA	2	4	24	);
+Data(	CPlasTCA	20.8940919	129.4837105	31.79766485	);
+Print(	CLivTCA	2	4	24	);
+Data(	CLivTCA	22.25432725	39.2229556	30.40258803	);
+Print(	CKidTCA	2	4	24	);
+Data(	CKidTCA	38.39300813	53.12138285	74.79127488	);
+Print(	CBldTCVG	2	4	);	
+Data(	CBldTCVG	0.008261751	0.001795336	);	
+Print(	CLivTCVG	2	4	);	
+Data(	CLivTCVG	0.063007641	0.02657975	);	
+Print(	CKidTCVG	2	4	);	
+Data(	CKidTCVG	0.006531107	0.004009139	);	
+Print(	CBldTCVC	2	4	);	
+Data(	CBldTCVC	0.006395374	0.000589045	);	
+Print(	CLivTCVC	2	);		
+Data(	CLivTCVC	0.000872405	);		
+Print(	CKidTCVC	2	4	);	
+Data(	CKidTCVC	0.016948887	0.008408671	);	
+Print(	CBldNAT	2	4	);	
+Data(	CBldNAT	0.018088577	0.001596977	);	
+Print(	CLivNAT	2	4	);	
+Data(	CLivNAT	0.048384576	0.015296993	);	
+Print(	CKidNAT	2	4	);	
+Data(	CKidNAT	0.005882488	0.004192302	);	
+Data(	CLivTCVC_ND	4	);		
+Print(	CLivTCVC_ND	0.000265217	);		
+}	# CC011				
+}	# End Strain 12	# Strain = # CC011	# Cichocki, 2017-1000
+
+Level { ## Strain 13 # Strain = # CC012/GeniUnc	# Cichocki, 2017-1000
+#Likelihoods
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CPlasTCA , LogNormal_v , Prediction( CPlasTCA )  , Ve_CPlasTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	Likelihood( CKidTCA , LogNormal_v , Prediction( CKidTCA )  , Ve_CKidTCA );
+	Likelihood( CBldTCVG , LogNormal_v , Prediction( CBldTCVG )  , Ve_CBldTCVG );
+	Likelihood( CLivTCVG , LogNormal_v , Prediction( CLivTCVG )  , Ve_CLivTCVG );
+	Likelihood( CKidTCVG , LogNormal_v , Prediction( CKidTCVG )  , Ve_CKidTCVG );
+	Likelihood( CBldTCVC , LogNormal_v , Prediction( CBldTCVC )  , Ve_CBldTCVC );
+	Likelihood( CLivTCVC , LogNormal_v , Prediction( CLivTCVC )  , Ve_CLivTCVC );
+	Likelihood( CKidTCVC , LogNormal_v , Prediction( CKidTCVC )  , Ve_CKidTCVC );
+	Likelihood( CBldNAT , LogNormal_v , Prediction( CBldNAT )  , Ve_CBldNAT );
+	Likelihood( CLivNAT , LogNormal_v , Prediction( CLivNAT )  , Ve_CLivNAT );
+	Likelihood( CKidNAT , LogNormal_v , Prediction( CKidNAT )  , Ve_CKidNAT );
+
+Experiment {		# CC012/GeniUnc					
+Species = 3;							
+# Aqueous Gavage 		# 1000 mg/kg dose group					
+Male = 1.0;							
+BWmeas=0.0204;							
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );							
+TChng =  0.05 ;							
+Print(	CLiv	1	2	12	24	);	
+Data(	CLiv	93.5646687	57.96790906	40.06144419	17.97099267	);	
+Print(	CKid	1	2	4	12	24	);
+Data(	CKid	123.5978218	52.10647202	34.94531317	12.26493784	2.067948025	);
+Print(	CPlasTCA	1	2	4	24	);	
+Data(	CPlasTCA	65.74030102	120.7919629	187.8978276	287.6149649	);	
+Print(	CLivTCA	1	2	4	24	);	
+Data(	CLivTCA	43.67789521	57.89140783	84.98953872	117.4654092	);	
+Print(	CKidTCA	1	2	4	12	24	);
+Data(	CKidTCA	11.95824115	14.70541591	39.00253681	51.64021877	85.64693577	);
+Print(	CBldTCVG	1	2	4	12	);	
+Data(	CBldTCVG	0.003355579	0.003014321	0.001885952	0.000861524	);	
+Print(	CLivTCVG	1	2	4	12	);	
+Data(	CLivTCVG	0.066768017	0.081242547	0.02936811	0.005743302	);	
+Print(	CKidTCVG	1	2	4	12	);	
+Data(	CKidTCVG	0.054971574	0.038607686	0.027655376	0.008588188	);	
+Print(	CBldTCVC	1	2	4	12	);	
+Data(	CBldTCVC	0.017647743	0.014408584	0.00586682	0.001586638	);	
+Print(	CLivTCVC	1	2	4	12	);	
+Data(	CLivTCVC	0.001436208	0.001551708	0.00103257	0.000805286	);	
+Print(	CKidTCVC	1	2	4	12	);	
+Data(	CKidTCVC	0.049888751	0.040120867	0.021105881	0.010864188	);	
+Print(	CBldNAT	1	2	4	12	);	
+Data(	CBldNAT	0.024699098	0.032824385	0.01347408	0.002274526	);	
+Print(	CLivNAT	1	2	4	12	);	
+Data(	CLivNAT	0.053511508	0.063485114	0.023898157	0.008501807	);	
+Print(	CKidNAT	1	2	4	12	);	
+Data(	CKidNAT	0.025116639	0.031058673	0.014952851	0.007360483	);	
+}	# CC012/GeniUnc						
+}	# End Strain 13	# Strain = # CC012/GeniUnc	# Cichocki, 2017-1000
+
+Level { ## Strain 14 # Strain = # CC013	# Cichocki, 2017-1000
+#Likelihoods
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CPlasTCA , LogNormal_v , Prediction( CPlasTCA )  , Ve_CPlasTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	Likelihood( CKidTCA , LogNormal_v , Prediction( CKidTCA )  , Ve_CKidTCA );
+	Likelihood( CBldTCVG , LogNormal_v , Prediction( CBldTCVG )  , Ve_CBldTCVG );
+	Likelihood( CLivTCVG , LogNormal_v , Prediction( CLivTCVG )  , Ve_CLivTCVG );
+	Likelihood( CKidTCVG , LogNormal_v , Prediction( CKidTCVG )  , Ve_CKidTCVG );
+	Likelihood( CBldTCVC , LogNormal_v , Prediction( CBldTCVC )  , Ve_CBldTCVC );
+	Likelihood( CLivTCVC , LogNormal_v , Prediction( CLivTCVC )  , Ve_CLivTCVC );
+	Likelihood( CKidTCVC , LogNormal_v , Prediction( CKidTCVC )  , Ve_CKidTCVC );
+	Likelihood( CBldNAT , LogNormal_v , Prediction( CBldNAT )  , Ve_CBldNAT );
+	Likelihood( CLivNAT , LogNormal_v , Prediction( CLivNAT )  , Ve_CLivNAT );
+	Likelihood( CKidNAT , LogNormal_v , Prediction( CKidNAT )  , Ve_CKidNAT );
+
+Experiment {		# CC013		
+Species = 3;				
+# Aqueous Gavage 		# 1000 mg/kg dose group		
+Male = 1.0;				
+BWmeas=0.0263;				
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );				
+TChng =  0.05 ;				
+Print(	CLiv	2	24	);
+Data(	CLiv	119.6765099	21.98709082	);
+Print(	CKid	2	24	);
+Data(	CKid	102.256566	5.970623176	);
+Print(	CPlasTCA	2	24	);
+Data(	CPlasTCA	106.7862858	157.5068061	);
+Print(	CLivTCA	2	24	);
+Data(	CLivTCA	46.88564092	70.80308569	);
+Print(	CKidTCA	2	24	);
+Data(	CKidTCA	51.84214561	103.6456766	);
+Print(	CBldTCVG	2	);	
+Data(	CBldTCVG	0.002583471	);	
+Print(	CLivTCVG	2	);	
+Data(	CLivTCVG	0.231127442	);	
+Print(	CKidTCVG	2	);	
+Data(	CKidTCVG	0.016331354	);	
+Print(	CBldTCVC	2	);	
+Data(	CBldTCVC	0.003526871	);	
+Print(	CLivTCVC	2	);	
+Data(	CLivTCVC	0.001743322	);	
+Print(	CKidTCVC	2	);	
+Data(	CKidTCVC	0.051458417	);	
+Print(	CBldNAT	2	);	
+Data(	CBldNAT	0.0098752	);	
+Print(	CLivNAT	2	);	
+Data(	CLivNAT	0.099985235	);	
+Print(	CKidNAT	2	);	
+Data(	CKidNAT	0.026905523	);	
+}	# CC013			
+}	# End Strain 14	# Strain = # CC013	# Cichocki, 2017-1000
+
+Level { ## Strain 15 # Strain = # CC015/Unc	# Cichocki, 2017-1000
+#Likelihoods
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CPlasTCA , LogNormal_v , Prediction( CPlasTCA )  , Ve_CPlasTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	Likelihood( CKidTCA , LogNormal_v , Prediction( CKidTCA )  , Ve_CKidTCA );
+	Likelihood( CBldTCVG , LogNormal_v , Prediction( CBldTCVG )  , Ve_CBldTCVG );
+	Likelihood( CLivTCVG , LogNormal_v , Prediction( CLivTCVG )  , Ve_CLivTCVG );
+	Likelihood( CKidTCVG , LogNormal_v , Prediction( CKidTCVG )  , Ve_CKidTCVG );
+	Likelihood( CBldTCVC , LogNormal_v , Prediction( CBldTCVC )  , Ve_CBldTCVC );
+	Likelihood( CLivTCVC , LogNormal_v , Prediction( CLivTCVC )  , Ve_CLivTCVC );
+	Likelihood( CKidTCVC , LogNormal_v , Prediction( CKidTCVC )  , Ve_CKidTCVC );
+	Likelihood( CBldNAT , LogNormal_v , Prediction( CBldNAT )  , Ve_CBldNAT );
+	Likelihood( CLivNAT , LogNormal_v , Prediction( CLivNAT )  , Ve_CLivNAT );
+	Likelihood( CKidNAT , LogNormal_v , Prediction( CKidNAT )  , Ve_CKidNAT );
+
+Experiment {		# CC015/Unc					
+Species = 3;							
+# Aqueous Gavage 		# 1000 mg/kg dose group					
+Male = 1.0;							
+BWmeas=0.0185;							
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );							
+TChng =  0.05 ;							
+Print(	CLiv	1	2	4	12	24	);
+Data(	CLiv	94.83798589	68.81710556	57.72944109	26.4117492	2.479985207	);
+Print(	CKid	1	2	4	12	24	);
+Data(	CKid	97.81653688	90.936384	83.06897922	4.801367601	0.086296833	);
+Print(	CPlasTCA	1	2	4	24	);	
+Data(	CPlasTCA	77.1628782	126.2708868	210.3219234	287.1039293	);	
+Print(	CLivTCA	1	2	4	12	24	);
+Data(	CLivTCA	36.40314164	53.17868224	105.1051607	107.7739358	93.6580717	);
+Print(	CKidTCA	1	2	4	12	24	);
+Data(	CKidTCA	17.96834929	34.29600853	150.1327534	74.8432501	53.67586625	);
+Print(	CBldTCVG	1	2	4	12	);	
+Data(	CBldTCVG	0.004070379	0.003586888	0.002346041	0.000742984	);	
+Print(	CLivTCVG	1	2	4	12	);	
+Data(	CLivTCVG	0.075036	0.048537288	0.024266116	0.005062283	);	
+Print(	CKidTCVG	1	2	4	12	);	
+Data(	CKidTCVG	0.063786656	0.063071074	0.041721458	0.006031404	);	
+Print(	CBldTCVC	1	2	4	12	);	
+Data(	CBldTCVC	0.005918361	0.005482559	0.002527016	0.000305809	);	
+Print(	CLivTCVC	1	2	4	12	);	
+Data(	CLivTCVC	0.001486829	0.00117612	0.001106023	0.000777502	);	
+Print(	CKidTCVC	1	2	12	24	);	
+Data(	CKidTCVC	0.028957773	0.027753084	0.01946293	0.003704521	);	
+Print(	CBldNAT	1	2	4	12	);	
+Data(	CBldNAT	0.013809411	0.012871773	0.009421638	0.000886496	);	
+Print(	CLivNAT	1	2	4	12	);	
+Data(	CLivNAT	0.045913875	0.038053883	0.028736097	0.00269433	);	
+Print(	CKidNAT	1	2	4	12	);	
+Data(	CKidNAT	0.017251847	0.017687932	0.015396097	0.004399681	);	
+}	# CC015/Unc						
+}	# End Strain 15	# Strain = # CC015/Unc	# Cichocki, 2017-1000
+
+Level { ## Strain 16 # Strain = # CC019	# Cichocki, 2017-1000
+#Likelihoods
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CPlasTCA , LogNormal_v , Prediction( CPlasTCA )  , Ve_CPlasTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	Likelihood( CKidTCA , LogNormal_v , Prediction( CKidTCA )  , Ve_CKidTCA );
+	Likelihood( CBldTCVG , LogNormal_v , Prediction( CBldTCVG )  , Ve_CBldTCVG );
+	Likelihood( CLivTCVG , LogNormal_v , Prediction( CLivTCVG )  , Ve_CLivTCVG );
+	Likelihood( CKidTCVG , LogNormal_v , Prediction( CKidTCVG )  , Ve_CKidTCVG );
+	Likelihood( CBldTCVC , LogNormal_v , Prediction( CBldTCVC )  , Ve_CBldTCVC );
+	Likelihood( CLivTCVC , LogNormal_v , Prediction( CLivTCVC )  , Ve_CLivTCVC );
+	Likelihood( CKidTCVC , LogNormal_v , Prediction( CKidTCVC )  , Ve_CKidTCVC );
+	Likelihood( CBldNAT , LogNormal_v , Prediction( CBldNAT )  , Ve_CBldNAT );
+	Likelihood( CLivNAT , LogNormal_v , Prediction( CLivNAT )  , Ve_CLivNAT );
+	Likelihood( CKidNAT , LogNormal_v , Prediction( CKidNAT )  , Ve_CKidNAT );
+	Likelihood( CLivTCVC_ND , StudentT, 5 , Prediction(CLivTCVC_ND)	, 1.90E-04 );
+
+Experiment {		# CC019				
+Species = 3;						
+# Aqueous Gavage 		# 1000 mg/kg dose group				
+Male = 1.0;						
+BWmeas=0.0192;						
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );						
+TChng =  0.05 ;						
+Print(	CLiv	1	2	4	24	);
+Data(	CLiv	194.0669737	121.2637232	139.6472403	5.373336009	);
+Print(	CKid	1	2	4	24	);
+Data(	CKid	173.0384852	119.3442986	127.5378781	3.253181062	);
+Print(	CPlasTCA	1	2	4	24	);
+Data(	CPlasTCA	84.78062583	38.20722368	17.26161761	15.13667689	);
+Print(	CLivTCA	1	2	4	24	);
+Data(	CLivTCA	14.67782672	19.95089582	64.64504717	63.07545471	);
+Print(	CKidTCA	1	2	4	24	);
+Data(	CKidTCA	17.9810024	31.73266302	69.72317552	98.29582401	);
+Print(	CBldTCVG	1	2	4	);	
+Data(	CBldTCVG	0.002592203	0.002573312	0.002229507	);	
+Print(	CLivTCVG	1	2	4	);	
+Data(	CLivTCVG	0.107094234	0.068293022	0.110062885	);	
+Print(	CKidTCVG	1	2	4	);	
+Data(	CKidTCVG	0.011779071	0.008081151	0.012042326	);	
+Print(	CBldTCVC	1	2	4	);	
+Data(	CBldTCVC	0.001434783	0.000727445	0.000859864	);	
+Print(	CLivTCVC	1	4	);	
+Data(	CLivTCVC	0.001041293	0.001021544	);	
+Print(	CKidTCVC	1	2	4	);	
+Data(	CKidTCVC	0.038541967	0.019416581	0.031759756	);	
+Print(	CBldNAT	1	2	4	);	
+Data(	CBldNAT	0.005686582	0.0046641	0.002955131	);	
+Print(	CLivNAT	1	2	4	);	
+Data(	CLivNAT	0.092370311	0.04837062	0.050551245	);	
+Print(	CKidNAT	1	2	4	);	
+Data(	CKidNAT	0.00692642	0.004714469	0.007620466	);	
+Data(	CLivTCVC_ND	2	);			
+Print(	CLivTCVC_ND	0.000560977	);			
+}	# CC019					
+}	# End Strain 16	# Strain = # CC019	# Cichocki, 2017-1000
+
+Level { ## Strain 17 # Strain = # CC020/GeniUnc	# Cichocki, 2017-1000
+#Likelihoods
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CPlasTCA , LogNormal_v , Prediction( CPlasTCA )  , Ve_CPlasTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	Likelihood( CKidTCA , LogNormal_v , Prediction( CKidTCA )  , Ve_CKidTCA );
+	Likelihood( CBldTCVG , LogNormal_v , Prediction( CBldTCVG )  , Ve_CBldTCVG );
+	Likelihood( CLivTCVG , LogNormal_v , Prediction( CLivTCVG )  , Ve_CLivTCVG );
+	Likelihood( CKidTCVG , LogNormal_v , Prediction( CKidTCVG )  , Ve_CKidTCVG );
+	Likelihood( CBldTCVC , LogNormal_v , Prediction( CBldTCVC )  , Ve_CBldTCVC );
+	Likelihood( CLivTCVC , LogNormal_v , Prediction( CLivTCVC )  , Ve_CLivTCVC );
+	Likelihood( CKidTCVC , LogNormal_v , Prediction( CKidTCVC )  , Ve_CKidTCVC );
+	Likelihood( CBldNAT , LogNormal_v , Prediction( CBldNAT )  , Ve_CBldNAT );
+	Likelihood( CLivNAT , LogNormal_v , Prediction( CLivNAT )  , Ve_CLivNAT );
+	Likelihood( CKidNAT , LogNormal_v , Prediction( CKidNAT )  , Ve_CKidNAT );
+	Likelihood( CLivTCVC_ND , StudentT, 5 , Prediction(CLivTCVC_ND)	, 1.90E-04 );
+
+Experiment {		# CC020/GeniUnc					
+Species = 3;							
+# Aqueous Gavage 		# 1000 mg/kg dose group					
+Male = 1.0;							
+BWmeas=0.0275;							
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );							
+TChng =  0.05 ;							
+Print(	CLiv	1	2	4	12	24	);
+Data(	CLiv	163.1722213	88.40062645	109.9857752	10.23254732	1.980300952	);
+Print(	CKid	1	2	4	12	24	);
+Data(	CKid	114.1007409	106.3019745	102.5711125	5.896952458	0.48260869	);
+Print(	CPlasTCA	1	2	4	12	);	
+Data(	CPlasTCA	130.7168866	8.867322796	320.1245801	258.9529713	);	
+Print(	CLivTCA	1	2	4	12	24	);
+Data(	CLivTCA	55.72371512	81.8280064	143.8583854	66.82306283	45.63279589	);
+Print(	CKidTCA	1	2	4	12	24	);
+Data(	CKidTCA	4.881052159	53.32515265	47.04306089	27.1999567	10.38060422	);
+Print(	CBldTCVG	1	2	4	12	);	
+Data(	CBldTCVG	0.006052806	0.004665469	0.00550825	0.001846638	);	
+Print(	CLivTCVG	1	2	4	12	);	
+Data(	CLivTCVG	0.076476884	0.038566977	0.062933424	0.004856623	);	
+Print(	CKidTCVG	1	2	4	12	);	
+Data(	CKidTCVG	0.063924614	0.043414767	0.05892246	0.006766552	);	
+Print(	CBldTCVC	1	2	4	12	);	
+Data(	CBldTCVC	0.000259084	0.002947252	0.016840132	0.004289176	);	
+Print(	CLivTCVC	1	4	);			
+Data(	CLivTCVC	0.000966774	0.000988285	);			
+Print(	CKidTCVC	1	2	4	12	);	
+Data(	CKidTCVC	0.04856855	0.037959389	0.052450816	0.003613132	);	
+Print(	CBldNAT	1	2	4	12	);	
+Data(	CBldNAT	0.012704646	0.012516451	0.03101746	0.024534208	);	
+Print(	CLivNAT	1	2	4	12	);	
+Data(	CLivNAT	0.083776063	0.027990251	0.063513915	0.003335278	);	
+Print(	CKidNAT	1	2	4	12	);	
+Data(	CKidNAT	0.023812419	0.0136458	0.018888864	0.001842155	);	
+Print(	CLivTCVC_ND	2	12	);			
+Data(	CLivTCVC_ND	0.000403451	9.66E-05	);			
+}	# CC020/GeniUnc						
+}	# End Strain 17	# Strain = # CC020/GeniUnc	# Cichocki, 2017-1000
+
+Level { ## Strain 18 # Strain = # CC021/Unc	# Cichocki, 2017-1000
+#Likelihoods
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CPlasTCA , LogNormal_v , Prediction( CPlasTCA )  , Ve_CPlasTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	Likelihood( CKidTCA , LogNormal_v , Prediction( CKidTCA )  , Ve_CKidTCA );
+	Likelihood( CBldTCVG , LogNormal_v , Prediction( CBldTCVG )  , Ve_CBldTCVG );
+	Likelihood( CLivTCVG , LogNormal_v , Prediction( CLivTCVG )  , Ve_CLivTCVG );
+	Likelihood( CKidTCVG , LogNormal_v , Prediction( CKidTCVG )  , Ve_CKidTCVG );
+	Likelihood( CBldTCVC , LogNormal_v , Prediction( CBldTCVC )  , Ve_CBldTCVC );
+	Likelihood( CLivTCVC , LogNormal_v , Prediction( CLivTCVC )  , Ve_CLivTCVC );
+	Likelihood( CKidTCVC , LogNormal_v , Prediction( CKidTCVC )  , Ve_CKidTCVC );
+	Likelihood( CBldNAT , LogNormal_v , Prediction( CBldNAT )  , Ve_CBldNAT );
+	Likelihood( CLivNAT , LogNormal_v , Prediction( CLivNAT )  , Ve_CLivNAT );
+	Likelihood( CKidNAT , LogNormal_v , Prediction( CKidNAT )  , Ve_CKidNAT );
+	Likelihood( CLiv_ND , StudentT, 5 , Prediction(CLiv_ND)	, 2.76E-04 );
+	Likelihood( CBldTCVC_ND , StudentT, 5 , Prediction(CBldTCVC_ND)	, 7.85E-05 );
+	
+Experiment {		# CC021/Unc					
+Species = 3;							
+# Aqueous Gavage 		# 1000 mg/kg dose group					
+Male = 1.0;							
+BWmeas=0.02184;							
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );							
+TChng =  0.05 ;							
+Print(	CLiv	1	2	4	12	);	
+Data(	CLiv	80.17895658	44.50042719	59.1266426	4.053668305	);	
+Print(	CKid	1	2	4	12	24	);
+Data(	CKid	92.24185391	98.59445443	21.17506863	4.600675121	0.975419651	);
+Print(	CPlasTCA	1	2	4	12	24	);
+Data(	CPlasTCA	93.80369111	241.0744369	287.5228825	308.5488918	121.1567551	);
+Print(	CLivTCA	1	2	4	12	24	);
+Data(	CLivTCA	34.90225802	69.35070402	94.71960224	75.66582481	57.1049698	);
+Print(	CKidTCA	1	2	4	12	24	);
+Data(	CKidTCA	34.23118356	40.71854727	51.16732925	60.07312135	26.57562779	);
+Print(	CBldTCVG	1	2	4	12	);	
+Data(	CBldTCVG	0.007080503	0.004377302	0.001185095	0.000559927	);	
+Print(	CLivTCVG	1	2	4	12	);	
+Data(	CLivTCVG	0.069494877	0.036466228	0.010234713	0.003513296	);	
+Print(	CKidTCVG	1	2	4	12	);	
+Data(	CKidTCVG	0.01663401	0.025241453	0.005332903	0.002342572	);	
+Print(	CBldTCVC	1	2	4	);		
+Data(	CBldTCVC	0.004946	0.010046759	0.003458879	);		
+Print(	CLivTCVC	1	2	4	12	);			
+Data(	CLivTCVC	0.003152425	0.005047262	0.000883932	0.001628421	);	
+Print(	CKidTCVC	1	2	12	24	);	
+Data(	CKidTCVC	0.044326491	0.053778238	0.015143023	0.002608569	);
+Print(	CBldNAT	1	2	4	12	);	
+Data(	CBldNAT	0.030576981	0.034811263	0.008184633	0.000453461	);	
+Print(	CLivNAT	1	2	4	12	);	
+Data(	CLivNAT	0.051107166	0.064873911	0.022484045	0.003573934	);	
+Print(	CKidNAT	1	2	4	12	);	
+Data(	CKidNAT	0.011634101	0.027567518	0.006651487	0.003241647	);	
+Print(	CLiv_ND	24	);				
+Data(	CLiv_ND	0.000016583	);				
+Print(	CBldTCVC_ND	12	);				
+Data(	CBldTCVC_ND	4.57E-05	);				
+}	# CC021/Unc						
+}	# End Strain 18	# Strain = # CC021/Unc	# Cichocki, 2017-1000
+
+Level { ## Strain 19 # Strain = # CC022/GeniUnc	# Cichocki, 2017-1000
+#Likelihoods
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CPlasTCA , LogNormal_v , Prediction( CPlasTCA )  , Ve_CPlasTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	Likelihood( CKidTCA , LogNormal_v , Prediction( CKidTCA )  , Ve_CKidTCA );
+	Likelihood( CBldTCVG , LogNormal_v , Prediction( CBldTCVG )  , Ve_CBldTCVG );
+	Likelihood( CLivTCVG , LogNormal_v , Prediction( CLivTCVG )  , Ve_CLivTCVG );
+	Likelihood( CKidTCVG , LogNormal_v , Prediction( CKidTCVG )  , Ve_CKidTCVG );
+	Likelihood( CBldTCVC , LogNormal_v , Prediction( CBldTCVC )  , Ve_CBldTCVC );
+	Likelihood( CLivTCVC , LogNormal_v , Prediction( CLivTCVC )  , Ve_CLivTCVC );
+	Likelihood( CKidTCVC , LogNormal_v , Prediction( CKidTCVC )  , Ve_CKidTCVC );
+	Likelihood( CBldNAT , LogNormal_v , Prediction( CBldNAT )  , Ve_CBldNAT );
+	Likelihood( CLivNAT , LogNormal_v , Prediction( CLivNAT )  , Ve_CLivNAT );
+	Likelihood( CKidNAT , LogNormal_v , Prediction( CKidNAT )  , Ve_CKidNAT );
+	Likelihood( CBldTCVC_ND , StudentT, 5 , Prediction(CBldTCVC_ND)	, 7.85E-05 );
+	Likelihood( CLivTCVC_ND , StudentT, 5 , Prediction(CLivTCVC_ND)	, 1.90E-04 );
+	Likelihood( CLivNAT_ND , StudentT, 5 , Prediction(CLivNAT_ND)	, 3.05E-04 );
+	
+Experiment {		# CC022/GeniUnc					
+Species = 3;							
+# Aqueous Gavage 		# 1000 mg/kg dose group					
+Male = 1.0;							
+BWmeas=0.01704;							
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );							
+TChng =  0.05 ;							
+Print(	CLiv	1	4	12	24	);	
+Data(	CLiv	91.63934202	49.36735781	9.233199487	0.346738608	);	
+Print(	CKid	1	2	4	12	24	);
+Data(	CKid	108.3051375	74.17040802	22.74448466	4.296069144	0.330999787	);
+Print(	CPlasTCA	1	2	4	24	);	
+Data(	CPlasTCA	81.62571552	147.9421842	220.0547411	116.5489198	);	
+Print(	CLivTCA	1	2	4	12	24	);
+Data(	CLivTCA	70.9855523	90.88054267	188.2294463	149.9743894	165.2432752	);
+Print(	CKidTCA	1	2	4	12	24	);
+Data(	CKidTCA	38.62268015	24.94223203	47.19676417	28.76932127	42.52048524	);
+Print(	CBldTCVG	1	2	4	12	);	
+Data(	CBldTCVG	0.006207637	0.004339535	0.001861194	0.00054609	);	
+Print(	CLivTCVG	1	2	4	12	24	);
+Data(	CLivTCVG	0.081493607	0.05908273	0.011401456	0.004154873	0.001434152	);
+Print(	CKidTCVG	1	2	4	12	);	
+Data(	CKidTCVG	0.012572765	0.01053524	0.007515221	0.002689425	);	
+Print(	CBldTCVC	1	2	4	);		
+Data(	CBldTCVC	0.011189729	0.005479615	0.003260526	);		
+Print(	CLivTCVC	1	2	4	12	);	
+Data(	CLivTCVC	0.002070543	0.001636859	0.001086816	0.000770222	);	
+Print(	CKidTCVC	1	2	4	12	);	
+Data(	CKidTCVC	0.10869447	0.084674766	0.034092633	0.005511563	);	
+Print(	CBldNAT	1	2	4	12	);	
+Data(	CBldNAT	0.057652547	0.021088085	0.015777336	0.000764554	);	
+Print(	CLivNAT	1	2	4	12	);	
+Data(	CLivNAT	0.090345758	0.047855601	0.024286039	0.007185998	);	
+Print(	CKidNAT	1	2	4	12	);	
+Data(	CKidNAT	0.039027001	0.027278524	0.011669485	0.004534753	);	
+Print(	CBldTCVC_ND	12	);				
+Data(	CBldTCVC_ND	0.000126936	);				
+Print(	CLivTCVC_ND	24	);				
+Data(	CLivTCVC_ND	4.71E-05	);				
+Print(	CLivNAT_ND	24	);				
+Data(	CLivNAT_ND	0.000576132	);				
+}	# CC022/GeniUnc						
+}	# End Strain 19	# Strain = # CC022/GeniUnc	# Cichocki, 2017-1000
+
+Level { ## Strain 20 # Strain = # CC023/GeniUnc	# Cichocki, 2017-1000
+#Likelihoods
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CPlasTCA , LogNormal_v , Prediction( CPlasTCA )  , Ve_CPlasTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	Likelihood( CKidTCA , LogNormal_v , Prediction( CKidTCA )  , Ve_CKidTCA );
+	Likelihood( CBldTCVG , LogNormal_v , Prediction( CBldTCVG )  , Ve_CBldTCVG );
+	Likelihood( CLivTCVG , LogNormal_v , Prediction( CLivTCVG )  , Ve_CLivTCVG );
+	Likelihood( CKidTCVG , LogNormal_v , Prediction( CKidTCVG )  , Ve_CKidTCVG );
+	Likelihood( CBldTCVC , LogNormal_v , Prediction( CBldTCVC )  , Ve_CBldTCVC );
+	Likelihood( CLivTCVC , LogNormal_v , Prediction( CLivTCVC )  , Ve_CLivTCVC );
+	Likelihood( CKidTCVC , LogNormal_v , Prediction( CKidTCVC )  , Ve_CKidTCVC );
+	Likelihood( CBldNAT , LogNormal_v , Prediction( CBldNAT )  , Ve_CBldNAT );
+	Likelihood( CLivNAT , LogNormal_v , Prediction( CLivNAT )  , Ve_CLivNAT );
+	Likelihood( CKidNAT , LogNormal_v , Prediction( CKidNAT )  , Ve_CKidNAT );
+	Likelihood( CLivTCVC_ND , StudentT, 5 , Prediction(CLivTCVC_ND)	, 1.90E-04 );
+
+Experiment {		# CC023/GeniUnc					
+Species = 3;							
+# Aqueous Gavage 		# 1000 mg/kg dose group					
+Male = 1.0;							
+BWmeas=0.0261;							
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );							
+TChng =  0.05 ;							
+Print(	CLiv	1	2	4	12	24	);
+Data(	CLiv	116.2295405	97.99691773	113.5375063	35.70572414	72.44558258	);
+Print(	CKid	1	2	4	12	24	);
+Data(	CKid	186.6970683	94.27881315	115.4850392	15.46487129	29.06952624	);
+Print(	CPlasTCA	1	2	4	12	24	);
+Data(	CPlasTCA	106.4323215	160.079145	203.4990372	299.9361628	185.2473453	);
+Print(	CLivTCA	1	2	4	12	24	);
+Data(	CLivTCA	61.63345168	63.68709098	126.4309808	220.8121315	125.3126878	);
+Print(	CKidTCA	1	2	4	12	24	);
+Data(	CKidTCA	22.95653593	32.65883234	43.51591827	87.24009941	56.31920897	);
+Print(	CBldTCVG	1	2	4	12	);	
+Data(	CBldTCVG	0.018597662	0.016061285	0.010737054	0.001641267	);	
+Print(	CLivTCVG	1	2	4	12	24	);
+Data(	CLivTCVG	0.336950578	0.506481837	0.258238626	0.024687119	0.072937954	);
+Print(	CKidTCVG	1	2	4	12	);	
+Data(	CKidTCVG	0.023618896	0.012528117	0.010300402	0.003564711	);	
+Print(	CBldTCVC	1	2	4	12	);	
+Data(	CBldTCVC	0.02703682	0.027266768	0.013344686	0.001545453	);	
+Print(	CLivTCVC	1	2	4	12	);	
+Data(	CLivTCVC	0.002179122	0.002916484	0.001775933	0.000991004	);	
+Print(	CKidTCVC	1	2	4	12	);	
+Data(	CKidTCVC	0.120291582	0.122570137	0.086289788	0.015103728	);	
+Print(	CBldNAT	1	2	4	12	);	
+Data(	CBldNAT	0.091368547	0.132814935	0.059148783	0.006284794	);	
+Print(	CLivNAT	1	2	4	12	24	);
+Data(	CLivNAT	0.179320153	0.175983917	0.076857766	0.011169442	0.023402452	);
+Print(	CKidNAT	1	2	4	12	);	
+Data(	CKidNAT	0.037135327	0.054396707	0.039902684	0.008535795	);	
+Print(	CLivTCVC_ND	24	);				
+Data(	CLivTCVC_ND	0.000312717	);				
+}	# CC023/GeniUnc						
+}	# End Strain 20	# Strain = # CC023/GeniUnc	# Cichocki, 2017-1000
+
+Level { ## Strain 21 # Strain = # CC024/GeniUnc	# Cichocki, 2017-1000
+#Likelihoods
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CPlasTCA , LogNormal_v , Prediction( CPlasTCA )  , Ve_CPlasTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	Likelihood( CKidTCA , LogNormal_v , Prediction( CKidTCA )  , Ve_CKidTCA );
+	Likelihood( CBldTCVG , LogNormal_v , Prediction( CBldTCVG )  , Ve_CBldTCVG );
+	Likelihood( CLivTCVG , LogNormal_v , Prediction( CLivTCVG )  , Ve_CLivTCVG );
+	Likelihood( CKidTCVG , LogNormal_v , Prediction( CKidTCVG )  , Ve_CKidTCVG );
+	Likelihood( CBldTCVC , LogNormal_v , Prediction( CBldTCVC )  , Ve_CBldTCVC );
+	Likelihood( CLivTCVC , LogNormal_v , Prediction( CLivTCVC )  , Ve_CLivTCVC );
+	Likelihood( CKidTCVC , LogNormal_v , Prediction( CKidTCVC )  , Ve_CKidTCVC );
+	Likelihood( CBldNAT , LogNormal_v , Prediction( CBldNAT )  , Ve_CBldNAT );
+	Likelihood( CLivNAT , LogNormal_v , Prediction( CLivNAT )  , Ve_CLivNAT );
+	Likelihood( CKidNAT , LogNormal_v , Prediction( CKidNAT )  , Ve_CKidNAT );
+
+Experiment {		# CC024/GeniUnc					
+Species = 3;							
+# Aqueous Gavage 		# 1000 mg/kg dose group					
+Male = 1.0;							
+BWmeas=0.0224;							
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );							
+TChng =  0.05 ;							
+Print(	CLiv	1	2	4	12	24	);
+Data(	CLiv	53.19617409	66.84831395	35.78547706	51.60156302	16.61292346	);
+Print(	CKid	1	2	4	12	24	);
+Data(	CKid	31.97283564	63.48525299	35.87253529	36.99652778	6.795578582	);
+Print(	CPlasTCA	1	2	4	12	24	);
+Data(	CPlasTCA	82.47229874	175.2971768	154.0003821	383.200562	341.9233947	);
+Print(	CLivTCA	1	2	4	12	24	);
+Data(	CLivTCA	35.57850577	53.74219897	86.0594274	91.70192031	95.19462924	);
+Print(	CKidTCA	1	2	4	12	24	);
+Data(	CKidTCA	12.66332949	12.0662311	32.23680871	44.41124291	72.16386008	);
+Print(	CBldTCVG	1	2	4	12	);	
+Data(	CBldTCVG	0.001808538	0.003628417	0.001167951	0.002881997	);	
+Print(	CLivTCVG	1	2	4	12	);	
+Data(	CLivTCVG	0.013560145	0.030803449	0.011993788	0.03058317	);	
+Print(	CKidTCVG	1	2	4	12	);	
+Data(	CKidTCVG	0.0054026	0.010247855	0.004397952	0.006211008	);	
+Print(	CBldTCVC	1	2	4	12	);	
+Data(	CBldTCVC	0.002986124	0.005773284	0.004161524	0.003600077	);	
+Print(	CLivTCVC	1	2	4	12	);	
+Data(	CLivTCVC	0.000965038	0.001293675	0.00089796	0.001073933	);	
+Print(	CKidTCVC	1	2	4	12	);	
+Data(	CKidTCVC	0.007866657	0.014828862	0.009980709	0.00744592	);	
+Print(	CBldNAT	1	2	4	12	);	
+Data(	CBldNAT	0.007411059	0.015432861	0.006774534	0.008688683	);	
+Print(	CLivNAT	1	2	4	12	);	
+Data(	CLivNAT	0.017431985	0.037747543	0.011808733	0.013672955	);	
+Print(	CKidNAT	1	2	4	12	);	
+Data(	CKidNAT	0.004615438	0.007155731	0.006458069	0.003989492	);	
+}	# CC024/GeniUnc						
+}	# End Strain 21	# Strain = # CC024/GeniUnc	# Cichocki, 2017-1000
+
+Level { ## Strain 22 # Strain = # CC027/GeniUnc	# Cichocki, 2017-1000
+#Likelihoods
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CPlasTCA , LogNormal_v , Prediction( CPlasTCA )  , Ve_CPlasTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	Likelihood( CKidTCA , LogNormal_v , Prediction( CKidTCA )  , Ve_CKidTCA );
+	Likelihood( CBldTCVG , LogNormal_v , Prediction( CBldTCVG )  , Ve_CBldTCVG );
+	Likelihood( CLivTCVG , LogNormal_v , Prediction( CLivTCVG )  , Ve_CLivTCVG );
+	Likelihood( CKidTCVG , LogNormal_v , Prediction( CKidTCVG )  , Ve_CKidTCVG );
+	Likelihood( CBldTCVC , LogNormal_v , Prediction( CBldTCVC )  , Ve_CBldTCVC );
+	Likelihood( CLivTCVC , LogNormal_v , Prediction( CLivTCVC )  , Ve_CLivTCVC );
+	Likelihood( CKidTCVC , LogNormal_v , Prediction( CKidTCVC )  , Ve_CKidTCVC );
+	Likelihood( CBldNAT , LogNormal_v , Prediction( CBldNAT )  , Ve_CBldNAT );
+	Likelihood( CLivNAT , LogNormal_v , Prediction( CLivNAT )  , Ve_CLivNAT );
+	Likelihood( CKidNAT , LogNormal_v , Prediction( CKidNAT )  , Ve_CKidNAT );
+
+Experiment {		# CC027/GeniUnc				
+Species = 3;						
+# Aqueous Gavage 		# 1000 mg/kg dose group				
+Male = 1.0;						
+BWmeas=0.0184;						
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );						
+TChng =  0.05 ;						
+Print(	CLiv	1	2	4	24	);
+Data(	CLiv	155.7881874	83.95209778	155.627711	7.117000401	);
+Print(	CKid	1	2	4	24	);
+Data(	CKid	223.6359578	168.2400867	148.0125959	4.121567792	);
+Print(	CPlasTCA	1	2	);		
+Data(	CPlasTCA	67.11521869	62.73234216	);		
+Print(	CLivTCA	1	2	4	24	);
+Data(	CLivTCA	24.79404877	34.22746057	24.10617813	26.45869615	);
+Print(	CKidTCA	1	2	4	24	);
+Data(	CKidTCA	25.23281823	16.49271274	27.49481445	37.65092665	);
+Print(	CBldTCVG	1	2	4	);	
+Data(	CBldTCVG	0.011964675	0.008310296	0.012890951	);	
+Print(	CLivTCVG	1	2	4	);	
+Data(	CLivTCVG	0.290111258	0.144960979	0.227819604	);	
+Print(	CKidTCVG	1	2	4	);	
+Data(	CKidTCVG	0.056803147	0.025364896	0.042714469	);	
+Print(	CBldTCVC	1	2	4	);	
+Data(	CBldTCVC	0.001326726	0.007170204	0.001043822	);	
+Print(	CLivTCVC	1	2	4	);	
+Data(	CLivTCVC	0.002794843	0.002188497	0.002056577	);	
+Print(	CKidTCVC	1	2	4	);	
+Data(	CKidTCVC	0.008614375	0.02824923	0.049213294	);	
+Print(	CBldNAT	1	2	4	);	
+Data(	CBldNAT	0.010975861	0.018543521	0.00243938	);	
+Print(	CLivNAT	1	2	4	);	
+Data(	CLivNAT	0.218845345	0.219569628	0.168419125	);	
+Print(	CKidNAT	1	2	4	);	
+Data(	CKidNAT	0.038945532	0.019651877	0.01943478	);	
+}	# CC027/GeniUnc					
+}	# End Strain 22	# Strain = # CC027/GeniUnc	# Cichocki, 2017-1000
+
+Level { ## Strain 23 # Strain = # CC028/GeniUnc	# Cichocki, 2017-1000
+#Likelihoods
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CPlasTCA , LogNormal_v , Prediction( CPlasTCA )  , Ve_CPlasTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	Likelihood( CKidTCA , LogNormal_v , Prediction( CKidTCA )  , Ve_CKidTCA );
+	Likelihood( CBldTCVG , LogNormal_v , Prediction( CBldTCVG )  , Ve_CBldTCVG );
+	Likelihood( CLivTCVG , LogNormal_v , Prediction( CLivTCVG )  , Ve_CLivTCVG );
+	Likelihood( CKidTCVG , LogNormal_v , Prediction( CKidTCVG )  , Ve_CKidTCVG );
+	Likelihood( CBldTCVC , LogNormal_v , Prediction( CBldTCVC )  , Ve_CBldTCVC );
+	Likelihood( CLivTCVC , LogNormal_v , Prediction( CLivTCVC )  , Ve_CLivTCVC );
+	Likelihood( CKidTCVC , LogNormal_v , Prediction( CKidTCVC )  , Ve_CKidTCVC );
+	Likelihood( CBldNAT , LogNormal_v , Prediction( CBldNAT )  , Ve_CBldNAT );
+	Likelihood( CLivNAT , LogNormal_v , Prediction( CLivNAT )  , Ve_CLivNAT );
+	Likelihood( CKidNAT , LogNormal_v , Prediction( CKidNAT )  , Ve_CKidNAT );
+
+Experiment {		# CC028/GeniUnc					
+Species = 3;							
+# Aqueous Gavage 		# 1000 mg/kg dose group					
+Male = 1.0;							
+BWmeas=0.025;							
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );							
+TChng =  0.05 ;							
+Print(	CLiv	1	2	4	12	24	);
+Data(	CLiv	82.42321752	47.58030626	73.4399042	47.39448237	74.11059401	);
+Print(	CKid	1	2	4	12	24	);
+Data(	CKid	58.18984832	46.9996245	44.98403087	26.17763328	38.10453666	);
+Print(	CPlasTCA	1	2	4	12	24	);
+Data(	CPlasTCA	81.92365775	130.4054252	273.4429408	397.1230833	535.5347846	);
+Print(	CLivTCA	1	2	4	12	24	);
+Data(	CLivTCA	37.37695882	65.54592948	136.4228223	204.4941424	259.6866695	);
+Print(	CKidTCA	1	2	4	12	24	);
+Data(	CKidTCA	20.30763551	21.34835678	62.06515103	88.17200974	129.2479485	);
+Print(	CBldTCVG	1	2	4	12	);	
+Data(	CBldTCVG	0.003818366	0.001846913	0.001820104	0.001555476	);	
+Print(	CLivTCVG	1	2	4	12	);	
+Data(	CLivTCVG	0.028502717	0.018650436	0.018850887	0.021894217	);	
+Print(	CKidTCVG	1	2	4	12	);	
+Data(	CKidTCVG	0.014470717	0.009861079	0.010499569	0.005673232	);	
+Print(	CBldTCVC	1	2	4	12	);	
+Data(	CBldTCVC	0.005684132	0.003096563	0.002713908	0.001331585	);	
+Print(	CLivTCVC	1	2	4	12	);	
+Data(	CLivTCVC	0.00110963	0.001122226	0.001228908	0.000903474	);	
+Print(	CKidTCVC	1	2	4	12	);	
+Data(	CKidTCVC	0.020439751	0.017248668	0.012122721	0.008036801	);	
+Print(	CBldNAT	1	2	4	12	);	
+Data(	CBldNAT	0.016910005	0.011705788	0.007221716	0.004336892	);	
+Print(	CLivNAT	1	2	4	12	);	
+Data(	CLivNAT	0.025248782	0.02909175	0.020934722	0.010712995	);	
+Print(	CKidNAT	1	2	4	12	);	
+Data(	CKidNAT	0.008032213	0.014046175	0.006507816	0.003950958	);	
+}	# CC028/GeniUnc						
+}	# End Strain 23	# Strain = # CC028/GeniUnc	# Cichocki, 2017-1000
+
+Level { ## Strain 24 # Strain = # CC029/Unc	# Cichocki, 2017-1000
+#Likelihoods
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CPlasTCA , LogNormal_v , Prediction( CPlasTCA )  , Ve_CPlasTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	Likelihood( CKidTCA , LogNormal_v , Prediction( CKidTCA )  , Ve_CKidTCA );
+	Likelihood( CBldTCVG , LogNormal_v , Prediction( CBldTCVG )  , Ve_CBldTCVG );
+	Likelihood( CLivTCVG , LogNormal_v , Prediction( CLivTCVG )  , Ve_CLivTCVG );
+	Likelihood( CKidTCVG , LogNormal_v , Prediction( CKidTCVG )  , Ve_CKidTCVG );
+	Likelihood( CBldTCVC , LogNormal_v , Prediction( CBldTCVC )  , Ve_CBldTCVC );
+	Likelihood( CLivTCVC , LogNormal_v , Prediction( CLivTCVC )  , Ve_CLivTCVC );
+	Likelihood( CKidTCVC , LogNormal_v , Prediction( CKidTCVC )  , Ve_CKidTCVC );
+	Likelihood( CBldNAT , LogNormal_v , Prediction( CBldNAT )  , Ve_CBldNAT );
+	Likelihood( CLivNAT , LogNormal_v , Prediction( CLivNAT )  , Ve_CLivNAT );
+	Likelihood( CKidNAT , LogNormal_v , Prediction( CKidNAT )  , Ve_CKidNAT );
+	Likelihood( CLivTCVC_ND , StudentT, 5 , Prediction(CLivTCVC_ND)	, 1.90E-04 );
+
+Experiment {		# CC029/Unc					
+Species = 3;							
+# Aqueous Gavage 		# 1000 mg/kg dose group					
+Male = 1.0;							
+BWmeas=0.02;							
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );							
+TChng =  0.05 ;							
+Print(	CLiv	1	2	4	12	24	);
+Data(	CLiv	78.83055003	40.96601206	53.04522952	68.39840884	1.260187279	);
+Print(	CKid	1	2	4	24	);	
+Data(	CKid	64.51942248	122.6706122	34.22778829	0.473441937	);	
+Print(	CPlasTCA	12	24	);			
+Data(	CPlasTCA	182.5939113	76.78572665	);			
+Print(	CLivTCA	1	2	4	12	24	);
+Data(	CLivTCA	39.79586864	24.5273039	28.55963246	51.79980139	42.13017563	);
+Print(	CKidTCA	1	2	4	12	24	);
+Data(	CKidTCA	18.10135601	17.98180851	26.15353248	53.15049506	29.10608068	);
+Print(	CBldTCVG	2	4	12	);		
+Data(	CBldTCVG	0.006329644	0.005113512	0.002934247	);		
+Print(	CLivTCVG	1	2	4	12	24	);
+Data(	CLivTCVG	0.045424659	0.391682327	0.047088778	0.020447768	0.001782649	);
+Print(	CKidTCVG	1	2	4	12	);	
+Data(	CKidTCVG	0.004454168	0.024600908	0.019817677	0.00768355	);	
+Print(	CBldTCVC	2	4	12	);		
+Data(	CBldTCVC	0.009171765	0.008371748	0.007761343	);		
+Print(	CLivTCVC	2	);				
+Data(	CLivTCVC	0.002141839	);				
+Print(	CKidTCVC	1	2	4	12	);	
+Data(	CKidTCVC	0.019982811	0.003276861	0.00580863	0.002600269	);	
+Print(	CBldNAT	2	4	12	);		
+Data(	CBldNAT	0.054754903	0.028789112	0.074104173	);		
+Print(	CLivNAT	1	2	4	12	24	);
+Data(	CLivNAT	0.053978156	0.001409487	0.110173853	0.046754638	0.01000765	);
+Print(	CKidNAT	1	2	4	12	);	
+Data(	CKidNAT	0.01785872	0.043556824	0.027635897	0.019264513	);	
+Print(	CLivTCVC_ND	1	4	12	24	);	
+Data(	CLivTCVC_ND	0.000437259	0.000351236	0.000263512	6.32E-05	);	
+}	# CC029/Unc						
+}	# End Strain 24	# Strain = # CC029/Unc	# Cichocki, 2017-1000
+
+Level { ## Strain 25 # Strain = # CC030/GeniUnc	# Cichocki, 2017-1000
+#Likelihoods
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CPlasTCA , LogNormal_v , Prediction( CPlasTCA )  , Ve_CPlasTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	Likelihood( CKidTCA , LogNormal_v , Prediction( CKidTCA )  , Ve_CKidTCA );
+	Likelihood( CBldTCVG , LogNormal_v , Prediction( CBldTCVG )  , Ve_CBldTCVG );
+	Likelihood( CLivTCVG , LogNormal_v , Prediction( CLivTCVG )  , Ve_CLivTCVG );
+	Likelihood( CKidTCVG , LogNormal_v , Prediction( CKidTCVG )  , Ve_CKidTCVG );
+	Likelihood( CBldTCVC , LogNormal_v , Prediction( CBldTCVC )  , Ve_CBldTCVC );
+	Likelihood( CLivTCVC , LogNormal_v , Prediction( CLivTCVC )  , Ve_CLivTCVC );
+	Likelihood( CKidTCVC , LogNormal_v , Prediction( CKidTCVC )  , Ve_CKidTCVC );
+	Likelihood( CBldNAT , LogNormal_v , Prediction( CBldNAT )  , Ve_CBldNAT );
+	Likelihood( CLivNAT , LogNormal_v , Prediction( CLivNAT )  , Ve_CLivNAT );
+	Likelihood( CKidNAT , LogNormal_v , Prediction( CKidNAT )  , Ve_CKidNAT );
+	Likelihood( CLivTCVC_ND , StudentT, 5 , Prediction(CLivTCVC_ND)	, 1.90E-04 );
+	Likelihood( CLivNAT_ND , StudentT, 5 , Prediction(CLivNAT_ND)	, 3.05E-04 );
+	
+Experiment {		# CC030/GeniUnc					
+Species = 3;							
+# Aqueous Gavage 		# 1000 mg/kg dose group					
+Male = 1.0;							
+BWmeas=0.02264;							
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );							
+TChng =  0.05 ;							
+Print(	CLiv	12	);				
+Data(	CLiv	20.77932866	);				
+Print(	CKid	1	2	4	12	24	);
+Data(	CKid	111.0107461	99.53319804	49.79028716	6.483456662	0.54723973	);
+Print(	CPlasTCA	1	2	4	12	24	);
+Data(	CPlasTCA	59.20902031	109.8438574	167.6041487	236.3825926	94.46425597	);
+Print(	CLivTCA	1	2	4	12	24	);
+Data(	CLivTCA	58.36378045	85.90950024	147.3495793	65.81517624	52.04937188	);
+Print(	CKidTCA	1	2	4	24	);	
+Data(	CKidTCA	29.39848509	31.4327348	8.685927085	27.9552367	);	
+Print(	CBldTCVG	1	2	4	12	);	
+Data(	CBldTCVG	0.005717997	0.004483772	0.003184497	0.0006399	);	
+Print(	CLivTCVG	1	2	4	12	24	);
+Data(	CLivTCVG	0.058945007	0.062632239	0.083586894	0.005866974	0.001323455	);
+Print(	CKidTCVG	1	2	4	12	);	
+Data(	CKidTCVG	0.009442141	0.007258275	0.00314391	0.002281704	);	
+Print(	CBldTCVC	1	2	4	12	);	
+Data(	CBldTCVC	0.006444209	0.00310166	0.002575466	0.000270192	);	
+Print(	CLivTCVC	1	2	4	12	);	
+Data(	CLivTCVC	0.001111228	0.001072772	0.001144697	0.000787082	);	
+Print(	CKidTCVC	1	2	4	12	);	
+Data(	CKidTCVC	0.044346486	0.030836503	0.020203194	0.005401111	);	
+Print(	CBldNAT	1	2	4	12	);	
+Data(	CBldNAT	0.012121522	0.012268926	0.014173905	0.001052127	);	
+Print(	CLivNAT	1	2	4	12	);	
+Data(	CLivNAT	0.036099891	0.023769773	0.031911654	0.002570968	);	
+Print(	CKidNAT	1	2	4	12	);	
+Data(	CKidNAT	0.007143381	0.006186127	0.003906962	0.002595219	);	
+Print(	CLivTCVC_ND	24	);				
+Data(	CLivTCVC_ND	8.26E-05	);				
+Print(	CLivNAT_ND	24	);				
+Data(	CLivNAT_ND	0.000804431	);				
+}	# CC030/GeniUnc						
+}	# End Strain 25	# Strain = # CC030/GeniUnc	# Cichocki, 2017-1000
+
+Level { ## Strain 26 # Strain = # CC032/GeniUnc	# Cichocki, 2017-1000
+#Likelihoods
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CPlasTCA , LogNormal_v , Prediction( CPlasTCA )  , Ve_CPlasTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	Likelihood( CKidTCA , LogNormal_v , Prediction( CKidTCA )  , Ve_CKidTCA );
+	Likelihood( CBldTCVG , LogNormal_v , Prediction( CBldTCVG )  , Ve_CBldTCVG );
+	Likelihood( CLivTCVG , LogNormal_v , Prediction( CLivTCVG )  , Ve_CLivTCVG );
+	Likelihood( CKidTCVG , LogNormal_v , Prediction( CKidTCVG )  , Ve_CKidTCVG );
+	Likelihood( CBldTCVC , LogNormal_v , Prediction( CBldTCVC )  , Ve_CBldTCVC );
+	Likelihood( CLivTCVC , LogNormal_v , Prediction( CLivTCVC )  , Ve_CLivTCVC );
+	Likelihood( CKidTCVC , LogNormal_v , Prediction( CKidTCVC )  , Ve_CKidTCVC );
+	Likelihood( CBldNAT , LogNormal_v , Prediction( CBldNAT )  , Ve_CBldNAT );
+	Likelihood( CLivNAT , LogNormal_v , Prediction( CLivNAT )  , Ve_CLivNAT );
+	Likelihood( CKidNAT , LogNormal_v , Prediction( CKidNAT )  , Ve_CKidNAT );
+
+Experiment {		# CC032/GeniUnc					
+Species = 3;							
+# Aqueous Gavage 		# 1000 mg/kg dose group					
+Male = 1.0;							
+BWmeas=0.027;							
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );							
+TChng =  0.05 ;							
+Print(	CLiv	1	2	24	);		
+Data(	CLiv	131.6641192	107.7261399	11.56484597	);		
+Print(	CKid	1	2	4	12	24	);
+Data(	CKid	141.8336853	90.335957	86.01213798	30.28310072	2.488997309	);
+Print(	CPlasTCA	1	2	4	12	24	);
+Data(	CPlasTCA	107.5457232	207.5933197	240.5872872	287.6013681	374.4105282	);
+Print(	CLivTCA	1	2	4	12	24	);
+Data(	CLivTCA	45.45810569	69.10458424	88.54533145	133.5722704	109.2614403	);
+Print(	CKidTCA	1	2	4	12	24	);
+Data(	CKidTCA	31.23998441	40.23053743	35.06126012	92.53181446	40.37014835	);
+Print(	CBldTCVG	1	2	4	12	);	
+Data(	CBldTCVG	0.005598437	0.002436367	0.003212843	0.002027209	);	
+Print(	CLivTCVG	1	2	4	12	);	
+Data(	CLivTCVG	0.092675374	0.024234848	0.050560925	0.024019509	);	
+Print(	CKidTCVG	1	2	4	12	);	
+Data(	CKidTCVG	0.02573053	0.014483828	0.018743559	0.008222707	);	
+Print(	CBldTCVC	1	2	4	12	);	
+Data(	CBldTCVC	0.008306633	0.004048268	0.005325348	0.002723317	);	
+Print(	CLivTCVC	1	2	4	12	);	
+Data(	CLivTCVC	0.001332814	0.000947425	0.001125131	0.000947342	);	
+Print(	CKidTCVC	1	2	4	12	);	
+Data(	CKidTCVC	0.023170943	0.013216626	0.017260873	0.007469341	);	
+Print(	CBldNAT	1	2	4	12	);	
+Data(	CBldNAT	0.016036813	0.008626563	0.011946611	0.008490845	);	
+Print(	CLivNAT	1	2	4	12	);	
+Data(	CLivNAT	0.028976231	0.011548819	0.01547343	0.009909221	);	
+Print(	CKidNAT	1	2	4	12	);	
+Data(	CKidNAT	0.016130805	0.007430159	0.01039599	0.007537424	);	
+}	# CC032/GeniUnc						
+}	# End Strain 26	# Strain = # CC032/GeniUnc	# Cichocki, 2017-1000
+
+Level { ## Strain 27 # Strain = # CC033/GeniUnc	# Cichocki, 2017-1000
+#Likelihoods
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CPlasTCA , LogNormal_v , Prediction( CPlasTCA )  , Ve_CPlasTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	Likelihood( CKidTCA , LogNormal_v , Prediction( CKidTCA )  , Ve_CKidTCA );
+	Likelihood( CBldTCVG , LogNormal_v , Prediction( CBldTCVG )  , Ve_CBldTCVG );
+	Likelihood( CLivTCVG , LogNormal_v , Prediction( CLivTCVG )  , Ve_CLivTCVG );
+	Likelihood( CKidTCVG , LogNormal_v , Prediction( CKidTCVG )  , Ve_CKidTCVG );
+	Likelihood( CBldTCVC , LogNormal_v , Prediction( CBldTCVC )  , Ve_CBldTCVC );
+	Likelihood( CLivTCVC , LogNormal_v , Prediction( CLivTCVC )  , Ve_CLivTCVC );
+	Likelihood( CKidTCVC , LogNormal_v , Prediction( CKidTCVC )  , Ve_CKidTCVC );
+	Likelihood( CBldNAT , LogNormal_v , Prediction( CBldNAT )  , Ve_CBldNAT );
+	Likelihood( CLivNAT , LogNormal_v , Prediction( CLivNAT )  , Ve_CLivNAT );
+	Likelihood( CKidNAT , LogNormal_v , Prediction( CKidNAT )  , Ve_CKidNAT );
+
+Experiment {		# CC033/GeniUnc					
+Species = 3;							
+# Aqueous Gavage 		# 1000 mg/kg dose group					
+Male = 1.0;							
+BWmeas=0.0204;							
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );							
+TChng =  0.05 ;							
+Print(	CLiv	1	2	4	12	24	);
+Data(	CLiv	62.62045837	56.78790502	85.40794606	50.31115404	3.7063005	);
+Print(	CKid	1	2	4	12	24	);
+Data(	CKid	51.59362937	181.1111108	56.8369495	24.90712849	0.650891816	);
+Print(	CPlasTCA	2	4	12	24	);	
+Data(	CPlasTCA	143.9123421	190.2718941	132.8828502	106.691371	);	
+Print(	CLivTCA	1	2	4	12	24	);
+Data(	CLivTCA	20.58587246	54.89758328	85.29660151	61.25896467	41.4835455	);
+Print(	CKidTCA	1	2	4	12	24	);
+Data(	CKidTCA	15.45123733	33.46219565	59.97283057	51.19771806	51.56418807	);
+Print(	CBldTCVG	1	2	4	12	);	
+Data(	CBldTCVG	0.004007517	0.003984263	0.004753269	0.001725812	);	
+Print(	CLivTCVG	1	2	4	12	);	
+Data(	CLivTCVG	0.150446027	0.057759194	0.12321188	0.026175405	);	
+Print(	CKidTCVG	1	2	4	12	);	
+Data(	CKidTCVG	0.005131857	0.005502673	0.008380694	0.003999773	);	
+Print(	CBldTCVC	1	2	4	12	);	
+Data(	CBldTCVC	0.01100647	0.008766726	0.00992887	0.002760772	);	
+Print(	CLivTCVC	1	2	4	12	);	
+Data(	CLivTCVC	0.002336649	0.002117557	0.002178661	0.001135653	);	
+Print(	CKidTCVC	1	2	4	12	);	
+Data(	CKidTCVC	0.020204696	0.024653516	0.014011836	0.005500569	);	
+Print(	CBldNAT	1	2	4	12	);	
+Data(	CBldNAT	0.018718548	0.016882529	0.015505948	0.005652599	);	
+Print(	CLivNAT	1	2	4	12	);	
+Data(	CLivNAT	0.033202487	0.036036906	0.025522915	0.004909759	);	
+Print(	CKidNAT	1	2	4	12	);	
+Data(	CKidNAT	0.007643777	0.0061917	0.00710768	0.003585613	);	
+}	# CC033/GeniUnc						
+}	# End Strain 27	# Strain = # CC033/GeniUnc	# Cichocki, 2017-1000
+
+Level { ## Strain 28 # Strain = # CC035/Unc	# Cichocki, 2017-1000
+#Likelihoods
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CPlasTCA , LogNormal_v , Prediction( CPlasTCA )  , Ve_CPlasTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	Likelihood( CKidTCA , LogNormal_v , Prediction( CKidTCA )  , Ve_CKidTCA );
+	Likelihood( CBldTCVG , LogNormal_v , Prediction( CBldTCVG )  , Ve_CBldTCVG );
+	Likelihood( CLivTCVG , LogNormal_v , Prediction( CLivTCVG )  , Ve_CLivTCVG );
+	Likelihood( CKidTCVG , LogNormal_v , Prediction( CKidTCVG )  , Ve_CKidTCVG );
+	Likelihood( CBldTCVC , LogNormal_v , Prediction( CBldTCVC )  , Ve_CBldTCVC );
+	Likelihood( CLivTCVC , LogNormal_v , Prediction( CLivTCVC )  , Ve_CLivTCVC );
+	Likelihood( CKidTCVC , LogNormal_v , Prediction( CKidTCVC )  , Ve_CKidTCVC );
+	Likelihood( CBldNAT , LogNormal_v , Prediction( CBldNAT )  , Ve_CBldNAT );
+	Likelihood( CLivNAT , LogNormal_v , Prediction( CLivNAT )  , Ve_CLivNAT );
+	Likelihood( CKidNAT , LogNormal_v , Prediction( CKidNAT )  , Ve_CKidNAT );
+	Likelihood( CLivTCVC_ND , StudentT, 5 , Prediction(CLivTCVC_ND)	, 1.90E-04 );
+
+Experiment {		# CC035/Unc					
+Species = 3;							
+# Aqueous Gavage 		# 1000 mg/kg dose group					
+Male = 1.0;							
+BWmeas=0.0222;							
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );							
+TChng =  0.05 ;							
+Print(	CLiv	1	2	4	12	24	);
+Data(	CLiv	102.3307601	169.231572	107.8870015	23.29814926	0.480993822	);
+Print(	CKid	1	2	4	12	24	);
+Data(	CKid	222.4820654	105.8132862	67.52694913	12.69897909	0.158483669	);
+Print(	CPlasTCA	1	4	24	);		
+Data(	CPlasTCA	123.1810485	219.6971558	90.018665	);		
+Print(	CLivTCA	1	2	4	12	24	);
+Data(	CLivTCA	42.87604965	32.98857923	93.09856194	24.07965698	29.34816549	);
+Print(	CKidTCA	1	2	4	12	24	);
+Data(	CKidTCA	24.12116482	55.90493842	60.82189535	88.0308035	1.613352835	);
+Print(	CBldTCVG	1	2	4	12	);	
+Data(	CBldTCVG	0.009625826	0.003014519	0.002665674	0.001568794	);	
+Print(	CLivTCVG	1	2	4	12	);	
+Data(	CLivTCVG	0.278863769	0.147150328	0.091118875	0.023300475	);	
+Print(	CKidTCVG	1	2	4	12	);	
+Data(	CKidTCVG	0.034468563	0.007356397	0.015624501	0.002276237	);	
+Print(	CBldTCVC	1	2	4	12	);	
+Data(	CBldTCVC	0.015483862	0.003075255	0.009307639	0.000525817	);	
+Print(	CLivTCVC	1	2	4	);		
+Data(	CLivTCVC	0.00394505	0.003223155	0.00204745	);		
+Print(	CKidTCVC	1	2	4	12	);	
+Data(	CKidTCVC	0.036687422	0.036212368	0.016927749	0.004402821	);	
+Print(	CBldNAT	1	2	4	12	);	
+Data(	CBldNAT	0.040721175	0.009325484	0.015224953	0.000791585	);	
+Print(	CLivNAT	1	2	4	12	);	
+Data(	CLivNAT	0.092841668	0.04430022	0.023963136	0.005628769	);	
+Print(	CKidNAT	1	2	4	12	);	
+Data(	CKidNAT	0.014770691	0.008887479	0.010153862	0.00116466	);	
+Print(	CLivTCVC_ND	12	);				
+Data(	CLivTCVC_ND	0.000459607	);				
+}	# CC035/Unc						
+}	# End Strain 28	# Strain = # CC035/Unc	# Cichocki, 2017-1000
+
+Level { ## Strain 29 # Strain = # CC037/TauUnc	# Cichocki, 2017-1000
+#Likelihoods
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CPlasTCA , LogNormal_v , Prediction( CPlasTCA )  , Ve_CPlasTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	Likelihood( CKidTCA , LogNormal_v , Prediction( CKidTCA )  , Ve_CKidTCA );
+	Likelihood( CBldTCVG , LogNormal_v , Prediction( CBldTCVG )  , Ve_CBldTCVG );
+	Likelihood( CLivTCVG , LogNormal_v , Prediction( CLivTCVG )  , Ve_CLivTCVG );
+	Likelihood( CKidTCVG , LogNormal_v , Prediction( CKidTCVG )  , Ve_CKidTCVG );
+	Likelihood( CBldTCVC , LogNormal_v , Prediction( CBldTCVC )  , Ve_CBldTCVC );
+	Likelihood( CLivTCVC , LogNormal_v , Prediction( CLivTCVC )  , Ve_CLivTCVC );
+	Likelihood( CKidTCVC , LogNormal_v , Prediction( CKidTCVC )  , Ve_CKidTCVC );
+	Likelihood( CBldNAT , LogNormal_v , Prediction( CBldNAT )  , Ve_CBldNAT );
+	Likelihood( CLivNAT , LogNormal_v , Prediction( CLivNAT )  , Ve_CLivNAT );
+	Likelihood( CKidNAT , LogNormal_v , Prediction( CKidNAT )  , Ve_CKidNAT );
+	Likelihood( CLivTCVC_ND , StudentT, 5 , Prediction(CLivTCVC_ND)	, 1.90E-04 );
+
+Experiment {		# CC037/TauUnc					
+Species = 3;							
+# Aqueous Gavage 		# 1000 mg/kg dose group					
+Male = 1.0;							
+BWmeas=0.0241;							
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );							
+TChng =  0.05 ;							
+Print(	CLiv	1	2	4	12	24	);
+Data(	CLiv	49.57866402	71.29874675	38.1980874	24.17850164	3.93033183	);
+Print(	CKid	1	2	4	12	24	);
+Data(	CKid	78.50849586	288.461189	81.93340853	10.95930155	1.152295672	);
+Print(	CPlasTCA	1	2	4	12	24	);
+Data(	CPlasTCA	113.6991965	87.47924044	129.0759971	305.7097964	165.9150427	);
+Print(	CLivTCA	1	2	4	12	24	);
+Data(	CLivTCA	26.61783835	49.92852732	65.07846604	110.352951	42.69006472	);
+Print(	CKidTCA	1	2	4	12	);	
+Data(	CKidTCA	20.52966407	15.42354939	34.20858906	87.61615714	);	
+Print(	CBldTCVG	1	2	4	12	);	
+Data(	CBldTCVG	0.005639023	0.009515253	0.003038824	0.001127037	);	
+Print(	CLivTCVG	1	2	4	12	24	);
+Data(	CLivTCVG	0.049563448	0.169659595	0.031208355	0.008131034	0.003359714	);
+Print(	CKidTCVG	1	2	4	12	);	
+Data(	CKidTCVG	0.01539037	0.02403299	0.007082772	0.004147543	);	
+Print(	CBldTCVC	1	2	4	12	);	
+Data(	CBldTCVC	0.002055537	0.018273111	0.00506407	0.001246883	);	
+Print(	CLivTCVC	2	);				
+Data(	CLivTCVC	0.000838412	);				
+Print(	CKidTCVC	1	2	4	12	);	
+Data(	CKidTCVC	0.03601197	0.08246133	0.021609365	0.00745583	);	
+Print(	CBldNAT	1	2	4	12	);	
+Data(	CBldNAT	0.00874688	0.039992163	0.012541905	0.003598917	);	
+Print(	CLivNAT	1	2	4	12	24	);
+Data(	CLivNAT	0.044270869	0.090364794	0.033189338	0.010743497	0.002176431	);
+Print(	CKidNAT	1	2	4	12	);	
+Data(	CKidNAT	0.015862609	0.020327507	0.008625727	0.002874121	);	
+Print(	CLivTCVC_ND	1	4	12	24	);	
+Data(	CLivTCVC_ND	0.00050017	0.000398644	0.000178354	0.000371575	);	
+}	# CC037/TauUnc						
+}	# End Strain 29	# Strain = # CC037/TauUnc	# Cichocki, 2017-1000
+
+Level { ## Strain 30 # Strain = # CC040/TauUnc	# Cichocki, 2017-1000
+#Likelihoods
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CPlasTCA , LogNormal_v , Prediction( CPlasTCA )  , Ve_CPlasTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	Likelihood( CKidTCA , LogNormal_v , Prediction( CKidTCA )  , Ve_CKidTCA );
+	Likelihood( CBldTCVG , LogNormal_v , Prediction( CBldTCVG )  , Ve_CBldTCVG );
+	Likelihood( CLivTCVG , LogNormal_v , Prediction( CLivTCVG )  , Ve_CLivTCVG );
+	Likelihood( CKidTCVG , LogNormal_v , Prediction( CKidTCVG )  , Ve_CKidTCVG );
+	Likelihood( CBldTCVC , LogNormal_v , Prediction( CBldTCVC )  , Ve_CBldTCVC );
+	Likelihood( CLivTCVC , LogNormal_v , Prediction( CLivTCVC )  , Ve_CLivTCVC );
+	Likelihood( CKidTCVC , LogNormal_v , Prediction( CKidTCVC )  , Ve_CKidTCVC );
+	Likelihood( CBldNAT , LogNormal_v , Prediction( CBldNAT )  , Ve_CBldNAT );
+	Likelihood( CLivNAT , LogNormal_v , Prediction( CLivNAT )  , Ve_CLivNAT );
+	Likelihood( CKidNAT , LogNormal_v , Prediction( CKidNAT )  , Ve_CKidNAT );
+
+Experiment {		# CC040/TauUnc					
+Species = 3;							
+# Aqueous Gavage 		# 1000 mg/kg dose group					
+Male = 1.0;							
+BWmeas=0.0281;							
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );							
+TChng =  0.05 ;							
+Print(	CLiv	1	2	4	12	24	);
+Data(	CLiv	136.0341971	64.27928522	124.1887297	83.16191477	10.08797471	);
+Print(	CKid	1	4	12	24	);	
+Data(	CKid	188.7801855	223.883968	65.99257243	4.618326272	);	
+Print(	CPlasTCA	1	2	12	24	);	
+Data(	CPlasTCA	103.8859967	70.95769987	123.8892099	210.6245506	);	
+Print(	CLivTCA	2	4	12	24	);	
+Data(	CLivTCA	92.43219564	262.8939249	455.8131412	189.3438779	);	
+Print(	CKidTCA	1	2	4	12	24	);
+Data(	CKidTCA	25.4282983	60.52808596	95.21939294	170.120901	67.51058612	);
+Print(	CBldTCVG	1	4	12	);		
+Data(	CBldTCVG	0.002885526	0.007693769	0.001819727	);		
+Print(	CLivTCVG	1	2	4	12	);	
+Data(	CLivTCVG	0.100686883	0.044828773	0.127163809	0.050576448	);	
+Print(	CKidTCVG	1	2	4	12	);	
+Data(	CKidTCVG	0.015108178	0.008278995	0.013509012	0.005191741	);	
+Print(	CBldTCVC	1	4	12	);		
+Data(	CBldTCVC	0.004230068	0.015528951	0.000969536	);		
+Print(	CLivTCVC	1	2	4	12	);	
+Data(	CLivTCVC	0.000891786	0.000752625	0.00252641	0.000981863	);	
+Print(	CKidTCVC	1	2	4	12	);	
+Data(	CKidTCVC	0.070635488	0.03479112	0.029235356	0.01616682	);	
+Print(	CBldNAT	1	4	12	);		
+Data(	CBldNAT	0.016797035	0.038699246	0.004113912	);		
+Print(	CLivNAT	1	2	4	12	);	
+Data(	CLivNAT	0.109623207	0.052824493	0.064731525	0.022058058	);	
+Print(	CKidNAT	1	2	4	12	);	
+Data(	CKidNAT	0.045246442	0.018783391	0.024747101	0.013111916	);	
+}	# CC040/TauUnc						
+}	# End Strain 30	# Strain = # CC040/TauUnc	# Cichocki, 2017-1000
+
+Level { ## Strain 31 # Strain = # CC042/GeniUnc	# Cichocki, 2017-1000
+#Likelihoods
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CPlasTCA , LogNormal_v , Prediction( CPlasTCA )  , Ve_CPlasTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	Likelihood( CKidTCA , LogNormal_v , Prediction( CKidTCA )  , Ve_CKidTCA );
+	Likelihood( CBldTCVG , LogNormal_v , Prediction( CBldTCVG )  , Ve_CBldTCVG );
+	Likelihood( CLivTCVG , LogNormal_v , Prediction( CLivTCVG )  , Ve_CLivTCVG );
+	Likelihood( CKidTCVG , LogNormal_v , Prediction( CKidTCVG )  , Ve_CKidTCVG );
+	Likelihood( CBldTCVC , LogNormal_v , Prediction( CBldTCVC )  , Ve_CBldTCVC );
+	Likelihood( CLivTCVC , LogNormal_v , Prediction( CLivTCVC )  , Ve_CLivTCVC );
+	Likelihood( CKidTCVC , LogNormal_v , Prediction( CKidTCVC )  , Ve_CKidTCVC );
+	Likelihood( CBldNAT , LogNormal_v , Prediction( CBldNAT )  , Ve_CBldNAT );
+	Likelihood( CLivNAT , LogNormal_v , Prediction( CLivNAT )  , Ve_CLivNAT );
+	Likelihood( CKidNAT , LogNormal_v , Prediction( CKidNAT )  , Ve_CKidNAT );
+	Likelihood( CLivTCVC_ND , StudentT, 5 , Prediction(CLivTCVC_ND)	, 1.90E-04 );
+
+Experiment {		# CC042/GeniUnc				
+Species = 3;						
+# Aqueous Gavage 		# 1000 mg/kg dose group				
+Male = 1.0;						
+BWmeas=0.02525;						
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );						
+TChng =  0.05 ;						
+Print(	CLiv	1	2	4	24	);
+Data(	CLiv	54.15780119	103.0635426	61.78422838	8.344173703	);
+Print(	CKid	1	2	4	24	);
+Data(	CKid	72.95741813	91.02271206	54.24384487	4.727457075	);
+Print(	CPlasTCA	2	4	24	);	
+Data(	CPlasTCA	162.9068125	37.67447424	104.4863924	);	
+Print(	CLivTCA	1	2	4	24	);
+Data(	CLivTCA	32.77445442	104.6935241	60.16059705	32.98388519	);
+Print(	CKidTCA	1	2	4	24	);
+Data(	CKidTCA	34.07670496	70.81479334	83.43125436	20.90844317	);
+Print(	CBldTCVG	1	2	4	);	
+Data(	CBldTCVG	0.004442214	0.01249926	0.002454969	);	
+Print(	CLivTCVG	1	2	4	24	);
+Data(	CLivTCVG	0.097092987	0.249517933	0.147421954	0.008474867	);
+Print(	CKidTCVG	1	2	4	);	
+Data(	CKidTCVG	0.024350937	0.031718037	0.016288695	);	
+Print(	CBldTCVC	1	2	4	);	
+Data(	CBldTCVC	0.006192228	0.01325177	0.001822415	);	
+Print(	CLivTCVC	1	2	4	);	
+Data(	CLivTCVC	0.000598549	0.001800897	0.000599144	);	
+Print(	CKidTCVC	1	2	4	);	
+Data(	CKidTCVC	0.054468118	0.073858057	0.044072746	);	
+Print(	CBldNAT	1	2	4	);	
+Data(	CBldNAT	0.018347922	0.046976875	0.006646913	);	
+Print(	CLivNAT	1	2	4	24	);
+Data(	CLivNAT	0.05291657	0.084198515	0.062118546	0.005531065	);
+Print(	CKidNAT	1	2	4	);	
+Data(	CKidNAT	0.016983822	0.04516751	0.019707805	);	
+Print(	CLivTCVC_ND	24	);			
+Data(	CLivTCVC_ND	0.000131479	);			
+}	# CC042/GeniUnc					
+}	# End Strain 31	# Strain = # CC042/GeniUnc	# Cichocki, 2017-1000
+
+Level { ## Strain 32 # Strain = # CC043/GeniUnc	# Cichocki, 2017-1000
+#Likelihoods
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CPlasTCA , LogNormal_v , Prediction( CPlasTCA )  , Ve_CPlasTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	Likelihood( CKidTCA , LogNormal_v , Prediction( CKidTCA )  , Ve_CKidTCA );
+	Likelihood( CBldTCVG , LogNormal_v , Prediction( CBldTCVG )  , Ve_CBldTCVG );
+	Likelihood( CLivTCVG , LogNormal_v , Prediction( CLivTCVG )  , Ve_CLivTCVG );
+	Likelihood( CKidTCVG , LogNormal_v , Prediction( CKidTCVG )  , Ve_CKidTCVG );
+	Likelihood( CBldTCVC , LogNormal_v , Prediction( CBldTCVC )  , Ve_CBldTCVC );
+	Likelihood( CLivTCVC , LogNormal_v , Prediction( CLivTCVC )  , Ve_CLivTCVC );
+	Likelihood( CKidTCVC , LogNormal_v , Prediction( CKidTCVC )  , Ve_CKidTCVC );
+	Likelihood( CBldNAT , LogNormal_v , Prediction( CBldNAT )  , Ve_CBldNAT );
+	Likelihood( CLivNAT , LogNormal_v , Prediction( CLivNAT )  , Ve_CLivNAT );
+	Likelihood( CKidNAT , LogNormal_v , Prediction( CKidNAT )  , Ve_CKidNAT );
+	Likelihood( CLivTCVC_ND , StudentT, 5 , Prediction(CLivTCVC_ND)	, 1.90E-04 );
+
+Experiment {		# CC043/GeniUnc					
+Species = 3;							
+# Aqueous Gavage 		# 1000 mg/kg dose group					
+Male = 1.0;							
+BWmeas=0.0237;							
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );							
+TChng =  0.05 ;							
+Print(	CLiv	2	4	12	24	);	
+Data(	CLiv	90.60501248	96.80981411	61.54797105	0.149056918	);	
+Print(	CKid	1	2	4	12	24	);
+Data(	CKid	160.1273788	136.4556799	60.64362648	16.2722074	0.026403234	);
+Print(	CPlasTCA	1	2	4	24	);	
+Data(	CPlasTCA	120.9091662	149.9584416	346.2277494	31.56352457	);	
+Print(	CLivTCA	1	12	24	);		
+Data(	CLivTCA	76.64180746	200.4680925	18.32415539	);		
+Print(	CKidTCA	1	2	4	12	24	);
+Data(	CKidTCA	31.85474419	28.44614831	90.8121231	134.0999937	26.26181146	);
+Print(	CBldTCVG	1	2	4	12	);	
+Data(	CBldTCVG	0.019936602	0.004177942	0.006128263	0.002553405	);	
+Print(	CLivTCVG	1	2	4	12	24	);
+Data(	CLivTCVG	0.191737633	0.036851624	0.053277301	0.024614646	0.002741221	);
+Print(	CKidTCVG	1	2	4	12	);	
+Data(	CKidTCVG	0.031762838	0.117674324	0.004907944	0.002755948	);	
+Print(	CBldTCVC	1	2	4	12	);	
+Data(	CBldTCVC	0.005299444	0.003577285	0.012636371	0.009286668	);	
+Print(	CLivTCVC	1	4	12	);		
+Data(	CLivTCVC	0.000640512	0.001566986	0.000713056	);		
+Print(	CKidTCVC	1	2	4	12	);	
+Data(	CKidTCVC	0.061991205	0.015470212	0.019590841	0.005612842	);	
+Print(	CBldNAT	1	2	4	12	);	
+Data(	CBldNAT	0.050901057	0.011543337	0.02978109	0.0476318	);	
+Print(	CLivNAT	1	2	4	12	24	);
+Data(	CLivNAT	0.113946265	0.056532853	0.039440734	0.010871247	0.002619402	);
+Print(	CKidNAT	1	2	4	12	);	
+Data(	CKidNAT	0.043007634	0.16141825	0.011126504	0.004743528	);	
+Print(	CLivTCVC_ND	2	24	);			
+Data(	CLivTCVC_ND	0.000462503	7.77E-05	);			
+}	# CC043/GeniUnc						
+}	# End Strain 32	# Strain = # CC043/GeniUnc	# Cichocki, 2017-1000
+
+Level { ## Strain 33 # Strain = # CC044/Unc	# Cichocki, 2017-1000
+#Likelihoods
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CPlasTCA , LogNormal_v , Prediction( CPlasTCA )  , Ve_CPlasTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	Likelihood( CKidTCA , LogNormal_v , Prediction( CKidTCA )  , Ve_CKidTCA );
+	Likelihood( CBldTCVG , LogNormal_v , Prediction( CBldTCVG )  , Ve_CBldTCVG );
+	Likelihood( CLivTCVG , LogNormal_v , Prediction( CLivTCVG )  , Ve_CLivTCVG );
+	Likelihood( CKidTCVG , LogNormal_v , Prediction( CKidTCVG )  , Ve_CKidTCVG );
+	Likelihood( CBldTCVC , LogNormal_v , Prediction( CBldTCVC )  , Ve_CBldTCVC );
+	Likelihood( CLivTCVC , LogNormal_v , Prediction( CLivTCVC )  , Ve_CLivTCVC );
+	Likelihood( CKidTCVC , LogNormal_v , Prediction( CKidTCVC )  , Ve_CKidTCVC );
+	Likelihood( CBldNAT , LogNormal_v , Prediction( CBldNAT )  , Ve_CBldNAT );
+	Likelihood( CLivNAT , LogNormal_v , Prediction( CLivNAT )  , Ve_CLivNAT );
+	Likelihood( CKidNAT , LogNormal_v , Prediction( CKidNAT )  , Ve_CKidNAT );
+	Likelihood( CLiv_ND , StudentT, 5 , Prediction(CLiv_ND)	, 2.76E-04 );
+	Likelihood( CLivTCVC_ND , StudentT, 5 , Prediction(CLivTCVC_ND)	, 1.90E-04 );
+	
+Experiment {		# CC044/Unc					
+Species = 3;							
+# Aqueous Gavage 		# 1000 mg/kg dose group					
+Male = 1.0;							
+BWmeas=0.02234;							
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );							
+TChng =  0.05 ;							
+Print(	CLiv	2	4	12	);		
+Data(	CLiv	69.02289613	70.93973262	21.02180564	);		
+Print(	CKid	1	2	4	12	24	);
+Data(	CKid	58.42989606	146.4987502	105.2994991	7.614164675	0.431215263	);
+Print(	CPlasTCA	1	2	4	24	);	
+Data(	CPlasTCA	88.30849742	47.24395356	127.7390756	60.1073822	);	
+Print(	CLivTCA	1	2	4	12	24	);
+Data(	CLivTCA	17.71556879	42.63027294	67.59875558	68.03768809	55.45358285	);
+Print(	CKidTCA	1	2	4	12	24	);
+Data(	CKidTCA	23.51108134	19.74956761	66.82534117	57.22020959	13.14337954	);
+Print(	CBldTCVG	1	2	4	12	);	
+Data(	CBldTCVG	0.003248608	0.010500995	0.006860042	0.002047004	);	
+Print(	CLivTCVG	1	2	4	12	24	);
+Data(	CLivTCVG	0.029101751	0.083459425	0.035674602	0.00717474	0.001298739	);
+Print(	CKidTCVG	1	2	4	12	);	
+Data(	CKidTCVG	0.007531072	0.025831089	0.017980498	0.00450239	);	
+Print(	CBldTCVC	1	2	4	12	);	
+Data(	CBldTCVC	0.007243167	0.006846266	0.00655333	0.003705934	);	
+Print(	CLivTCVC	2	4	);			
+Data(	CLivTCVC	0.001538876	0.00103353	);			
+Print(	CKidTCVC	1	2	4	12	);	
+Data(	CKidTCVC	0.032907066	0.035326702	0.025453334	0.008097166	);	
+Print(	CBldNAT	1	2	4	12	);	
+Data(	CBldNAT	0.017590798	0.022858769	0.029561059	0.086328228	);	
+Print(	CLivNAT	1	2	4	12	24	);
+Data(	CLivNAT	0.044635594	0.155267365	0.087920361	0.008683131	0.001177153	);
+Print(	CKidNAT	1	2	4	12	);	
+Data(	CKidNAT	0.009806084	0.026566272	0.017291256	0.003848689	);	
+Print(	CLiv_ND	24	);				
+Data(	CLiv_ND	0.000016583	);				
+Print(	CLivTCVC_ND	1	12	24	);		
+Data(	CLivTCVC_ND	0.000519083	0.000131006	6.83E-05	);		
+}	# CC044/Unc						
+}	# End Strain 33	# Strain = # CC044/Unc	# Cichocki, 2017-1000
+
+Level { ## Strain 34 # Strain = # CC045/GeniUnc	# Cichocki, 2017-1000
+#Likelihoods
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CPlasTCA , LogNormal_v , Prediction( CPlasTCA )  , Ve_CPlasTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	Likelihood( CKidTCA , LogNormal_v , Prediction( CKidTCA )  , Ve_CKidTCA );
+	Likelihood( CBldTCVG , LogNormal_v , Prediction( CBldTCVG )  , Ve_CBldTCVG );
+	Likelihood( CLivTCVG , LogNormal_v , Prediction( CLivTCVG )  , Ve_CLivTCVG );
+	Likelihood( CKidTCVG , LogNormal_v , Prediction( CKidTCVG )  , Ve_CKidTCVG );
+	Likelihood( CBldTCVC , LogNormal_v , Prediction( CBldTCVC )  , Ve_CBldTCVC );
+	Likelihood( CLivTCVC , LogNormal_v , Prediction( CLivTCVC )  , Ve_CLivTCVC );
+	Likelihood( CKidTCVC , LogNormal_v , Prediction( CKidTCVC )  , Ve_CKidTCVC );
+	Likelihood( CBldNAT , LogNormal_v , Prediction( CBldNAT )  , Ve_CBldNAT );
+	Likelihood( CLivNAT , LogNormal_v , Prediction( CLivNAT )  , Ve_CLivNAT );
+	Likelihood( CKidNAT , LogNormal_v , Prediction( CKidNAT )  , Ve_CKidNAT );
+
+Experiment {		# CC045/GeniUnc					
+Species = 3;							
+# Aqueous Gavage 		# 1000 mg/kg dose group					
+Male = 1.0;							
+BWmeas=0.0271;							
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );							
+TChng =  0.05 ;							
+Print(	CLiv	1	2	4	12	24	);
+Data(	CLiv	51.38677594	65.5671315	62.18347477	46.6261491	82.25348946	);
+Print(	CKid	1	2	4	12	24	);
+Data(	CKid	70.56906392	105.8984205	89.57706366	26.96774749	22.17213503	);
+Print(	CPlasTCA	1	2	4	12	24	);
+Data(	CPlasTCA	104.6663088	160.4142624	210.7812643	227.9514108	209.3177723	);
+Print(	CLivTCA	1	2	4	12	24	);
+Data(	CLivTCA	44.54023489	59.83879499	114.6291195	101.984445	112.4962027	);
+Print(	CKidTCA	1	2	4	12	24	);
+Data(	CKidTCA	32.58584895	36.95675732	100.6604116	71.47053384	66.69214784	);
+Print(	CBldTCVG	1	2	4	12	);	
+Data(	CBldTCVG	0.002897915	0.004038998	0.003108507	0.001127444	);	
+Print(	CLivTCVG	1	2	4	12	24	);
+Data(	CLivTCVG	0.050998587	0.041253011	0.027970962	0.010409465	0.006539712	);
+Print(	CKidTCVG	1	2	4	12	);	
+Data(	CKidTCVG	0.045601961	0.067741682	0.032962514	0.010444533	);	
+Print(	CBldTCVC	1	2	4	12	);	
+Data(	CBldTCVC	0.007603744	0.00948515	0.004003449	0.001389963	);	
+Print(	CLivTCVC	1	2	4	12	24	);
+Data(	CLivTCVC	0.00143802	0.001505508	0.001340587	0.000901622	0.000909521	);
+Print(	CKidTCVC	1	2	4	12	);	
+Data(	CKidTCVC	0.031878647	0.051922849	0.033379254	0.012892849	);	
+Print(	CBldNAT	1	2	4	12	);	
+Data(	CBldNAT	0.017923849	0.022563915	0.011785209	0.002590065	);	
+Print(	CLivNAT	1	2	4	12	24	);
+Data(	CLivNAT	0.055772608	0.057898831	0.033759025	0.007281983	0.006641249	);
+Print(	CKidNAT	1	2	4	12	);	
+Data(	CKidNAT	0.024932152	0.034211191	0.02009681	0.00512893	);	
+}	# CC045/GeniUnc						
+}	# End Strain 34	# Strain = # CC045/GeniUnc	# Cichocki, 2017-1000
+
+Level { ## Strain 35 # Strain = # CC046/Unc	# Cichocki, 2017-1000
+#Likelihoods
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CPlasTCA , LogNormal_v , Prediction( CPlasTCA )  , Ve_CPlasTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	Likelihood( CKidTCA , LogNormal_v , Prediction( CKidTCA )  , Ve_CKidTCA );
+	Likelihood( CBldTCVG , LogNormal_v , Prediction( CBldTCVG )  , Ve_CBldTCVG );
+	Likelihood( CLivTCVG , LogNormal_v , Prediction( CLivTCVG )  , Ve_CLivTCVG );
+	Likelihood( CKidTCVG , LogNormal_v , Prediction( CKidTCVG )  , Ve_CKidTCVG );
+	Likelihood( CBldTCVC , LogNormal_v , Prediction( CBldTCVC )  , Ve_CBldTCVC );
+	Likelihood( CLivTCVC , LogNormal_v , Prediction( CLivTCVC )  , Ve_CLivTCVC );
+	Likelihood( CKidTCVC , LogNormal_v , Prediction( CKidTCVC )  , Ve_CKidTCVC );
+	Likelihood( CBldNAT , LogNormal_v , Prediction( CBldNAT )  , Ve_CBldNAT );
+	Likelihood( CLivNAT , LogNormal_v , Prediction( CLivNAT )  , Ve_CLivNAT );
+	Likelihood( CKidNAT , LogNormal_v , Prediction( CKidNAT )  , Ve_CKidNAT );
+
+Experiment {		# CC046/Unc				
+Species = 3;						
+# Aqueous Gavage 		# 1000 mg/kg dose group				
+Male = 1.0;						
+BWmeas=0.0262;						
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );						
+TChng =  0.05 ;						
+Print(	CLiv	1	2	4	24	);
+Data(	CLiv	81.41895359	103.6300046	99.7665159	22.63630922	);
+Print(	CKid	1	2	4	24	);
+Data(	CKid	124.7695303	144.1941712	97.49598971	11.85187767	);
+Print(	CPlasTCA	1	2	4	24	);
+Data(	CPlasTCA	64.74229109	136.8613589	284.6618958	267.6064869	);
+Print(	CLivTCA	1	2	4	24	);
+Data(	CLivTCA	31.03010804	33.82351234	44.39014931	24.45919291	);
+Print(	CKidTCA	2	4	24	);	
+Data(	CKidTCA	19.50982004	46.68822658	47.07920803	);	
+Print(	CBldTCVG	1	2	4	);	
+Data(	CBldTCVG	0.005350845	0.005190842	0.006092577	);	
+Print(	CLivTCVG	1	2	4	);	
+Data(	CLivTCVG	0.046501162	0.067080846	0.109488462	);	
+Print(	CKidTCVG	1	2	4	);	
+Data(	CKidTCVG	0.021379055	0.016900138	0.019310264	);	
+Print(	CBldTCVC	1	2	4	);	
+Data(	CBldTCVC	0.004540397	0.008433647	0.005914555	);	
+Print(	CLivTCVC	1	2	4	);	
+Data(	CLivTCVC	0.000577308	0.001203039	0.002212652	);	
+Print(	CKidTCVC	1	2	4	);	
+Data(	CKidTCVC	0.012956303	0.023539768	0.004730073	);	
+Print(	CBldNAT	1	2	4	);	
+Data(	CBldNAT	0.014698785	0.021644552	0.025257685	);	
+Print(	CLivNAT	1	2	4	);	
+Data(	CLivNAT	0.03504807	0.096189545	0.158660304	);	
+Print(	CKidNAT	1	2	4	);	
+Data(	CKidNAT	0.031623535	0.042049408	0.053252795	);	
+}	# CC046/Unc					
+}	# End Strain 35	# Strain = # CC046/Unc	# Cichocki, 2017-1000
+
+Level { ## Strain 36 # Strain = # CC051/TauUnc	# Cichocki, 2017-1000
+#Likelihoods
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CPlasTCA , LogNormal_v , Prediction( CPlasTCA )  , Ve_CPlasTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	Likelihood( CKidTCA , LogNormal_v , Prediction( CKidTCA )  , Ve_CKidTCA );
+	Likelihood( CBldTCVG , LogNormal_v , Prediction( CBldTCVG )  , Ve_CBldTCVG );
+	Likelihood( CLivTCVG , LogNormal_v , Prediction( CLivTCVG )  , Ve_CLivTCVG );
+	Likelihood( CKidTCVG , LogNormal_v , Prediction( CKidTCVG )  , Ve_CKidTCVG );
+	Likelihood( CBldTCVC , LogNormal_v , Prediction( CBldTCVC )  , Ve_CBldTCVC );
+	Likelihood( CLivTCVC , LogNormal_v , Prediction( CLivTCVC )  , Ve_CLivTCVC );
+	Likelihood( CKidTCVC , LogNormal_v , Prediction( CKidTCVC )  , Ve_CKidTCVC );
+	Likelihood( CBldNAT , LogNormal_v , Prediction( CBldNAT )  , Ve_CBldNAT );
+	Likelihood( CLivNAT , LogNormal_v , Prediction( CLivNAT )  , Ve_CLivNAT );
+	Likelihood( CKidNAT , LogNormal_v , Prediction( CKidNAT )  , Ve_CKidNAT );
+	Likelihood( CLivTCVC_ND , StudentT, 5 , Prediction(CLivTCVC_ND)	, 1.90E-04 );
+
+Experiment {		# CC051/TauUnc					
+Species = 3;							
+# Aqueous Gavage 		# 1000 mg/kg dose group					
+Male = 1.0;							
+BWmeas=0.0282;							
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );							
+TChng =  0.05 ;							
+Print(	CLiv	1	2	4	12	24	);
+Data(	CLiv	56.74638387	50.62580996	33.71781261	16.09209526	32.64413368	);
+Print(	CKid	1	2	4	12	24	);
+Data(	CKid	77.92465514	88.51252746	27.30141959	7.866048097	4.544417421	);
+Print(	CPlasTCA	1	2	4	24	);	
+Data(	CPlasTCA	99.46645642	370.184602	287.0764591	280.8365154	);	
+Print(	CLivTCA	1	2	4	12	24	);
+Data(	CLivTCA	22.8145726	36.9962185	58.64803577	70.7872363	75.55134416	);
+Print(	CKidTCA	1	2	4	12	24	);
+Data(	CKidTCA	6.180321722	33.77126603	29.77747336	34.15017149	61.56332153	);
+Print(	CBldTCVG	1	2	4	12	);	
+Data(	CBldTCVG	0.007212039	0.005061841	0.003596885	0.000996732	);	
+Print(	CLivTCVG	1	2	4	12	24	);
+Data(	CLivTCVG	0.051072727	0.064922014	0.014327575	0.006576582	0.002769898	);
+Print(	CKidTCVG	1	2	4	12	);	
+Data(	CKidTCVG	0.018865249	0.022995615	0.008235453	0.003729396	);	
+Print(	CBldTCVC	1	2	4	12	);	
+Data(	CBldTCVC	0.004373669	0.011174953	0.009054022	0.000770442	);	
+Print(	CLivTCVC	2	);				
+Data(	CLivTCVC	0.000654265	);				
+Print(	CKidTCVC	1	2	4	12	);	
+Data(	CKidTCVC	0.03346383	0.040623364	0.018243704	0.005370559	);	
+Print(	CBldNAT	1	2	4	12	);	
+Data(	CBldNAT	0.015332213	0.022874766	0.039045578	0.001791962	);	
+Print(	CLivNAT	1	2	4	12	24	);
+Data(	CLivNAT	0.03853394	0.052762274	0.01567299	0.005450663	0.004057195	);
+Print(	CKidNAT	1	2	4	12	);	
+Data(	CKidNAT	0.007366001	0.004407031	0.002787975	0.001608401	);	
+Print(	CLivTCVC_ND	1	4	12	24	);	
+Data(	CLivTCVC_ND	0.000446028	0.000297632	9.61E-05	0.000140856	);	
+}	# CC051/TauUnc						
+}	# End Strain 36	# Strain = # CC051/TauUnc	# Cichocki, 2017-1000
+
+Level { ## Strain 37 # Strain = # CC052/GeniUnc	# Cichocki, 2017-1000
+#Likelihoods
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CPlasTCA , LogNormal_v , Prediction( CPlasTCA )  , Ve_CPlasTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	Likelihood( CKidTCA , LogNormal_v , Prediction( CKidTCA )  , Ve_CKidTCA );
+	Likelihood( CBldTCVG , LogNormal_v , Prediction( CBldTCVG )  , Ve_CBldTCVG );
+	Likelihood( CLivTCVG , LogNormal_v , Prediction( CLivTCVG )  , Ve_CLivTCVG );
+	Likelihood( CKidTCVG , LogNormal_v , Prediction( CKidTCVG )  , Ve_CKidTCVG );
+	Likelihood( CBldTCVC , LogNormal_v , Prediction( CBldTCVC )  , Ve_CBldTCVC );
+	Likelihood( CLivTCVC , LogNormal_v , Prediction( CLivTCVC )  , Ve_CLivTCVC );
+	Likelihood( CKidTCVC , LogNormal_v , Prediction( CKidTCVC )  , Ve_CKidTCVC );
+	Likelihood( CBldNAT , LogNormal_v , Prediction( CBldNAT )  , Ve_CBldNAT );
+	Likelihood( CLivNAT , LogNormal_v , Prediction( CLivNAT )  , Ve_CLivNAT );
+	Likelihood( CKidNAT , LogNormal_v , Prediction( CKidNAT )  , Ve_CKidNAT );
+	Likelihood( CLivTCVC_ND , StudentT, 5 , Prediction(CLivTCVC_ND)	, 1.90E-04 );
+
+Experiment {		# CC052/GeniUnc				
+Species = 3;						
+# Aqueous Gavage 		# 1000 mg/kg dose group				
+Male = 1.0;						
+BWmeas=0.01138;						
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );						
+TChng =  0.05 ;						
+Print(	CLiv	1	4	24	);	
+Data(	CLiv	132.6040031	88.53334756	0.5838863	);	
+Print(	CKid	1	4	24	);	
+Data(	CKid	120.78279	76.99798543	0.494025643	);	
+Print(	CPlasTCA	1	24	);		
+Data(	CPlasTCA	127.6524369	175.4015505	);		
+Print(	CLivTCA	1	4	24	);	
+Data(	CLivTCA	91.8390523	190.9664401	46.77042636	);	
+Print(	CKidTCA	1	4	24	);	
+Data(	CKidTCA	31.91260777	67.16822432	34.50710617	);	
+Print(	CBldTCVG	1	2	4	24	);
+Data(	CBldTCVG	0.010252992	0.004383702	0.006486963	0.005080664	);
+Print(	CLivTCVG	1	2	4	24	);
+Data(	CLivTCVG	0.126656838	0.132080144	0.121451249	0.03015272	);
+Print(	CKidTCVG	1	2	4	24	);
+Data(	CKidTCVG	0.026184506	0.019642715	0.020826811	0.013927356	);
+Print(	CBldTCVC	1	2	4	24	);
+Data(	CBldTCVC	0.008229515	0.010940543	0.016948974	0.002394757	);
+Print(	CLivTCVC	1	24	);		
+Data(	CLivTCVC	0.001129181	0.000369819	);		
+Print(	CKidTCVC	1	2	4	24	);
+Data(	CKidTCVC	0.03977217	0.043013156	0.026664255	0.017249598	);
+Print(	CBldNAT	1	2	4	24	);
+Data(	CBldNAT	0.054496862	0.041467269	0.046385169	0.031004258	);
+Print(	CLivNAT	1	2	4	24	);
+Data(	CLivNAT	0.075858924	0.105470412	0.07798963	0.038172153	);
+Print(	CKidNAT	1	2	4	24	);
+Data(	CKidNAT	0.067106453	0.049154694	0.043492995	0.026198765	);
+Print(	CLivTCVC_ND	2	4	);		
+Data(	CLivTCVC_ND	0.000725393	0.000545691	);		
+}	# CC052/GeniUnc					
+}	# End Strain 37	# Strain = # CC052/GeniUnc	# Cichocki, 2017-1000
+
+Level { ## Strain 38 # Strain = # CC056/GeniUnc	# Cichocki, 2017-1000
+#Likelihoods
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CPlasTCA , LogNormal_v , Prediction( CPlasTCA )  , Ve_CPlasTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	Likelihood( CKidTCA , LogNormal_v , Prediction( CKidTCA )  , Ve_CKidTCA );
+	Likelihood( CBldTCVG , LogNormal_v , Prediction( CBldTCVG )  , Ve_CBldTCVG );
+	Likelihood( CLivTCVG , LogNormal_v , Prediction( CLivTCVG )  , Ve_CLivTCVG );
+	Likelihood( CKidTCVG , LogNormal_v , Prediction( CKidTCVG )  , Ve_CKidTCVG );
+	Likelihood( CBldTCVC , LogNormal_v , Prediction( CBldTCVC )  , Ve_CBldTCVC );
+	Likelihood( CLivTCVC , LogNormal_v , Prediction( CLivTCVC )  , Ve_CLivTCVC );
+	Likelihood( CKidTCVC , LogNormal_v , Prediction( CKidTCVC )  , Ve_CKidTCVC );
+	Likelihood( CBldNAT , LogNormal_v , Prediction( CBldNAT )  , Ve_CBldNAT );
+	Likelihood( CLivNAT , LogNormal_v , Prediction( CLivNAT )  , Ve_CLivNAT );
+	Likelihood( CKidNAT , LogNormal_v , Prediction( CKidNAT )  , Ve_CKidNAT );
+	Likelihood( CLivTCVC_ND , StudentT, 5 , Prediction(CLivTCVC_ND)	, 1.90E-04 );
+
+Experiment {		# CC056/GeniUnc					
+Species = 3;							
+# Aqueous Gavage 		# 1000 mg/kg dose group					
+Male = 1.0;							
+BWmeas=0.0198;							
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );							
+TChng =  0.05 ;							
+Print(	CLiv	1	2	4	12	24	);
+Data(	CLiv	83.45184983	80.2559104	53.22981306	120.6846762	16.4475372	);
+Print(	CKid	1	2	4	12	24	);
+Data(	CKid	72.81100013	85.99494134	35.06096785	79.51383363	6.38173313	);
+Print(	CPlasTCA	2	4	12	24	);	
+Data(	CPlasTCA	154.0422181	188.5773245	504.2744753	168.5407354	);	
+Print(	CLivTCA	1	2	4	12	24	);
+Data(	CLivTCA	46.86520936	71.83789183	114.4385186	108.6342538	52.0224845	);
+Print(	CKidTCA	1	2	4	12	24	);
+Data(	CKidTCA	20.21140994	41.79239937	50.52776288	59.75473833	33.1237297	);
+Print(	CBldTCVG	1	2	4	12	);	
+Data(	CBldTCVG	0.004530601	0.003014895	0.003653329	0.003783809	);	
+Print(	CLivTCVG	1	2	4	12	);	
+Data(	CLivTCVG	0.050571635	0.049726	0.031598019	0.058419681	);	
+Print(	CKidTCVG	1	2	4	12	);	
+Data(	CKidTCVG	0.026776442	0.018349541	0.014797756	0.009626681	);	
+Print(	CBldTCVC	1	2	4	12	);	
+Data(	CBldTCVC	0.025176453	0.004901376	0.005157067	0.006454139	);	
+Print(	CLivTCVC	1	12	);			
+Data(	CLivTCVC	0.000776627	0.001021005	);			
+Print(	CKidTCVC	1	2	4	12	);	
+Data(	CKidTCVC	0.022845762	0.020367925	0.016483631	0.031562532	);	
+Print(	CBldNAT	1	2	4	12	);	
+Data(	CBldNAT	0.088950301	0.010106414	0.015410262	0.012136631	);	
+Print(	CLivNAT	1	2	4	12	);	
+Data(	CLivNAT	0.027013817	0.028988507	0.029955289	0.018278718	);	
+Print(	CKidNAT	1	2	4	12	);	
+Data(	CKidNAT	0.031087375	0.018189005	0.016147306	0.011772755	);	
+Print(	CLivTCVC_ND	2	4	);			
+Data(	CLivTCVC_ND	0.000480035	0.000403682	);			
+}	# CC056/GeniUnc						
+}	# End Strain 38	# Strain = # CC056/GeniUnc	# Cichocki, 2017-1000
+
+Level { ## Strain 39 # Strain = # CC058/Unc	# Cichocki, 2017-1000
+#Likelihoods
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CPlasTCA , LogNormal_v , Prediction( CPlasTCA )  , Ve_CPlasTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	Likelihood( CKidTCA , LogNormal_v , Prediction( CKidTCA )  , Ve_CKidTCA );
+	Likelihood( CBldTCVG , LogNormal_v , Prediction( CBldTCVG )  , Ve_CBldTCVG );
+	Likelihood( CLivTCVG , LogNormal_v , Prediction( CLivTCVG )  , Ve_CLivTCVG );
+	Likelihood( CKidTCVG , LogNormal_v , Prediction( CKidTCVG )  , Ve_CKidTCVG );
+	Likelihood( CBldTCVC , LogNormal_v , Prediction( CBldTCVC )  , Ve_CBldTCVC );
+	Likelihood( CLivTCVC , LogNormal_v , Prediction( CLivTCVC )  , Ve_CLivTCVC );
+	Likelihood( CKidTCVC , LogNormal_v , Prediction( CKidTCVC )  , Ve_CKidTCVC );
+	Likelihood( CBldNAT , LogNormal_v , Prediction( CBldNAT )  , Ve_CBldNAT );
+	Likelihood( CLivNAT , LogNormal_v , Prediction( CLivNAT )  , Ve_CLivNAT );
+	Likelihood( CKidNAT , LogNormal_v , Prediction( CKidNAT )  , Ve_CKidNAT );
+	Likelihood( CLiv_ND , StudentT, 5 , Prediction(CLiv_ND)	, 2.76E-04 );
+	Likelihood( CBldTCVC_ND , StudentT, 5 , Prediction(CBldTCVC_ND)	, 7.85E-05 );
+	Likelihood( CLivTCVC_ND , StudentT, 5 , Prediction(CLivTCVC_ND)	, 1.90E-04 );
+	Likelihood( CBldNAT_ND , StudentT, 5 , Prediction(CBldNAT_ND)	, 5.27E-05 );
+	Likelihood( CLivNAT_ND , StudentT, 5 , Prediction(CLivNAT_ND)	, 3.05E-04 );
+	Likelihood( CKidNAT_ND , StudentT, 5 , Prediction(CKidNAT_ND)	, 1.84E-04 );
+	
+Experiment {		# CC058/Unc					
+Species = 3;							
+# Aqueous Gavage 		# 1000 mg/kg dose group					
+Male = 1.0;							
+BWmeas=0.0217;							
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );							
+TChng =  0.05 ;							
+Print(	CLiv	1	2	4	12	);	
+Data(	CLiv	109.6386742	42.06682437	26.2445847	0.535332164	);	
+Print(	CKid	1	2	4	12	24	);
+Data(	CKid	46.76045822	39.30135119	14.02652923	5.611100119	0.173360324	);
+Print(	CPlasTCA	1	2	4	24	);	
+Data(	CPlasTCA	87.84702879	123.8743341	203.145355	93.44022593	);	
+Print(	CLivTCA	1	2	4	12	24	);
+Data(	CLivTCA	42.05135537	54.31574323	137.5258532	138.5264616	55.68961623	);
+Print(	CKidTCA	1	2	4	12	24	);
+Data(	CKidTCA	18.73100981	42.68929999	19.21253285	50.20693817	25.96496161	);
+Print(	CBldTCVG	1	2	4	12	);	
+Data(	CBldTCVG	0.003756206	0.001934634	0.001005107	0.00039271	);	
+Print(	CLivTCVG	1	2	4	12	24	);
+Data(	CLivTCVG	0.043930835	0.020352592	0.008614675	0.00289585	0.001346087	);
+Print(	CKidTCVG	1	2	4	12	);	
+Data(	CKidTCVG	0.029000133	0.024160841	0.003277017	0.001783024	);	
+Print(	CBldTCVC	1	2	4	);		
+Data(	CBldTCVC	0.004425268	0.003255299	0.000650964	);		
+Print(	CLivTCVC	1	2	4	12	);	
+Data(	CLivTCVC	0.001258913	0.000926832	0.000917269	0.000743131	);	
+Print(	CKidTCVC	1	2	4	12	);	
+Data(	CKidTCVC	0.030917481	0.020118754	0.010234428	0.00252044	);	
+Print(	CBldNAT	1	2	4	);		
+Data(	CBldNAT	0.018156541	0.013134254	0.002121505	);		
+Print(	CLivNAT	1	2	4	);		
+Data(	CLivNAT	0.044383449	0.020118057	0.005211985	);		
+Print(	CKidNAT	1	2	4	);		
+Data(	CKidNAT	0.01104265	0.005277015	0.001690257	);		
+Print(	CLiv_ND	24	);				
+Data(	CLiv_ND	0.000016583	);				
+Print(	CBldTCVC_ND	12	);				
+Data(	CBldTCVC_ND	0.000140808	);				
+Print(	CLivTCVC_ND	24	);				
+Data(	CLivTCVC_ND	5.63E-06	);				
+Print(	CBldNAT_ND	12	);				
+Data(	CBldNAT_ND	0.000110307	);				
+Print(	CLivNAT_ND	12	24	);			
+Data(	CLivNAT_ND	0	0.000762131	);			
+Print(	CKidNAT_ND	12	);				
+Data(	CKidNAT_ND	0.000379608	);				
+}	# CC058/Unc						
+}	# End Strain 39	# Strain = # CC058/Unc	# Cichocki, 2017-1000
+
+Level { ## Strain 40 # Strain = # CC059/TauUnc	# Cichocki, 2017-1000
+#Likelihoods
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CPlasTCA , LogNormal_v , Prediction( CPlasTCA )  , Ve_CPlasTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	Likelihood( CKidTCA , LogNormal_v , Prediction( CKidTCA )  , Ve_CKidTCA );
+	Likelihood( CBldTCVG , LogNormal_v , Prediction( CBldTCVG )  , Ve_CBldTCVG );
+	Likelihood( CLivTCVG , LogNormal_v , Prediction( CLivTCVG )  , Ve_CLivTCVG );
+	Likelihood( CKidTCVG , LogNormal_v , Prediction( CKidTCVG )  , Ve_CKidTCVG );
+	Likelihood( CBldTCVC , LogNormal_v , Prediction( CBldTCVC )  , Ve_CBldTCVC );
+	Likelihood( CLivTCVC , LogNormal_v , Prediction( CLivTCVC )  , Ve_CLivTCVC );
+	Likelihood( CKidTCVC , LogNormal_v , Prediction( CKidTCVC )  , Ve_CKidTCVC );
+	Likelihood( CBldNAT , LogNormal_v , Prediction( CBldNAT )  , Ve_CBldNAT );
+	Likelihood( CLivNAT , LogNormal_v , Prediction( CLivNAT )  , Ve_CLivNAT );
+	Likelihood( CKidNAT , LogNormal_v , Prediction( CKidNAT )  , Ve_CKidNAT );
+	Likelihood( CLivTCVC_ND , StudentT, 5 , Prediction(CLivTCVC_ND)	, 1.90E-04 );
+
+Experiment {		# CC059/TauUnc			
+Species = 3;					
+# Aqueous Gavage 		# 1000 mg/kg dose group			
+Male = 1.0;					
+BWmeas=0.0278;					
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );					
+TChng =  0.05 ;					
+Print(	CLiv	1	4	12	);
+Data(	CLiv	70.88443369	60.25482871	41.38439927	);
+Print(	CKid	1	4	12	);
+Data(	CKid	146.0229159	154.4909208	38.10854552	);
+Print(	CPlasTCA	1	4	12	);
+Data(	CPlasTCA	113.7211579	132.3437841	360.9138288	);
+Print(	CLivTCA	1	4	12	);
+Data(	CLivTCA	52.71210951	77.36893959	114.5514565	);
+Print(	CKidTCA	1	4	12	);
+Data(	CKidTCA	34.22092565	32.39176256	168.6049577	);
+Print(	CBldTCVG	1	4	12	);
+Data(	CBldTCVG	0.005238599	0.00323675	0.001659249	);
+Print(	CLivTCVG	1	4	12	);
+Data(	CLivTCVG	0.044033675	0.030866719	0.012780336	);
+Print(	CKidTCVG	1	4	12	);
+Data(	CKidTCVG	0.029857968	0.019626223	0.008632602	);
+Print(	CBldTCVC	1	4	12	);
+Data(	CBldTCVC	0.015855958	0.007868775	0.003579667	);
+Print(	CLivTCVC	4	);		
+Data(	CLivTCVC	0.000605286	);		
+Print(	CKidTCVC	1	4	12	);
+Data(	CKidTCVC	0.093941135	0.058885619	0.026179013	);
+Print(	CBldNAT	1	4	12	);
+Data(	CBldNAT	0.028199556	0.014279946	0.009202845	);
+Print(	CLivNAT	1	4	12	);
+Data(	CLivNAT	0.052795615	0.041106659	0.020772044	);
+Print(	CKidNAT	1	4	12	);
+Data(	CKidNAT	0.015405841	0.007643032	0.00514783	);
+Print(	CLivTCVC_ND	1	12	);	
+Data(	CLivTCVC_ND	0.000556758	0.000245909	);	
+}	# CC059/TauUnc				
+}	# End Strain 40	# Strain = # CC059/TauUnc	# Cichocki, 2017-1000
+
+Level { ## Strain 41 # Strain = # CC060/Unc	# Cichocki, 2017-1000
+#Likelihoods
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CPlasTCA , LogNormal_v , Prediction( CPlasTCA )  , Ve_CPlasTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	Likelihood( CKidTCA , LogNormal_v , Prediction( CKidTCA )  , Ve_CKidTCA );
+	Likelihood( CBldTCVG , LogNormal_v , Prediction( CBldTCVG )  , Ve_CBldTCVG );
+	Likelihood( CLivTCVG , LogNormal_v , Prediction( CLivTCVG )  , Ve_CLivTCVG );
+	Likelihood( CKidTCVG , LogNormal_v , Prediction( CKidTCVG )  , Ve_CKidTCVG );
+	Likelihood( CBldTCVC , LogNormal_v , Prediction( CBldTCVC )  , Ve_CBldTCVC );
+	Likelihood( CLivTCVC , LogNormal_v , Prediction( CLivTCVC )  , Ve_CLivTCVC );
+	Likelihood( CKidTCVC , LogNormal_v , Prediction( CKidTCVC )  , Ve_CKidTCVC );
+	Likelihood( CBldNAT , LogNormal_v , Prediction( CBldNAT )  , Ve_CBldNAT );
+	Likelihood( CLivNAT , LogNormal_v , Prediction( CLivNAT )  , Ve_CLivNAT );
+	Likelihood( CKidNAT , LogNormal_v , Prediction( CKidNAT )  , Ve_CKidNAT );
+	Likelihood( CLivTCVC_ND , StudentT, 5 , Prediction(CLivTCVC_ND)	, 1.90E-04 );
+
+Experiment {		# CC060/Unc					
+Species = 3;							
+# Aqueous Gavage 		# 1000 mg/kg dose group					
+Male = 1.0;							
+BWmeas=0.02474;							
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );							
+TChng =  0.05 ;							
+Print(	CLiv	1	2	4	12	24	);
+Data(	CLiv	47.50641532	45.90111848	48.67882556	21.11375896	5.582131208	);
+Print(	CKid	1	2	4	12	24	);
+Data(	CKid	3.162159345	91.99043119	233.1605783	76.52516771	3.585717895	);
+Print(	CPlasTCA	2	4	12	24	);	
+Data(	CPlasTCA	191.2865482	274.4540941	460.7708881	114.2017608	);	
+Print(	CLivTCA	1	2	4	12	24	);
+Data(	CLivTCA	28.54513569	36.21558187	74.62465323	64.72229515	31.58960404	);
+Print(	CKidTCA	1	2	4	);		
+Data(	CKidTCA	31.62383964	34.35474492	21.00132787	);		
+Print(	CBldTCVG	1	2	4	12	);	
+Data(	CBldTCVG	0.005917088	0.008270293	0.005202694	0.002325802	);	
+Print(	CLivTCVG	1	2	4	12	);	
+Data(	CLivTCVG	0.051422934	0.074638317	0.051491061	0.012996216	);	
+Print(	CKidTCVG	1	2	4	12	);	
+Data(	CKidTCVG	0.010976702	0.015553346	0.013242686	0.005010791	);	
+Print(	CBldTCVC	1	2	4	12	);	
+Data(	CBldTCVC	0.006596729	0.000690085	0.001539745	0.001087059	);	
+Print(	CLivTCVC	2	4	);			
+Data(	CLivTCVC	0.000849445	0.00064419	);			
+Print(	CKidTCVC	1	2	4	12	);	
+Data(	CKidTCVC	0.011465688	0.056413817	0.015591396	0.004498241	);	
+Print(	CBldNAT	1	2	4	12	);	
+Data(	CBldNAT	0.017533017	0.037065299	0.007067616	0.037363566	);	
+Print(	CLivNAT	1	2	4	12	);	
+Data(	CLivNAT	0.020280815	0.045831498	0.031192045	0.009210129	);	
+Print(	CKidNAT	1	2	4	12	);	
+Data(	CKidNAT	0.004188	0.01129747	0.004542009	0.001931237	);	
+Print(	CLivTCVC_ND	1	12	);			
+Data(	CLivTCVC_ND	0.00027601	0.000231049	);			
+}	# CC060/Unc						
+}	# End Strain 41	# Strain = # CC060/Unc	# Cichocki, 2017-1000
+
+Level { ## Strain 42 # Strain = # CC061	# Cichocki, 2017-1000
+#Likelihoods
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CPlasTCA , LogNormal_v , Prediction( CPlasTCA )  , Ve_CPlasTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	Likelihood( CKidTCA , LogNormal_v , Prediction( CKidTCA )  , Ve_CKidTCA );
+	Likelihood( CBldTCVG , LogNormal_v , Prediction( CBldTCVG )  , Ve_CBldTCVG );
+	Likelihood( CLivTCVG , LogNormal_v , Prediction( CLivTCVG )  , Ve_CLivTCVG );
+	Likelihood( CKidTCVG , LogNormal_v , Prediction( CKidTCVG )  , Ve_CKidTCVG );
+	Likelihood( CBldTCVC , LogNormal_v , Prediction( CBldTCVC )  , Ve_CBldTCVC );
+	Likelihood( CLivTCVC , LogNormal_v , Prediction( CLivTCVC )  , Ve_CLivTCVC );
+	Likelihood( CKidTCVC , LogNormal_v , Prediction( CKidTCVC )  , Ve_CKidTCVC );
+	Likelihood( CBldNAT , LogNormal_v , Prediction( CBldNAT )  , Ve_CBldNAT );
+	Likelihood( CLivNAT , LogNormal_v , Prediction( CLivNAT )  , Ve_CLivNAT );
+	Likelihood( CKidNAT , LogNormal_v , Prediction( CKidNAT )  , Ve_CKidNAT );
+	Likelihood( CLivTCVC_ND , StudentT, 5 , Prediction(CLivTCVC_ND)	, 1.90E-04 );
+
+Experiment {		# CC061			
+Species = 3;					
+# Aqueous Gavage 		# 1000 mg/kg dose group			
+Male = 1.0;					
+BWmeas=0.0264;					
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );					
+TChng =  0.05 ;					
+Print(	CLiv	2	4	24	);
+Data(	CLiv	208.5722954	194.5296864	46.66727843	);
+Print(	CKid	4	24	);	
+Data(	CKid	61.6585692	12.69424589	);	
+Print(	CPlasTCA	2	4	24	);
+Data(	CPlasTCA	53.38933531	106.6677852	107.3747976	);
+Print(	CLivTCA	2	4	24	);
+Data(	CLivTCA	21.96754872	69.97933772	35.17072318	);
+Print(	CKidTCA	2	4	24	);
+Data(	CKidTCA	42.16141893	79.73838783	53.63610453	);
+Print(	CBldTCVG	2	4	);	
+Data(	CBldTCVG	0.008112441	0.008559759	);	
+Print(	CLivTCVG	2	4	);	
+Data(	CLivTCVG	0.080619622	0.051505809	);	
+Print(	CKidTCVG	2	4	);	
+Data(	CKidTCVG	0.008594932	0.01106096	);	
+Print(	CBldTCVC	2	4	);	
+Data(	CBldTCVC	0.006783788	0.004025877	);	
+Print(	CLivTCVC	2	);		
+Data(	CLivTCVC	0.000685227	);		
+Print(	CKidTCVC	2	4	);	
+Data(	CKidTCVC	0.01321133	0.01399877	);	
+Print(	CBldNAT	2	4	);	
+Data(	CBldNAT	0.010842935	0.007703576	);	
+Print(	CLivNAT	2	4	);	
+Data(	CLivNAT	0.022433528	0.016465991	);	
+Print(	CKidNAT	2	4	);	
+Data(	CKidNAT	0.009524379	0.009257978	);	
+Print(	CLivTCVC_ND	4	);		
+Data(	CLivTCVC_ND	0.00036876	);		
+}	# CC061				
+}	# End Strain 42	# Strain = # CC061	# Cichocki, 2017-1000
+
+Level { ## Strain 43 # Strain = # CC063	# Cichocki, 2017-1000
+#Likelihoods
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CPlasTCA , LogNormal_v , Prediction( CPlasTCA )  , Ve_CPlasTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	Likelihood( CKidTCA , LogNormal_v , Prediction( CKidTCA )  , Ve_CKidTCA );
+	Likelihood( CBldTCVG , LogNormal_v , Prediction( CBldTCVG )  , Ve_CBldTCVG );
+	Likelihood( CLivTCVG , LogNormal_v , Prediction( CLivTCVG )  , Ve_CLivTCVG );
+	Likelihood( CKidTCVG , LogNormal_v , Prediction( CKidTCVG )  , Ve_CKidTCVG );
+	Likelihood( CBldTCVC , LogNormal_v , Prediction( CBldTCVC )  , Ve_CBldTCVC );
+	Likelihood( CLivTCVC , LogNormal_v , Prediction( CLivTCVC )  , Ve_CLivTCVC );
+	Likelihood( CKidTCVC , LogNormal_v , Prediction( CKidTCVC )  , Ve_CKidTCVC );
+	Likelihood( CBldNAT , LogNormal_v , Prediction( CBldNAT )  , Ve_CBldNAT );
+	Likelihood( CLivNAT , LogNormal_v , Prediction( CLivNAT )  , Ve_CLivNAT );
+	Likelihood( CKidNAT , LogNormal_v , Prediction( CKidNAT )  , Ve_CKidNAT );
+
+Experiment {		# CC063			
+Species = 3;					
+# Aqueous Gavage 		# 1000 mg/kg dose group			
+Male = 1.0;					
+BWmeas=0.0216;					
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );					
+TChng =  0.05 ;					
+Print(	CLiv	2	4	24	);
+Data(	CLiv	175.9804387	133.0622232	9.043751549	);
+Print(	CKid	2	4	24	);
+Data(	CKid	110.801275	155.4780851	4.404871827	);
+Print(	CPlasTCA	2	24	);	
+Data(	CPlasTCA	23.52804049	33.28580225	);	
+Print(	CLivTCA	2	4	24	);
+Data(	CLivTCA	38.24097195	50.81264217	40.86987438	);
+Print(	CKidTCA	2	4	24	);
+Data(	CKidTCA	36.6374573	101.2304047	55.10946749	);
+Print(	CBldTCVG	2	);		
+Data(	CBldTCVG	0.002408597	);		
+Print(	CLivTCVG	2	4	);	
+Data(	CLivTCVG	0.05844116	0.030351433	);	
+Print(	CKidTCVG	2	4	);	
+Data(	CKidTCVG	0.014672515	0.011117002	);	
+Print(	CBldTCVC	2	);		
+Data(	CBldTCVC	0.002263332	);		
+Print(	CLivTCVC	2	4	);	
+Data(	CLivTCVC	0.000942695	0.000569131	);	
+Print(	CKidTCVC	2	4	);	
+Data(	CKidTCVC	0.037060601	0.026783487	);	
+Print(	CBldNAT	2	);		
+Data(	CBldNAT	0.005975156	);		
+Print(	CLivNAT	2	4	);	
+Data(	CLivNAT	0.083611639	0.050039987	);	
+Print(	CKidNAT	2	4	);	
+Data(	CKidNAT	0.025955613	0.035619008	);	
+}	# CC063				
+}	# End Strain 43	# Strain = # CC063	# Cichocki, 2017-1000
+
+Level { ## Strain 44 # Strain = # CC065/Unc	# Cichocki, 2017-1000
+#Likelihoods
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CPlasTCA , LogNormal_v , Prediction( CPlasTCA )  , Ve_CPlasTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	Likelihood( CKidTCA , LogNormal_v , Prediction( CKidTCA )  , Ve_CKidTCA );
+	Likelihood( CBldTCVG , LogNormal_v , Prediction( CBldTCVG )  , Ve_CBldTCVG );
+	Likelihood( CLivTCVG , LogNormal_v , Prediction( CLivTCVG )  , Ve_CLivTCVG );
+	Likelihood( CKidTCVG , LogNormal_v , Prediction( CKidTCVG )  , Ve_CKidTCVG );
+	Likelihood( CBldTCVC , LogNormal_v , Prediction( CBldTCVC )  , Ve_CBldTCVC );
+	Likelihood( CLivTCVC , LogNormal_v , Prediction( CLivTCVC )  , Ve_CLivTCVC );
+	Likelihood( CKidTCVC , LogNormal_v , Prediction( CKidTCVC )  , Ve_CKidTCVC );
+	Likelihood( CBldNAT , LogNormal_v , Prediction( CBldNAT )  , Ve_CBldNAT );
+	Likelihood( CLivNAT , LogNormal_v , Prediction( CLivNAT )  , Ve_CLivNAT );
+	Likelihood( CKidNAT , LogNormal_v , Prediction( CKidNAT )  , Ve_CKidNAT );
+	Likelihood( CLivTCVC_ND , StudentT, 5 , Prediction(CLivTCVC_ND)	, 1.90E-04 );
+
+Experiment {		# CC065/Unc					
+Species = 3;							
+# Aqueous Gavage 		# 1000 mg/kg dose group					
+Male = 1.0;							
+BWmeas=0.0243;							
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );							
+TChng =  0.05 ;							
+Print(	CLiv	1	2	4	12	24	);
+Data(	CLiv	109.1899239	136.3019539	92.89004488	38.69259232	102.7363354	);
+Print(	CKid	1	2	4	12	24	);
+Data(	CKid	153.2399658	211.9557937	240.7414324	94.44404919	40.58299402	);
+Print(	CPlasTCA	1	2	4	12	24	);
+Data(	CPlasTCA	97.73091364	166.2173256	51.80561286	227.9603647	239.4486893	);
+Print(	CLivTCA	1	2	4	12	24	);
+Data(	CLivTCA	52.19030945	86.18284018	82.73971398	157.4207065	86.14281218	);
+Print(	CKidTCA	1	2	4	24	);	
+Data(	CKidTCA	26.27358051	33.87863973	57.88004684	43.86422293	);	
+Print(	CBldTCVG	1	2	4	12	);	
+Data(	CBldTCVG	0.008063237	0.007325027	0.004935262	0.002622246	);	
+Print(	CLivTCVG	1	2	4	12	);	
+Data(	CLivTCVG	0.082186703	0.057965042	0.042918921	0.012873744	);	
+Print(	CKidTCVG	1	2	4	12	);	
+Data(	CKidTCVG	0.026050882	0.021334698	0.02178391	0.005565303	);	
+Print(	CBldTCVC	1	2	4	12	);	
+Data(	CBldTCVC	0.000490645	0.00062211	0.000542193	0.000183122	);	
+Print(	CLivTCVC	2	);				
+Data(	CLivTCVC	0.005771418	);				
+Print(	CKidTCVC	1	2	4	12	);	
+Data(	CKidTCVC	0.047369989	0.066654094	0.03790438	0.014188897	);	
+Print(	CBldNAT	1	2	4	12	);	
+Data(	CBldNAT	0.030668605	0.019598671	0.017411802	0.032248501	);	
+Print(	CLivNAT	1	2	4	12	);	
+Data(	CLivNAT	0.053182095	0.056300803	0.041444188	0.014836803	);	
+Print(	CKidNAT	1	2	4	12	);	
+Data(	CKidNAT	0.005917521	0.008862025	0.007089121	0.003399544	);	
+Print(	CLivTCVC_ND	1	4	12	);		
+Data(	CLivTCVC_ND	0.008041124	0.007072322	0.006831277	);		
+}	# CC065/Unc						
+}	# End Strain 44	# Strain = # CC065/Unc	# Cichocki, 2017-1000
+
+Level { ## Strain 45 # Strain = # CC070/TauUnc	# Cichocki, 2017-1000
+#Likelihoods
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CPlasTCA , LogNormal_v , Prediction( CPlasTCA )  , Ve_CPlasTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	Likelihood( CKidTCA , LogNormal_v , Prediction( CKidTCA )  , Ve_CKidTCA );
+	Likelihood( CBldTCVG , LogNormal_v , Prediction( CBldTCVG )  , Ve_CBldTCVG );
+	Likelihood( CLivTCVG , LogNormal_v , Prediction( CLivTCVG )  , Ve_CLivTCVG );
+	Likelihood( CKidTCVG , LogNormal_v , Prediction( CKidTCVG )  , Ve_CKidTCVG );
+	Likelihood( CBldTCVC , LogNormal_v , Prediction( CBldTCVC )  , Ve_CBldTCVC );
+	Likelihood( CLivTCVC , LogNormal_v , Prediction( CLivTCVC )  , Ve_CLivTCVC );
+	Likelihood( CKidTCVC , LogNormal_v , Prediction( CKidTCVC )  , Ve_CKidTCVC );
+	Likelihood( CBldNAT , LogNormal_v , Prediction( CBldNAT )  , Ve_CBldNAT );
+	Likelihood( CLivNAT , LogNormal_v , Prediction( CLivNAT )  , Ve_CLivNAT );
+	Likelihood( CKidNAT , LogNormal_v , Prediction( CKidNAT )  , Ve_CKidNAT );
+	Likelihood( CLivTCVC_ND , StudentT, 5 , Prediction(CLivTCVC_ND)	, 1.90E-04 );
+
+Experiment {		# CC070/TauUnc					
+Species = 3;							
+# Aqueous Gavage 		# 1000 mg/kg dose group					
+Male = 1.0;							
+BWmeas=0.0261;							
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );							
+TChng =  0.05 ;							
+Print(	CLiv	1	2	4	12	24	);
+Data(	CLiv	81.38223273	70.06505246	84.08080424	74.63534437	16.98098854	);
+Print(	CKid	1	2	4	12	24	);
+Data(	CKid	74.14437056	80.62883574	76.15346672	108.8042417	9.272438084	);
+Print(	CPlasTCA	1	2	4	12	24	);
+Data(	CPlasTCA	78.52906145	34.34696446	297.4518342	252.0731202	81.40527716	);
+Print(	CLivTCA	1	2	4	12	24	);
+Data(	CLivTCA	22.13600083	45.07736997	48.68705869	90.90146846	72.19841438	);
+Print(	CKidTCA	1	2	4	12	24	);
+Data(	CKidTCA	26.13291722	39.74436193	73.96204821	98.54827038	73.34768919	);
+Print(	CBldTCVG	1	2	4	12	);	
+Data(	CBldTCVG	0.003908866	0.004070092	0.004229764	0.003283579	);	
+Print(	CLivTCVG	1	2	4	12	);	
+Data(	CLivTCVG	0.033584215	0.033393217	0.048109895	0.014967714	);	
+Print(	CKidTCVG	1	2	4	12	);	
+Data(	CKidTCVG	0.007376387	0.006943126	0.004781376	0.003691952	);	
+Print(	CBldTCVC	1	2	4	12	);	
+Data(	CBldTCVC	0.036812467	0.001253562	0.006238592	0.004447681	);	
+Print(	CLivTCVC	4	);				
+Data(	CLivTCVC	0.005845093	);				
+Print(	CKidTCVC	1	2	4	12	);	
+Data(	CKidTCVC	0.011708795	0.015652504	0.019149493	0.009276683	);	
+Print(	CBldNAT	1	2	4	12	);	
+Data(	CBldNAT	0.085080553	0.00281932	0.017884336	0.008140132	);	
+Print(	CLivNAT	1	2	4	12	);	
+Data(	CLivNAT	0.033548811	0.043465295	0.061245059	0.0164153	);	
+Print(	CKidNAT	1	2	4	12	);	
+Data(	CKidNAT	0.008809051	0.008100034	0.011193183	0.007345274	);	
+Print(	CLivTCVC_ND	1	2	12	);		
+Data(	CLivTCVC_ND	0.000327253	0.000562532	0.000282093	);		
+}	# CC070/TauUnc										
+}	# End Strain 45	# Strain = # CC070/TauUnc	# Cichocki, 2017-1000
+
+Level { ## Strain 46 # Strain = # CC071/TauUnc	# Cichocki, 2017-1000
+#Likelihoods
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CPlasTCA , LogNormal_v , Prediction( CPlasTCA )  , Ve_CPlasTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	Likelihood( CKidTCA , LogNormal_v , Prediction( CKidTCA )  , Ve_CKidTCA );
+	Likelihood( CBldTCVG , LogNormal_v , Prediction( CBldTCVG )  , Ve_CBldTCVG );
+	Likelihood( CLivTCVG , LogNormal_v , Prediction( CLivTCVG )  , Ve_CLivTCVG );
+	Likelihood( CKidTCVG , LogNormal_v , Prediction( CKidTCVG )  , Ve_CKidTCVG );
+	Likelihood( CBldTCVC , LogNormal_v , Prediction( CBldTCVC )  , Ve_CBldTCVC );
+	Likelihood( CLivTCVC , LogNormal_v , Prediction( CLivTCVC )  , Ve_CLivTCVC );
+	Likelihood( CKidTCVC , LogNormal_v , Prediction( CKidTCVC )  , Ve_CKidTCVC );
+	Likelihood( CBldNAT , LogNormal_v , Prediction( CBldNAT )  , Ve_CBldNAT );
+	Likelihood( CLivNAT , LogNormal_v , Prediction( CLivNAT )  , Ve_CLivNAT );
+	Likelihood( CKidNAT , LogNormal_v , Prediction( CKidNAT )  , Ve_CKidNAT );
+	Likelihood( CLivTCVC_ND , StudentT, 5 , Prediction(CLivTCVC_ND)	, 1.90E-04 );
+
+Experiment {		# CC071/TauUnc					
+Species = 3;							
+# Aqueous Gavage 		# 1000 mg/kg dose group					
+Male = 1.0;							
+BWmeas=0.018;							
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );							
+TChng =  0.05 ;							
+Print(	CLiv	1	2	4	12	24	);
+Data(	CLiv	121.7968895	100.2792686	114.5059701	42.39966147	15.30031545	);
+Print(	CKid	1	2	4	12	24	);
+Data(	CKid	76.05661764	73.84810896	62.30076189	13.06804972	7.24450859	);
+Print(	CPlasTCA	1	2	4	12	24	);
+Data(	CPlasTCA	36.9555184	146.838631	90.16986153	301.8841879	109.6178276	);
+Print(	CLivTCA	1	2	4	12	24	);
+Data(	CLivTCA	143.878502	213.0810836	107.5793537	265.4421491	143.2691546	);
+Print(	CKidTCA	1	2	4	12	24	);
+Data(	CKidTCA	32.50163929	42.71003231	65.91628191	36.91029384	35.51148937	);
+Print(	CBldTCVG	1	4	12	);		
+Data(	CBldTCVG	0.002655619	0.003130465	0.001642122	);		
+Print(	CLivTCVG	1	2	4	12	);	
+Data(	CLivTCVG	0.076408009	0.13131891	0.103176092	0.040447467	);	
+Print(	CKidTCVG	1	2	4	12	);	
+Data(	CKidTCVG	0.012734961	0.010907725	0.009664731	0.008851414	);	
+Print(	CBldTCVC	1	4	12	);		
+Data(	CBldTCVC	0.002206561	0.001150988	0.000321141	);		
+Print(	CLivTCVC	1	2	4	);		
+Data(	CLivTCVC	0.000746849	0.000694187	0.000604418	);		
+Print(	CKidTCVC	1	2	4	12	);	
+Data(	CKidTCVC	0.018859638	0.024756145	0.023774028	0.026484403	);	
+Print(	CBldNAT	1	4	12	);		
+Data(	CBldNAT	0.008942461	0.006738648	0.000998409	);		
+Print(	CLivNAT	1	2	4	12	);	
+Data(	CLivNAT	0.089251971	0.071176956	0.048535305	0.003879991	);	
+Print(	CKidNAT	1	2	4	12	);	
+Data(	CKidNAT	0.009334654	0.008042506	0.007659899	0.008046848	);	
+Print(	CLivTCVC_ND	12	);				
+Data(	CLivTCVC_ND	0.000330103	);				
+}	# CC071/TauUnc						
+}	# End Strain 46	# Strain = # CC071/TauUnc	# Cichocki, 2017-1000
+
+Level { ## Strain 47 # Strain = # CC072/TauUnc	# Cichocki, 2017-1000
+#Likelihoods
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CPlasTCA , LogNormal_v , Prediction( CPlasTCA )  , Ve_CPlasTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	Likelihood( CKidTCA , LogNormal_v , Prediction( CKidTCA )  , Ve_CKidTCA );
+	Likelihood( CBldTCVG , LogNormal_v , Prediction( CBldTCVG )  , Ve_CBldTCVG );
+	Likelihood( CLivTCVG , LogNormal_v , Prediction( CLivTCVG )  , Ve_CLivTCVG );
+	Likelihood( CKidTCVG , LogNormal_v , Prediction( CKidTCVG )  , Ve_CKidTCVG );
+	Likelihood( CBldTCVC , LogNormal_v , Prediction( CBldTCVC )  , Ve_CBldTCVC );
+	Likelihood( CLivTCVC , LogNormal_v , Prediction( CLivTCVC )  , Ve_CLivTCVC );
+	Likelihood( CKidTCVC , LogNormal_v , Prediction( CKidTCVC )  , Ve_CKidTCVC );
+	Likelihood( CBldNAT , LogNormal_v , Prediction( CBldNAT )  , Ve_CBldNAT );
+	Likelihood( CLivNAT , LogNormal_v , Prediction( CLivNAT )  , Ve_CLivNAT );
+	Likelihood( CKidNAT , LogNormal_v , Prediction( CKidNAT )  , Ve_CKidNAT );
+	Likelihood( CLivTCVC_ND , StudentT, 5 , Prediction(CLivTCVC_ND)	, 1.90E-04 );
+
+Experiment {		# CC072/TauUnc					
+Species = 3;							
+# Aqueous Gavage 		# 1000 mg/kg dose group					
+Male = 1.0;							
+BWmeas=0.0273;							
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );							
+TChng =  0.05 ;							
+Print(	CLiv	1	2	4	12	24	);
+Data(	CLiv	127.478522	127.3191828	72.78925666	56.52753853	8.831345547	);
+Print(	CKid	1	2	4	12	24	);
+Data(	CKid	184.2854207	302.2307549	118.1173182	17.03556826	1.510198747	);
+Print(	CPlasTCA	2	12	24	);		
+Data(	CPlasTCA	65.54408726	346.3359774	125.7697358	);		
+Print(	CLivTCA	1	2	4	12	24	);
+Data(	CLivTCA	156.2456334	168.0173305	363.2539439	423.5635234	161.2819151	);
+Print(	CKidTCA	1	2	4	12	24	);
+Data(	CKidTCA	24.83254232	27.32233866	57.9958419	121.2935826	78.25860375	);
+Print(	CBldTCVG	1	4	12	);		
+Data(	CBldTCVG	0.002162848	0.001896765	0.00167827	);		
+Print(	CLivTCVG	1	2	4	12	);	
+Data(	CLivTCVG	0.060821394	0.065637289	0.055150024	0.015061602	);	
+Print(	CKidTCVG	1	2	4	12	);	
+Data(	CKidTCVG	0.011111298	0.014599138	0.007947466	0.00316732	);	
+Print(	CBldTCVC	1	4	12	);		
+Data(	CBldTCVC	0.003478006	0.001163575	0.000580647	);		
+Print(	CLivTCVC	1	2	4	);		
+Data(	CLivTCVC	0.001105953	0.00062576	0.000636111	);		
+Print(	CKidTCVC	1	2	4	12	);	
+Data(	CKidTCVC	0.033400882	0.031590507	0.019582833	0.006597589	);	
+Print(	CBldNAT	1	4	12	);		
+Data(	CBldNAT	0.009792958	0.003802371	0.001254533	);		
+Print(	CLivNAT	1	2	4	12	);	
+Data(	CLivNAT	0.06315832	0.072975658	0.036497805	0.008987597	);	
+Print(	CKidNAT	1	2	4	12	);	
+Data(	CKidNAT	0.021165487	0.014138601	0.009549183	0.004015518	);	
+Print(	CLivTCVC_ND	12	);				
+Data(	CLivTCVC_ND	0.000164543	);				
+}	# CC072/TauUnc						
+}	# End Strain 47	# Strain = # CC072/TauUnc	# Cichocki, 2017-1000
+
+Level { ## Strain 48 # Strain = # CC075/Unc # Cichocki, 2017-1000
+#Likelihoods
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CPlasTCA , LogNormal_v , Prediction( CPlasTCA )  , Ve_CPlasTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	Likelihood( CKidTCA , LogNormal_v , Prediction( CKidTCA )  , Ve_CKidTCA );
+	Likelihood( CBldTCVG , LogNormal_v , Prediction( CBldTCVG )  , Ve_CBldTCVG );
+	Likelihood( CLivTCVG , LogNormal_v , Prediction( CLivTCVG )  , Ve_CLivTCVG );
+	Likelihood( CKidTCVG , LogNormal_v , Prediction( CKidTCVG )  , Ve_CKidTCVG );
+	Likelihood( CBldTCVC , LogNormal_v , Prediction( CBldTCVC )  , Ve_CBldTCVC );
+	Likelihood( CLivTCVC , LogNormal_v , Prediction( CLivTCVC )  , Ve_CLivTCVC );
+	Likelihood( CKidTCVC , LogNormal_v , Prediction( CKidTCVC )  , Ve_CKidTCVC );
+	Likelihood( CBldNAT , LogNormal_v , Prediction( CBldNAT )  , Ve_CBldNAT );
+	Likelihood( CLivNAT , LogNormal_v , Prediction( CLivNAT )  , Ve_CLivNAT );
+	Likelihood( CKidNAT , LogNormal_v , Prediction( CKidNAT )  , Ve_CKidNAT );
+
+Experiment {		# CC075/Unc					
+Species = 3;							
+# Aqueous Gavage 		# 1000 mg/kg dose group					
+Male = 1.0;							
+BWmeas=0.02134;							
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );							
+TChng =  0.05 ;							
+Print(	CLiv	1	2	4	12	24	);
+Data(	CLiv	44.12422181	29.19429997	73.35694405	35.66300737	2.277341335	);
+Print(	CKid	1	2	4	12	24	);
+Data(	CKid	107.831813	56.6009075	14.19191373	34.1335676	4.561492406	);
+Print(	CPlasTCA	1	4	12	);		
+Data(	CPlasTCA	114.3296045	243.0950297	205.6591043	);		
+Print(	CLivTCA	1	2	4	12	24	);
+Data(	CLivTCA	22.0028695	23.95742952	27.33084693	84.73318702	27.36998726	);
+Print(	CKidTCA	1	2	4	12	24	);
+Data(	CKidTCA	12.97557	43.61224016	30.40843435	72.65186477	40.07115666	);
+Print(	CBldTCVG	1	2	4	12	);	
+Data(	CBldTCVG	0.012469295	0.004067266	0.008749461	0.003597095	);	
+Print(	CLivTCVG	1	2	4	12	);	
+Data(	CLivTCVG	0.204120654	0.072808691	0.197770604	0.035449623	);	
+Print(	CKidTCVG	1	2	4	12	);	
+Data(	CKidTCVG	0.034866352	0.017880563	0.097824139	0.009586113	);	
+Print(	CBldTCVC	1	2	4	12	);	
+Data(	CBldTCVC	0.00370305	0.007210067	0.000293174	0.002600073	);	
+Print(	CLivTCVC	1	2	4	12	);	
+Data(	CLivTCVC	0.001602858	0.000590206	0.001914124	0.000641418	);	
+Print(	CKidTCVC	1	2	4	12	);	
+Data(	CKidTCVC	0.029035064	0.018827226	0.078269308	0.008606956	);	
+Print(	CBldNAT	1	2	4	12	);	
+Data(	CBldNAT	0.018872207	0.025386318	0.007925172	0.007150274	);	
+Print(	CLivNAT	1	2	4	12	);	
+Data(	CLivNAT	0.08892929	0.032796994	0.131054214	0.027779731	);	
+Print(	CKidNAT	1	2	4	12	);	
+Data(	CKidNAT	0.011595647	0.007153293	0.028000382	0.005863822	);	
+}	# CC075/Unc						
+}	# End Strain 48	# Strain = # CC075/Unc	# Cichocki, 2017-1000
+}  # End Interstrain variability level
+} # Level for MCMC in Population level
+End.

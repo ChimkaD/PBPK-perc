@@ -1,0 +1,183 @@
+# USEPA Perc Model version 3
+#
+Integrate(Lsodes, 0.3e-8, 1e-11 , 1)
+MonteCarlo ("perc.mouse.48strains.43p.mc.out", 5000, 27852702);
+
+## Population means 
+# Ventilation-perfusion-ratio
+Distrib(	M_lnQCC	TruncNormal	0.152	0.11	-0.183	0.487	); #v2	#posterior of TCE, 2014
+Distrib(	M_lnVPRC	TruncNormal	-0.319 0.141 -0.744 0.105	);	#v1	#posterior of TCE, 2014; 
+# Blood Flows to Tissues
+Distrib(	M_QGutC	TruncNormal	 1.0	0.17	0.66	1.34	);
+Distrib(	M_QSlwC	TruncNormal	 1.0	0.29	0.42	1.58	);
+# Volumes
+Distrib(	M_VFatC	TruncNormal	1.0	0.45	0.1	1.9	);	#prior of TCE, 2014
+Distrib(	M_VRapC	TruncNormal	1.0	0.1	0.8	1.2	); #(v3.2)  prior of TCE, 2014
+Distrib(	M_VKidC	TruncNormal	1.0	0.1	0.8	1.2	); #(v3.2)  prior of TCE, 2014
+# Absorption parameters
+Distrib(	M_lnkTSD	Uniform	-6.571	7.244	);
+Distrib(	M_lnkAS	Uniform	-6.571	7.244	);
+Distrib(	M_lnkAD	Uniform	-7.195	6.62	);
+Distrib(	M_lnkASAq	Uniform	-6.571	7.244	); 
+Distrib(	M_lnkTSDAq	Uniform	-6.571	7.244	);
+Distrib(	M_lnkADAq	Uniform	-7.195	6.62	);
+# Partition coefficients		
+Distrib(	M_PBC	TruncNormal 1.0 0.25	0.25 1.75	); 
+Distrib(	M_PFatC	TruncNormal 1.0 0.3	0.1 1.9 ); 
+Distrib(	M_lnPLivC	TruncNormal 0.0	0.4	-1.2 1.2 ); 
+Distrib(	M_lnPRapC	TruncNormal 0.0 0.4	-1.2 1.2 ); 	#(v3.2) prior of TCE, 2014
+Distrib(	M_lnPRespC	TruncNormal 0.0 0.4	-1.2 1.2 ); 	#(v3.2) prior of TCE, 2014
+Distrib(	M_lnPKidC	TruncNormal 0.0	0.4	-1.2 1.2 ); 
+Distrib(	M_lnPRBCPlasTCAC	TruncNormal	0.889	0.5	-0.605	2.383	);	#v1
+Distrib(	M_lnPKidTCAC	TruncNormal 0.0 0.4	-1.2 1.2	); 
+#Distrib(	M_lnPBrnTCAC	TruncNormal 0.0 0.4	-1.2 1.2	); 	#(v3.2) posterior of Perc, 2018
+Distrib(	M_lnPBodTCAC	TruncNormal 0.0 0.336	-1.008 1.008	); 
+Distrib(	M_lnPLivTCAC	TruncNormal 0.0 0.336	-1.008 1.008	); 
+#Distrib(	M_lnPBodTCVGC	TruncNormal	0.0 1.5	-5.0 3.0	); 	# prior of Perc, 2018
+Distrib(	M_lnPLivTCVGC	TruncNormal	0.0 1.5	-5.0 3.0	); 
+Distrib(	M_lnPKidTCVGC	TruncNormal	0.0 1.5	-5.0 3.0	); 
+Distrib(	M_lnPBodTCVCC	TruncNormal	0.0 1.5	-5.0 3.0	);
+Distrib(	M_lnPLivTCVCC	TruncNormal	0.0 1.5	-5.0 3.0	); 
+Distrib(	M_lnPKidTCVCC	TruncNormal	0.0 1.5	-5.0 3.0	); 
+Distrib(	M_lnPBodNATC	TruncNormal	0.0 1.5	-5.0 3.0	); 
+Distrib(	M_lnPLivNATC	TruncNormal	0.0 1.5	-5.0 3.0	); 
+Distrib(	M_lnPKidNATC	TruncNormal	0.0 1.5	-5.0 3.0	); 
+#Binding to blood plasma
+Distrib(	M_lnkDissocC	TruncNormal	0.467	0.636	-1.44	2.375	); #v1#(v3.2) posterior of TCE, 2014; 
+Distrib(	M_lnBMaxkDC	TruncNormal	0.421 0.26	-0.352 1.2	); #v1#(v3.2) posterior of TCE, 2014; 
+# Metabolism/Clearance parameters
+Distrib(	M_lnKMC	Uniform	-6.909	6.909	);
+Distrib(	M_lnClC	Uniform	-6.909	6.909	);	
+Distrib(	M_lnClTCVGC	Uniform	-13.8	10.203	); 	
+Distrib(	M_lnCl2OxC	Uniform	-6.909	6.909	);	
+#Distrib(	M_lnFracOtherC	TruncNormal	-6.701	-1.679	);	# posterior of TCE, 2014
+Distrib(	M_lnkUrnTCAC	TruncNormal	-2.11	0.482	-3.556	-0.663	); #v2	#v1	Uniform	-4.04	-0.181	posterior of TCE, 2014
+Distrib(	M_lnkMetTCAC	TruncNormal	-0.698	0.346	-1.735	0.4	);	#v2	#v1	Uniform	-2.08	0.685	posterior of TCE, 2014
+Distrib(	M_lnkKidTCVCC	Uniform	-6.909	6.909	);	
+Distrib(	M_lnkKidNATC	Uniform	-6.909	6.909	);	
+Distrib(	M_lnkDCAC	Uniform	-6.909	6.909	);		#(v3.1)
+Distrib(	M_lnkUrnNATC	Uniform	-6.909	6.909	);	
+
+## Population variances
+## Flows
+Distrib(	V_lnQCC	InvGamma	2.25	0.05	);
+Distrib(	V_lnVPRC	InvGamma	2.25	0.05	);
+# Blood Flows to Tissues
+Distrib(	V_QGutC	InvGamma	6	0.1445	);
+Distrib(	V_QSlwC	InvGamma	6	0.4205	);
+## Volumes
+Distrib(	V_VFatC	InvGamma	6	1.0125	); #(v3.2)  prior of TCE, 2014
+Distrib(	V_VRapC	InvGamma	6	0.0500	);
+Distrib(	V_VKidC	InvGamma	6	0.0500	);
+# Absorption parameters
+Distrib(	V_lnkTSD	InvGamma	2.25	5.0	);
+Distrib(	V_lnkAS	InvGamma	2.25	5.0	);
+Distrib(	V_lnkAD		InvGamma	2.25	5.0	);
+Distrib(	V_lnkASAq	InvGamma	2.25	5.0	);
+Distrib(	V_lnkTSDAq	InvGamma	2.25	5.0	);
+Distrib(	V_lnkADAq	InvGamma	2.25	5.0	);
+# New parameters: Partition coefficients											#(v2.1.1)
+Distrib(	V_PBC	InvGamma	9.488	1.0812	); 			#(v3.2)  prior of TCE, 2014
+Distrib(	V_PFatC	InvGamma	9.488	1.119 ); 	#(v3.2) prior of TCE, 2014
+Distrib(	V_lnPLivC	InvGamma	2.25	0.2 ); 	#(v3.2) prior of TCE, 2014
+Distrib(	V_lnPRapC	InvGamma	2.25	0.2	);
+Distrib(	V_lnPRespC	InvGamma	2.25	0.2	);
+Distrib(	V_lnPKidC	InvGamma	2.25	0.2 ); 	#(v3.2) prior of TCE, 2014
+Distrib(	V_lnPRBCPlasTCAC	InvGamma	2.25	0.1411	);		#(v3.2) posterior of TCE, 2014
+Distrib(	V_lnPKidTCAC	InvGamma	2.25	0.2	); 
+#Distrib(	V_lnPBrnTCAC	InvGamma	2.25	0.2	); 
+Distrib(	V_lnPBodTCAC	InvGamma	2.25	0.2	); 
+Distrib(	V_lnPLivTCAC	InvGamma	2.25	0.2	); 
+#Distrib(	V_lnPBodTCVGC	InvGamma	2.25	0.2	); 
+Distrib(	V_lnPLivTCVGC	InvGamma	2.25	0.2	); 
+Distrib(	V_lnPKidTCVGC	InvGamma	2.25	0.2	); 
+Distrib(	V_lnPBodTCVCC	InvGamma	2.25	0.2	); 
+Distrib(	V_lnPLivTCVCC	InvGamma	2.25	0.2	); 
+Distrib(	V_lnPKidTCVCC	InvGamma	2.25	0.2	); 
+Distrib(	V_lnPBodNATC	InvGamma	2.25	0.2	); 
+Distrib(	V_lnPLivNATC	InvGamma	2.25	0.2	); 
+Distrib(	V_lnPKidNATC	InvGamma	2.25	0.2	); 
+#Binding to blood plasma
+Distrib(	V_lnkDissocC	InvGamma	2.25	0.2	); 
+Distrib(	V_lnBMaxkDC	InvGamma	2.25	0.2	); 
+# Metabolism/Clearance parameters	
+Distrib(	V_lnKMC	InvGamma	2.25	0.3125	);				
+Distrib(	V_lnClC	InvGamma	2.25	0.3125	);
+Distrib(	V_lnClTCVGC	InvGamma	2.25	0.3125	);
+Distrib(	V_lnCl2OxC	InvGamma	2.25	0.3125 );
+#Distrib(	V_lnFracOtherC	InvGamma	2.25	0.3125	);
+Distrib(	V_lnkUrnTCAC	InvGamma	2.25	0.3125	);
+Distrib(	V_lnkMetTCAC	InvGamma	2.25	0.3125	);
+Distrib(	V_lnkKidTCVCC	InvGamma	2.25	0.3125	);		#(v2.1.1)
+Distrib(	V_lnkKidNATC	InvGamma	2.25	0.3125	);		#(v2.1.1)
+Distrib(	V_lnkDCAC	InvGamma	2.25	0.3125	);		#(v2.1.1)
+Distrib(	V_lnkUrnNATC	InvGamma	2.25	0.3125	);		#(v2.1.1)
+
+## Error variances										#values(v3.1)
+Distrib(	Ve_CInhPPM	LogUniform	0.01	3.3	);
+Distrib(	Ve_CVen	LogUniform	0.01	3.3	);
+Distrib(	Ve_CBldTCA	LogUniform	0.01	3.3	);
+Distrib(	Ve_CPlasTCA	LogUniform	0.01	3.3	);		#(v2.1.1)
+Distrib(	Ve_CPlasTCAfree	LogUniform	0.01	3.3	);		#(v2.1.1)
+Distrib(	Ve_RetDose	LogUniform	0.01	3.3	);
+Distrib(	Ve_FracRetMetab	LogUniform	0.01	3.3	);
+Distrib(	Ve_zRAExh	LogUniform	0.01	3.3	);
+Distrib(	Ve_CFat	LogUniform	0.01	3.3	);		#(v2.1.1)
+Distrib(	Ve_CLiv	LogUniform	0.01	3.3	);
+Distrib(	Ve_CKid	LogUniform	0.01	3.3	);
+Distrib(	Ve_CBrn	LogUniform	0.01	3.3	);		#(v2.1.1)
+Distrib(	Ve_CLivTCA	LogUniform	0.01	3.3	);
+Distrib(	Ve_CKidTCA	LogUniform	0.01	3.3	);		#(v2.1.1)
+Distrib(	Ve_CBrnTCA	LogUniform	0.01	3.3	);		#(v2.1.1)
+Distrib(	Ve_CBldTCVG	LogUniform	0.01	3.3	);		#(v2.1.1)
+Distrib(	Ve_CLivTCVG	LogUniform	0.01	3.3	);		#(v2.1.1)
+Distrib(	Ve_CKidTCVG	LogUniform	0.01	3.3	);		#(v2.1.1)
+Distrib(	Ve_CBldTCVC	LogUniform	0.01	3.3	);		#(v2.1.1)
+Distrib(	Ve_CLivTCVC	LogUniform	0.01	3.3	);		#(v2.1.1)
+Distrib(	Ve_CKidTCVC	LogUniform	0.01	3.3	);		#(v2.1.1)
+Distrib(	Ve_CBldNAT	LogUniform	0.01	3.3	);		#(v2.1.1)
+Distrib(	Ve_CLivNAT	LogUniform	0.01	3.3	);		#(v2.1.1)
+Distrib(	Ve_CKidNAT	LogUniform	0.01	3.3	);		#(v2.1.1)
+
+## Add any parameters that are fixed at something other than the “default”
+lnDRespC  = 	0.83; 		#(v3.1)
+FracPlasC =	0.874; 
+#lnkDissocC	= 	0.467; 		#(v3.1)
+lnVMaxTCVGC = 10.2;
+lnKM2C = 15;
+lnkTCVCC = -15.2;	#(v3.1)
+lnkNATC = -15.2;	#(v3.1)
+# QFatC = 0.831;
+# VLivC = 0.872;
+# lnkTSD = -0.253;
+# lnkAS = -2.158;
+# lnkAD = -0.025;
+# lnPGutC = -0.087;
+# lnPRapC = 0.072;
+# lnPRespC = 0.227;
+# lnPSlwC = 0.029;
+# lnPBrnC = 0.003;
+# lnPBrnTCAC = -0.001;
+# lnPBodTCVGC = -1.224;
+lnFracOtherC = -2.197; # Baseline #-4.454;
+#lnkDCAC = -2.338;
+
+
+Experiment {
+Species = 3;
+# 1 M B6C3F1 mice	
+# Closed chamber; 0.7 L volume	
+Male = 1.0;
+BWmeas=0.0325; # range 0.030 to 0.035	
+CC = 200; 
+NRodents = 1;	
+VChC = 0.7;	
+lnkLossC =  -3.912 ;	
+Print(	CVen	1	);
+Data(	CVen	-1	);
+Print(	CBldTCA	1	);
+Data(	CBldTCA	-1	);
+Print(	CInhPPM	0.001	0.002	0.050489922	0.057830505	0.126910324	0.1879683	0.21801189	0.287015068	0.309454087	0.317714371	0.385678626	0.431876607	0.439123516	0.500402902	0.523046299	0.568469346	0.622050488	0.629876468	0.697891818	0.743868389	0.782036011	0.796921554	0.880648475	0.933931565	0.949464306	1.154779202	1.19261471	1.413300548	1.413513442	1.664523889	1.679545684	1.938194766	1.938356565	2.2121126	2.42506613	);
+Data(	CInhPPM	192.0093699	172.3043669	120.7051272	153.4143459	85.87708162	70.22724192	98.69822572	59.23192467	83.24588433	45.8860518	70.75905918	42.13846034	58.31402846	38.99916081	45.52343273	54.80788307	39.91007699	32.63873022	48.04827682	34.98811522	30.6756418	41.15730995	38.38633591	36.6435473	27.31061072	27.51722633	32.62097537	28.37487417	23.38553408	22.14754781	26.25593656	24.10820145	20.81301306	20.96908403	20.4838528	);
+}
+End.
