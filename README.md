@@ -7,4 +7,4 @@ Following diagram will help to undertand a whole picture of the current Bayesian
 
 A workflow describing the steps of modeling processes and their inputs and outputs
 
-![A workflow describing the steps of modeling processes and their inputs and outputs](C:/Users/d_chi/Documents/TAMU/PERC/Manuscript_CC45/New figs&Tables/Figs_main text-upd/Figure 1.jpg)
+![A workflow describing the steps of modeling processes and their inputs and outputs](https://github.com/ChimkaD/PBPK-perc/blob/main/Model%20Files/Figure%201.jpg)
