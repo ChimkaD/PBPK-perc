@@ -6,4 +6,3 @@ The modeling processes are complex comprised with different steps and components
 Following diagram will help to undertand a whole picture of the current Bayesian population PBPK model.
 
 A workflow describing the steps of modeling processes and their inputs and outputs
-knitr::include_graphics('C:/Users/d_chi/Documents/TAMU/PERC/Manuscript_CC45/New figs&Tables/Figs_main text-upd/Figure 1.jpg')
