@@ -94,8 +94,7 @@ library(grid)
 library(dplyr)
 library(plyr)
 library(png)
-#Set drive---------------------
-setwd("C:/Users/d_chi/Documents/TAMU/PBPK modeling/Perc/48 strains/43p")
+
 # 1. Import CC-48.43p test.out------------------------------------------
 mcmc.1.out = read.delim("perc.mouse.48strains.43p.mcmc.1.50L.test.out")
 mcmc.2.out = read.delim("perc.mouse.48strains.43p.mcmc.2.50L.test.out")
