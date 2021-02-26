@@ -1,0 +1,879 @@
+---
+title: "Model fitting"
+author: "Chimeddulam Dalaijamts"
+date: "February 25, 2021"
+output: 
+  flexdashboard::flex_dashboard:
+    theme: united
+    source_code: embed
+    storyboard: true
+    vertical_layout: fill
+---
+
+<style type="text/css">    
+
+
+body{ /* Normal  */
+      font-size: 14px;
+  }
+td {  /* Table  */
+  font-size: 7px;
+}
+h1.title {
+  font-size: 12pt;
+  color: Maroon;
+}
+h1 { /* Header 1 */
+  font-size: 12px;
+  color: DarkBlue;
+}
+h2 { /* Header 2 */
+  font-size: 28px;
+  color: Maroon;
+}
+h3 { /* Header 3 */
+  font-size: 30px;
+  color: DarkRed;
+}
+code.r{ /* Code block */
+    font-size: 10px;
+}
+pre { /* Code block - determines code spacing between lines */
+    font-size: 12px;
+}
+</style>
+
+
+
+Overview {data-icon="fa-list"}
+=====================================
+
+###  Mouse PERC-PBPK modeling for 3 strains + CC 45 strains
+
+
+* Global evaluation of model prediction
+  + Scatterplot of prediction vs. observation - overal
+  + Violin of distribution of residual error
+  + Scatterplot of prediction vs. observation - each chemical
+
+
+* Plot of prediction of concentration-time course using MCMC iteration at 68k of chain 3
+  + Concentration-time course prediction vs. observation for **combined** CC 45 strains
+  + Concentration-time course prediction vs. observation for **each** of CC 45 strains
+
+
+* PBPK model prediction of concentration-time course for:
+  + Modeling Setpoint of toxicokinetics prediction
+    + **Combined** CC 45 strains using Population-generated random strain parameter posteriori
+    + **Each** of CC 45 strains using Strain-specific parameter posteriori
+  + Test results of last iterations of each of 4 chains for **Each** of CC 45 strains 
+
+
+
+
+Global evaluation {data-icon="fa-signal"}
+=====================================  
+
+
+Column {data-width=500}
+--------------------------------------------------
+
+
+### Prediction vs. Observation plot - **Overall** (test results)
+
+
+#### Scatterplot and Density
+
+```{r scatter plot - 3, out.width="95%", fig.show='hold', fig.height=5, fig.width=10, echo = FALSE}
+library(reshape2)
+library(ggplot2)
+library(ggridges)
+library(scales)
+library(gridExtra)
+library(grid)
+library(dplyr)
+library(plyr)
+library(png)
+#Set drive---------------------
+setwd("C:/Users/d_chi/Documents/TAMU/PBPK modeling/Perc/48 strains/43p")
+# 1. Import CC-48.43p test.out------------------------------------------
+mcmc.1.out = read.delim("perc.mouse.48strains.43p.mcmc.1.50L.test.out")
+mcmc.2.out = read.delim("perc.mouse.48strains.43p.mcmc.2.50L.test.out")
+mcmc.3.out = read.delim("perc.mouse.48strains.43p.mcmc.3.50L.test.out")
+mcmc.4.out = read.delim("perc.mouse.48strains.43p.mcmc.4.50L.test.out")
+mcmc.1.out$chain <- 1
+mcmc.2.out$chain <- 2
+mcmc.3.out$chain <- 3
+mcmc.4.out$chain <- 4
+mcmc.results.out = rbind(mcmc.1.out, mcmc.2.out,mcmc.3.out,mcmc.4.out)
+# 2.Processing chains-----------------------------------------------*-------------------------
+mcmc.results.out[mcmc.results.out == -1.0] <- NA
+#split1 Levels
+splt1 <- data.frame(do.call("rbind",strsplit(mcmc.results.out$Level, "_")),
+                   mcmc.results.out$Simulation, mcmc.results.out$Output_Var,mcmc.results.out$Time, 
+                   mcmc.results.out$Data, mcmc.results.out$Prediction,mcmc.results.out$chain) 
+#---------------*CC-48 strains---------------
+splt1$X1 <- NULL
+colnames(splt1) <- c("strain", "study", "dose", "experiment", "name", "time", "data", "prediction","chain") #
+splt <- subset(splt1, name != "CLiv_ND" &  name != "CKidTCA_ND" & 
+                 name !="CBldTCVG_ND" &  name !="CBldTCVC_ND" &
+                 name !="CLivTCVC_ND" &  name !="CKidTCVC_ND" & 
+                 name != "CBldNAT_ND" &  name != "CLivNAT_ND" & 
+                 name != "CKidNAT_ND")
+# splt$strain <- as.numeric(levels(splt$strain))[splt$strain]
+splt$strain <- as.numeric(splt$strain)
+#**Naming rows
+splt$Strains[splt$strain>3] <- "CC"
+splt$Strains[splt$strain==1] <- "B6C3F1"
+splt$Strains[splt$strain==2] <- "SW"
+splt$Strains[splt$strain==3] <- "C57Bl/6J"
+#Add categories for all----------------------------------------------------------------------
+splt$Chemicals[splt$name=="CVen"] <- "Perc"
+splt$Chemicals[splt$name=="CLiv"] <- "Perc"
+splt$Chemicals[splt$name=="CKid"] <- "Perc"
+splt$Chemicals[splt$name=="CFat"] <- "Perc"
+splt$Chemicals[splt$name=="zRAExh"] <- "Perc"
+splt$Chemicals[splt$name=="RetDose"] <- "Perc"
+splt$Chemicals[splt$name=="FracRetMetab"] <- "Perc"
+splt$Chemicals[splt$name=="CInhPPM"] <- "Perc"
+splt$Chemicals[splt$name=="CBldTCA"] <- "TCA"
+splt$Chemicals[splt$name=="CPlasTCA"] <- "TCA"
+splt$Chemicals[splt$name=="CLivTCA"] <- "TCA"
+splt$Chemicals[splt$name=="CKidTCA"] <- "TCA"
+splt$Chemicals[splt$name=="CBldTCVG"] <- "Conjugates"
+splt$Chemicals[splt$name=="CLivTCVG"] <- "Conjugates"
+splt$Chemicals[splt$name=="CKidTCVG"] <- "Conjugates"
+splt$Chemicals[splt$name=="CBldTCVC"] <- "Conjugates"
+splt$Chemicals[splt$name=="CLivTCVC"] <- "Conjugates"
+splt$Chemicals[splt$name=="CKidTCVC"] <- "Conjugates"
+splt$Chemicals[splt$name=="CBldNAT"] <- "Conjugates"
+splt$Chemicals[splt$name=="CLivNAT"] <- "Conjugates"
+splt$Chemicals[splt$name=="CKidNAT"] <- "Conjugates"
+
+splt$chemical[splt$name=="CVen"] <- "Perc"
+splt$chemical[splt$name=="CLiv"] <- "Perc"
+splt$chemical[splt$name=="CKid"] <- "Perc"
+splt$chemical[splt$name=="CFat"] <- "Perc"
+splt$chemical[splt$name=="zRAExh"] <- "Perc"
+splt$chemical[splt$name=="RetDose"] <- "Perc"
+splt$chemical[splt$name=="FracRetMetab"] <- "Perc"
+splt$chemical[splt$name=="CInhPPM"] <- "Perc"
+splt$chemical[splt$name=="CBldTCA"] <- "TCA"
+splt$chemical[splt$name=="CPlasTCA"] <- "TCA"
+splt$chemical[splt$name=="CLivTCA"] <- "TCA"
+splt$chemical[splt$name=="CKidTCA"] <- "TCA"
+splt$chemical[splt$name=="CBldTCVG"] <- "TCVG"
+splt$chemical[splt$name=="CLivTCVG"] <- "TCVG"
+splt$chemical[splt$name=="CKidTCVG"] <- "TCVG"
+splt$chemical[splt$name=="CBldTCVC"] <- "TCVC"
+splt$chemical[splt$name=="CLivTCVC"] <- "TCVC"
+splt$chemical[splt$name=="CKidTCVC"] <- "TCVC"
+splt$chemical[splt$name=="CBldNAT"] <- "NAcTCVC"
+splt$chemical[splt$name=="CLivNAT"] <- "NAcTCVC"
+splt$chemical[splt$name=="CKidNAT"] <- "NAcTCVC"
+
+splt$tissue[splt$name=="CVen"] <- "Blood"
+splt$tissue[splt$name=="CLiv"] <- "Liver"
+splt$tissue[splt$name=="CKid"] <- "Kidney"
+splt$tissue[splt$name=="CFat"] <- "Fat"
+splt$tissue[splt$name=="zRAExh"] <- "Exhal.Rate"
+splt$tissue[splt$name=="RetDose"] <- "Retained.dose"
+splt$tissue[splt$name=="FracRetMetab"] <- "Frac.Ret.dose.metabolized"
+splt$tissue[splt$name=="CInhPPM"] <- "Inhaled.conc"
+splt$tissue[splt$name=="CBldTCA"] <- "Blood"
+splt$tissue[splt$name=="CPlasTCA"] <- "Blood"
+splt$tissue[splt$name=="CLivTCA"] <- "Liver"
+splt$tissue[splt$name=="CKidTCA"] <- "Kidney"
+splt$tissue[splt$name=="CBldTCVG"] <- "Blood"
+splt$tissue[splt$name=="CLivTCVG"] <- "Liver"
+splt$tissue[splt$name=="CKidTCVG"] <- "Kidney"
+splt$tissue[splt$name=="CBldTCVC"] <- "Blood"
+splt$tissue[splt$name=="CLivTCVC"] <- "Liver"
+splt$tissue[splt$name=="CKidTCVC"] <- "Kidney"
+splt$tissue[splt$name=="CBldNAT"] <- "Blood"
+splt$tissue[splt$name=="CLivNAT"] <- "Liver"
+splt$tissue[splt$name=="CKidNAT"] <- "Kidney"
+# 2. Ordering variables---------------------------
+splt1 <- subset(splt, Strains != "NA" & Chemicals != "NA")
+splt1$Strains <- factor(splt1$Strains, 
+                        levels = c("B6C3F1","SW","C57Bl/6J","CC"), ordered=TRUE) 
+splt1$Chemicals <- factor(splt1$Chemicals, 
+                          levels = c("Perc","TCA","Conjugates"), ordered=TRUE)
+# 3. Linear regression with log-transformation-----------------------------------------------*------------------------------------------
+#------------------------* Remove NAs----------------------------------
+splt2 <- subset(splt1, data != "NA")
+#------------------------* Linear model with Chemicals adj----------------------------------
+log.mod <- lm(log(prediction)~log(data)*Chemicals, data = splt2)
+#------------------------* Create newdata----------------------------------
+newdata <- splt2 %>% 
+  mutate(fitted = fitted(log.mod),
+         residuals = residuals(log.mod)) %>%
+  dplyr::select(Strains, Chemicals, chemical, tissue, data, prediction, fitted, residuals)
+# newdata$fold <- (newdata$prediction-newdata$data)/newdata$data
+# sum(newdata$fitted>(newdata$fitted+2))
+newdata$Strains <- factor(newdata$Strains, 
+                        levels = c("B6C3F1","SW","C57Bl/6J", "CC"), ordered=TRUE) 
+newdata$chemical <- factor(newdata$chemical, 
+                         levels = c("Perc","TCA","TCVG", "TCVC", "NAcTCVC"), ordered=TRUE)
+#------------------------* Creat 2- or 3-fold----------------------------------
+per1 <- 100-sum(c(newdata$prediction>(newdata$data*2),newdata$prediction<(newdata$data*1/2)))*100/nrow(newdata)
+per2 <- 100-sum(c(newdata$prediction>(newdata$data*3),newdata$prediction<(newdata$data*1/3)))*100/nrow(newdata)
+#------------------------* Create table of within 2- or 3-fold----------------------------------
+mytable <- data.frame(rbind(fold=c("within\n 2-fold","within\n 3-fold"), 
+                            per=c(paste(round(per1,1), "%"),paste(round(per2, 1), "%"))),row.names = NULL)
+# a <- ifelse(newdata$prediction<(newdata$data*1/2), "grey", "black") # #& newdata$prediction<(newdata$data*1/2)
+newdata$fold[newdata$prediction>(newdata$data*3)] <- "> 3-fold"
+newdata$fold[newdata$prediction<=(newdata$data*3) & newdata$prediction>(newdata$data*2)] <- "> 2-fold"
+newdata$fold[newdata$prediction<=(newdata$data*2) & newdata$prediction>=(newdata$data*1/2)] <- "< 2-fold"
+newdata$fold[newdata$prediction < (newdata$data*1/2) & newdata$prediction >= (newdata$data*1/3)] <- "> 2-fold"
+newdata$fold[newdata$prediction < (newdata$data*1/3)] <- "> 3-fold"
+# 4.-----------------------------------------------*------------------------------------------------------------
+# Plot Residual error --------------------------
+newdata$res<-log(newdata$data, 10)-log(newdata$prediction, 10)
+p1 <- ggplot(newdata, aes(Strains, res)) +
+  xlab("") + ylab(expression(Log[10] ~ residual)) + #
+  geom_abline(slope = 0, intercept = 0, linetype="dotted") +
+  geom_violin(aes(colour = Strains), alpha = 0.6, size=0.5) +
+  scale_colour_manual(values = c("#0099FF","cyan","blueviolet","#FD61D1")) +
+  theme_bw()+ guides(colour=FALSE) +
+  geom_boxplot(aes(colour = Strains), width=0.2, fill="white", outlier.size=0.5) +
+  theme(axis.title = element_text(face = "bold"),
+        text = element_text(size=7),
+        # axis.text.x = element_text(hjust = 1), #angle = 45,
+        panel.grid.minor=element_blank(),
+        panel.grid.major.y=element_blank(),
+        panel.grid.major.x=element_blank())
+#----------* Combine plots ----------------
+g<-ggplotGrob(p1)
+# 5. Plot scatter with 2-fold errors----------------------------------
+p2 <-
+  ggplot(newdata, aes(x = data, y =prediction)) + #, group = Chemicals
+  scale_colour_manual(values=c("#0099FF","cyan","blueviolet","#FD61D1", "pink1")) +
+  scale_shape_manual(values=c(1,2,0)) +
+  geom_point(aes(shape=Chemicals, col=Strains), size=1.5) + #, stroke=1.5
+  geom_ribbon(aes(y = data, ymin = data*1/3, ymax = data*3), fill = "grey50", alpha = 0.2) +
+  geom_ribbon(aes(y = data, ymin = data*1/2, ymax = data*2), fill = "grey50", alpha = 0.2) +
+  geom_abline(slope=1, size=1, colour="grey50") + 
+  scale_x_log10(breaks = trans_breaks("log10", function(x) 10^x),
+                labels = trans_format("log10", scales::math_format(10^.x))) +
+  scale_y_log10(breaks = trans_breaks("log10", function(x) 10^x),
+                labels = trans_format("log10", scales::math_format(10^.x))) +
+  annotation_logticks()  +
+  annotation_custom(grob=g, xmin = 0.15, xmax = 4.5, ymin=-4.5, ymax=-1.5) +
+  annotation_custom(tableGrob(mytable, rows=NULL, cols=NULL,
+                              theme = ttheme_minimal(base_size = 7, core=list(fg_params=list(fontface=c("bold","plain")),bg_params = list(col="black")))), xmin=-11, ymin=2) +
+  coord_cartesian(ylim = c(5e-5, 1e4), xlim = c(5e-5, 1e4)) + 
+  labs(x="Observed values", y="Predicted values", title = "Scatter plot ") + #Scatterplot of Prediction vs. Observation plot\n (i=50kth of original MCMC)
+  theme_bw() +
+  theme(axis.title = element_text( size = 10),
+        axis.text = element_text(size = 7),
+        plot.title = element_text(face = "bold", size=10),
+        panel.grid = element_blank(),
+        legend.title = element_text(face = "bold"))
+
+#```
+
+#### Posterior GSD of Estimated residual errors---------------------------
+
+# ```{r violin plot, out.width="90%", fig.height=3, fig.width=8, echo = FALSE}
+#-----------* Residual error input from posterior mcmc.out------------------------------------------------
+sim.out.m = read.delim("perc.mouse.48strains.43p.mcmc.random5000.out")
+# names(sim.out.m)
+Ve <- sim.out.m[,c(1,88:111)]
+GSD.Ve <- data.frame(exp(Ve))
+GSD.Ve$Study <- "current study"
+colnames(GSD.Ve) <- c("iter","Inhaled.Perc.conc","Blood.Perc","Blood.TCA","Plasma.TCA","Plasma.TCA.free",
+                      "Retained.dose",
+                      "Frac.Ret.dose.metabolized","Perc.Exhal.Rate","Fat.Perc","Liver.Perc","Kidney.Perc",
+                      "Brain.Perc","Liver.TCA","Kidney.TCA","Brain.TCA","Blood.TCVG","Liver.TCVG","Kidney.TCVG",
+                      "Blood.TCVC","Liver.TCVC","Kidney.TCVC","Blood.NATCVC","Liver.NATCVC","Kidney.NATCVC", "Study")
+
+melt.Ve <- melt(GSD.Ve, id = c("iter", "Study"))
+melt.Ve$variable <- factor(melt.Ve$variable, 
+                           levels = c("Kidney.NATCVC","Liver.NATCVC","Blood.NATCVC","Kidney.TCVC","Liver.TCVC",
+                                      "Blood.TCVC","Kidney.TCVG","Liver.TCVG","Blood.TCVG","Brain.TCA","Kidney.TCA",
+                                      "Liver.TCA","Plasma.TCA.free","Plasma.TCA","Blood.TCA","Brain.Perc","Fat.Perc",
+                                      "Kidney.Perc","Liver.Perc","Blood.Perc","Perc.Exhal.Rate",
+                                      "Frac.Ret.dose.metabolized","Retained.dose","Inhaled.Perc.conc"), ordered=TRUE)
+
+#-----------* 3 strain 27p Ve data for comparison-------------------
+sim.out.3s = read.delim("perc.mouse.mcmc.3strains.random5000.out")
+Ve.27p <- sim.out.3s[,c(1,56:79)]
+# GSD.Ve.27p <- data.frame(exp(Ve.27p))
+SD.Ve.27p <- data.frame(sqrt(Ve.27p))
+GSD.Ve.27p <- data.frame(exp(SD.Ve.27p))
+# head(GSD.Ve.27p)
+GSD.Ve.27p$Study <- "Dalaijamts et al. (2018)"
+colnames(GSD.Ve.27p)<-c("iter","Inhaled.Perc.conc","Blood.Perc","Blood.TCA","Plasma.TCA","Plasma.TCA.free",
+                        "Retained.dose","Frac.Ret.dose.metabolized","Perc.Exhal.Rate","Fat.Perc","Liver.Perc",
+                        "Kidney.Perc","Brain.Perc","Liver.TCA","Kidney.TCA","Brain.TCA","Blood.TCVG","Liver.TCVG",
+                        "Kidney.TCVG","Blood.TCVC","Liver.TCVC","Kidney.TCVC","Blood.NATCVC","Liver.NATCVC",
+                        "Kidney.NATCVC", "Study")
+melt.3s.27 <- melt(GSD.Ve.27p, id = c("iter", "Study"))
+
+#_____________________________________________________________________________________________________
+#-----------*--Combine GSD.Ve of 43p and 27p-------------------
+mix.GSD.Ve <- rbind(melt.Ve,melt.3s.27)
+mix.GSD.Ve$variable <- factor(mix.GSD.Ve$variable, 
+                           levels = c("Kidney.NATCVC","Liver.NATCVC","Blood.NATCVC","Kidney.TCVC","Liver.TCVC",
+                                      "Blood.TCVC","Kidney.TCVG","Liver.TCVG","Blood.TCVG","Brain.TCA","Kidney.TCA",
+                                      "Liver.TCA","Plasma.TCA.free","Plasma.TCA","Blood.TCA","Brain.Perc","Fat.Perc",
+                                      "Kidney.Perc","Liver.Perc","Blood.Perc","Perc.Exhal.Rate",
+                                      "Frac.Ret.dose.metabolized","Retained.dose","Inhaled.Perc.conc"), ordered=TRUE)
+####* ~ Plot GSD.Ve residual errors---------------------------
+p3 <-
+ggplot(data=mix.GSD.Ve, aes(x = value, y = variable)) +
+  geom_density_ridges(aes(fill = Study, colour = Study),
+                      alpha = .7, size = 0.5, scale = 3, rel_min_height = .025) +
+  theme_ridges(grid = FALSE) + 
+  labs(x = "GSD distribution", y = "Chemical concentrations in tissues", title = "Posterior residual error distributions") +
+  # scale_y_discrete() +
+  scale_x_continuous(limits = c(0.8, 4)) +
+  # scale_y_discrete(limits = (y)) +
+  # geom_vline(xintercept = 2, linetype="dotted") +
+  geom_vline(xintercept = 3, linetype="dashed") +
+  scale_colour_manual(values=c("violetred","grey50")) + #,"aquamarine3"
+  scale_fill_manual(values = c("orchid",NA)) + #, "aquamarine", orchid
+  # theme_ridges(grid = FALSE, font_size = 11) +
+  theme(axis.title.y = element_text(hjust = 0.5, size=9),
+        axis.title.x = element_text(hjust = 0.5, size=9),
+        plot.title = element_text(face = "bold", size = 10),
+        axis.text.y = element_text(size=9),
+        legend.position=c(-0.4, -0.2), #none, ,"bottom"
+        legend.direction="horizontal",
+        legend.title = element_text(face = "bold", size=9),
+        legend.text = element_text(size=9),
+        plot.margin = unit(c(0,0.5,0.5,0), "cm"),
+        panel.grid.major.y = element_line(colour = "black", size = 0.3),
+        panel.grid.major.x = element_blank())
+
+grid.arrange(p2, p3, widths =c(1.2/2,0.9/2), ncol=2, bottom = "") #heights =c(1.5/2,0.5/2), 
+```
+
+
+#### Violin plot of residual errors
+
+
+```{r violin plot, out.width="90%", fig.height=3, fig.width=8, echo = FALSE}
+ggplot(newdata, aes(Strains, res)) + 
+  xlab("") + ylab(expression(Log[10] ~ residual)) + ggtitle("") +
+  geom_abline(slope = 0, intercept = 0, linetype="dotted") +
+  geom_violin(aes(colour = Strains), alpha = 0.6, size=0.5) +
+  scale_colour_manual(values = c("#0099FF","cyan","blueviolet","#FD61D1")) +
+  theme_bw()+ guides(colour=FALSE) +
+  geom_boxplot(aes(colour = Strains), width=0.2, fill="white", outlier.size=0.5) +
+  facet_wrap(~ Chemicals, ncol = 3, dir = "h", scales = "free", labeller=label_wrap_gen(multi_line = F)) +
+  theme(axis.title = element_text(face = "bold", size=14),
+        axis.text = element_text(size=12),
+        # title = element_text(face = "bold", size=14),
+        strip.text = element_text(size=14),
+        strip.background = element_rect(fill="white", colour="black"),
+        panel.grid.minor=element_blank(),
+        panel.grid.major.y=element_blank(),
+        panel.grid.major.x=element_blank())
+```
+
+
+Column {data-width=500}
+--------------------------------------------------
+
+
+### Prediction vs. Observation plot - **Each tissue-specific chemical**
+
+
+```{r scatter plots - 2, fig.height=11, fig.width=9, echo = FALSE}
+ggplot(newdata, aes(x = data, y =prediction)) + #, group = Chemicals
+  scale_y_log10() +
+  scale_x_log10() +
+  scale_colour_manual(values=c("#0099FF","cyan","blueviolet","#FD61D1", "pink1")) +
+  scale_shape_manual(values=c(1,2,0)) +
+  geom_point(aes(col=Strains, shape=Chemicals), size=1) + #, stroke=1.5
+  geom_ribbon(aes(y = data, ymin = data*1/3, ymax = data*3), fill = "grey50", alpha = 0.1) +
+  geom_ribbon(aes(y = data, ymin = data*1/2, ymax = data*2), fill = "grey50", alpha = 0.1) +
+  geom_abline(slope=1, size=1, colour="grey50") + 
+  annotation_logticks()  +
+  facet_wrap(~ chemical+tissue, nrow = 5, dir = "h", scales = "free", labeller=label_wrap_gen(multi_line = F)) +
+  labs(title = "", x="Observed values", y="Predicted values") +
+  theme_bw() +
+  theme(strip.text.y = element_text(size=12),
+        strip.background = element_rect(fill="white", colour="black"),
+        axis.title.y = element_text(size = 14),
+        axis.text = element_text(size = 8),
+        panel.grid = element_blank(),
+        legend.position="none")
+        # legend.title = element_text(face = "bold"),
+        # legend.box = "vertical")
+```
+
+Conc-time  {data-icon="fa-signal"}
+=====================================  
+
+
+Column {.tabset} 
+--------------------------------------------------
+
+
+### Combined CC-45
+
+
+#### PBPK model prediction vs. observation (using population-generated random strain parameter posteriori)
+
+
+```{r cont-time plot, fig.height = 5, fig.width = 10, echo = FALSE}
+library(plyr)
+library(png)
+setwd("C:/Users/d_chi/Documents/TAMU/PBPK modeling/Perc/48 strains/43p")
+#-------------------------------in vivo -----------------------------------------------------
+#-------------------------------Import in vivo data-----------------------------------------------------
+#* Read data----------------
+data45 = read.csv("CC45.csv", header = TRUE, na.strings = "NA")
+#* Add Number of strains----------------
+data45$n.strain[data45$strain=="CC001/Unc"] <- 1
+data45$n.strain[data45$strain=="CC002/Unc"] <- 2
+data45$n.strain[data45$strain=="CC003/Unc"] <- 3
+data45$n.strain[data45$strain=="CC004/TauUnc"] <- 4
+data45$n.strain[data45$strain=="CC005/TauUnc"] <- 5
+data45$n.strain[data45$strain=="CC006/TauUnc"] <- 6
+data45$n.strain[data45$strain=="CC007/Unc"] <- 7
+data45$n.strain[data45$strain== "CC008/GeniUnc"] <-8
+data45$n.strain[data45$strain=="CC011"] <- 9
+data45$n.strain[data45$strain=="CC012/GeniUnc"] <- 10
+data45$n.strain[data45$strain=="CC013"] <- 11
+data45$n.strain[data45$strain=="CC015/Unc"] <- 12
+data45$n.strain[data45$strain=="CC019"] <- 13
+data45$n.strain[data45$strain=="CC020/GeniUnc"] <- 14
+data45$n.strain[data45$strain=="CC021/Unc"] <- 15
+data45$n.strain[data45$strain=="CC022/GeniUnc"] <- 16
+data45$n.strain[data45$strain=="CC023/GeniUnc"] <- 17
+data45$n.strain[data45$strain=="CC024/GeniUnc"] <- 18
+data45$n.strain[data45$strain=="CC027/GeniUnc"] <- 19
+data45$n.strain[data45$strain=="CC028/GeniUnc"] <- 20
+data45$n.strain[data45$strain=="CC029/Unc"] <- 21
+data45$n.strain[data45$strain=="CC030/GeniUnc"] <- 22
+data45$n.strain[data45$strain=="CC032/GeniUnc"] <- 23
+data45$n.strain[data45$strain=="CC033/GeniUnc"] <- 24
+data45$n.strain[data45$strain=="CC035/Unc"] <- 25
+data45$n.strain[data45$strain=="CC037/TauUnc"] <- 26
+data45$n.strain[data45$strain=="CC040/TauUnc"] <- 27
+data45$n.strain[data45$strain=="CC042/GeniUnc"] <- 28
+data45$n.strain[data45$strain=="CC043/GeniUnc"] <- 29
+data45$n.strain[data45$strain=="CC044/Unc"] <- 30
+data45$n.strain[data45$strain=="CC045/GeniUnc"] <- 31
+data45$n.strain[data45$strain=="CC046/Unc"] <- 32
+data45$n.strain[data45$strain=="CC051/TauUnc"] <- 33
+data45$n.strain[data45$strain=="CC052/GeniUnc"] <- 34
+data45$n.strain[data45$strain=="CC056/GeniUnc"] <- 35
+data45$n.strain[data45$strain=="CC058/Unc"] <- 36
+data45$n.strain[data45$strain=="CC059/TauUnc"] <- 37
+data45$n.strain[data45$strain=="CC060/Unc"] <- 38
+data45$n.strain[data45$strain=="CC061"] <- 39
+data45$n.strain[data45$strain=="CC063"] <- 40
+data45$n.strain[data45$strain=="CC065/Unc"] <- 41
+data45$n.strain[data45$strain=="CC070/TauUnc"] <- 42
+data45$n.strain[data45$strain=="CC071/TauUnc"] <- 43
+data45$n.strain[data45$strain=="CC072/TauUnc"] <- 44
+data45$n.strain[data45$strain=="CC075/Unc"] <- 45
+#_______________________________________________________________________________________________________________________
+#2.1 -----------------------------------------------*------------------------------------------------------------
+#------------------------------- NDs of in vivo -----------------------------------------------------
+#-------------------* Create data for Non_detects------------------------------------------------------------------
+ND45.out <- subset(data45)
+ND45.out$CLiv[ND45.out$CLiv > 0.000829] <- NA
+ND45.out$CKid[ND45.out$CKid > 0.000497] <- NA
+ND45.out$CLivTCA[ND45.out$CLivTCA > 0.000327] <- NA
+ND45.out$CKidTCA[ND45.out$CKidTCA > 0.000327] <- NA
+ND45.out$CPlasTCA[ND45.out$CPlasTCA > 0.000164] <- NA
+ND45.out$CBldTCVG[ND45.out$CBldTCVG > 0.000148] <- NA
+ND45.out$CLivTCVG[ND45.out$CLivTCVG > 0.000197] <- NA
+ND45.out$CKidTCVG[ND45.out$CKidTCVG > 0.000183] <- NA
+ND45.out$CBldTCVC[ND45.out$CBldTCVC > 0.000235] <- NA
+ND45.out$CLivTCVC[ND45.out$CLivTCVC > 0.000569] <- NA
+ND45.out$CKidTCVC[ND45.out$CKidTCVC > 0.00171] <- NA
+ND45.out$CBldNAT[ND45.out$CBldNAT > 0.000158] <- NA
+ND45.out$CLivNAT[ND45.out$CLivNAT > 0.000916] <- NA
+ND45.out$CKidNAT[ND45.out$CKidNAT > 0.000551] <- NA
+#* remove 0s ----------
+ND45.out$CKidTCA <- NULL
+#-----------------** Melt ND data--------------------------------------------------------------------------------------
+ND45.melt <- melt(ND45.out, na.rm = TRUE, id = c("Mouse.ID","strain","n.strain","time"))
+colnames(ND45.melt) <- c("Mouse.ID", "n.strain", "strain", "time", "name", "value")
+# ND45.melt$strain <-as.character(levels(ND45.melt$strain))[ND45.melt$strain]
+# df <- data.frame(Mouse.ID="missing", n.strain="missing", strain="missing", time=0, name="CVen", value=0)
+# ND45.melt = rbind(ND45.melt, df)
+#** Create chemical and tissue names ----------------------------------
+# ND45.melt$chemical[ND45.melt$name == "CVen"] <- "Perc"
+ND45.melt$chemical[ND45.melt$name == "CLiv"] <- "Perc"
+ND45.melt$chemical[ND45.melt$name == "CKid"] <- "Perc"
+ND45.melt$chemical[ND45.melt$name == "CPlasTCA"] <- "TCA"
+ND45.melt$chemical[ND45.melt$name == "CLivTCA"] <- "TCA"
+ND45.melt$chemical[ND45.melt$name == "CKidTCA"] <- "TCA"
+ND45.melt$chemical[ND45.melt$name == "CBldTCVG"] <- "TCVG"
+ND45.melt$chemical[ND45.melt$name == "CLivTCVG"] <- "TCVG"
+ND45.melt$chemical[ND45.melt$name == "CKidTCVG"] <- "TCVG"
+ND45.melt$chemical[ND45.melt$name == "CBldTCVC"] <- "TCVC"
+ND45.melt$chemical[ND45.melt$name == "CLivTCVC"] <- "TCVC"
+ND45.melt$chemical[ND45.melt$name == "CKidTCVC"] <- "TCVC"
+ND45.melt$chemical[ND45.melt$name == "CBldNAT"] <- "NAcTCVC"
+ND45.melt$chemical[ND45.melt$name == "CLivNAT"] <- "NAcTCVC"
+ND45.melt$chemical[ND45.melt$name == "CKidNAT"] <- "NAcTCVC"
+
+# ND45.melt$tissue[ND45.melt$name == "CVen"] <- "blood"
+ND45.melt$tissue[ND45.melt$name == "CLiv"] <- "liver"
+ND45.melt$tissue[ND45.melt$name == "CKid"] <- "kidney"
+ND45.melt$tissue[ND45.melt$name == "CPlasTCA"] <- "blood"
+ND45.melt$tissue[ND45.melt$name == "CLivTCA"] <- "liver"
+ND45.melt$tissue[ND45.melt$name == "CKidTCA"] <- "kidney"
+ND45.melt$tissue[ND45.melt$name == "CBldTCVG"] <- "blood"
+ND45.melt$tissue[ND45.melt$name == "CLivTCVG"] <- "liver"
+ND45.melt$tissue[ND45.melt$name == "CKidTCVG"] <- "kidney"
+ND45.melt$tissue[ND45.melt$name == "CBldTCVC"] <- "blood"
+ND45.melt$tissue[ND45.melt$name == "CLivTCVC"] <- "liver"
+ND45.melt$tissue[ND45.melt$name == "CKidTCVC"] <- "kidney"
+ND45.melt$tissue[ND45.melt$name == "CBldNAT"] <- "blood"
+ND45.melt$tissue[ND45.melt$name == "CLivNAT"] <- "liver"
+ND45.melt$tissue[ND45.melt$name == "CKidNAT"] <- "kidney"
+#** Order tissues ----------------------------------
+ND45.melt$chemical <- factor(ND45.melt$chemical, levels = c("Perc","TCA","TCVG","TCVC","NAcTCVC"), ordered=TRUE)
+ND45.melt$tissue <- factor(ND45.melt$tissue, levels = c("blood","liver","kidney"), ordered=TRUE)
+#_______________________________________________________________________________________________________________________
+#2.2 -----------------------------------------------*------------------------------------------------------------
+#-------------------------------i.v. data processing -----------------------------------------------------
+#-------------------------* Remove NDs from data------------------------------------------------------------------------
+data45$CLiv[data45$CLiv < 0.000829] <- NA
+data45$CKid[data45$CKid < 0.000497] <- NA
+data45$CLivTCA[data45$CLivTCA < 0.000327] <- NA
+data45$CKidTCA[data45$CKidTCA < 0.000327] <- NA
+data45$CPlasTCA[data45$CPlasTCA < 0.000164] <- NA
+data45$CBldTCVG[data45$CBldTCVG < 0.000148] <- NA
+data45$CLivTCVG[data45$CLivTCVG < 0.000197] <- NA
+data45$CKidTCVG[data45$CKidTCVG < 0.000183] <- NA
+data45$CBldTCVC[data45$CBldTCVC < 0.000235] <- NA
+data45$CLivTCVC[data45$CLivTCVC < 0.000569] <- NA
+data45$CKidTCVC[data45$CKidTCVC < 0.00171] <- NA
+data45$CBldNAT[data45$CBldNAT < 0.000158] <- NA
+data45$CLivNAT[data45$CLivNAT < 0.000916] <- NA
+data45$CKidNAT[data45$CKidNAT < 0.000551] <- NA
+#-------------------* Melt--------------------------------------------------------------------
+data45.melt <- melt(data45, na.rm = TRUE, id = c("Mouse.ID","strain","time","n.strain"))
+colnames(data45.melt) <- c("Mouse.ID","n.strain","time","strain","name","value")
+#** Create chemical and tissue names ----------------------------------
+# data45.melt$chemical[data45.melt$name == "CVen"] <- "Perc"
+data45.melt$chemical[data45.melt$name == "CLiv"] <- "Perc"
+data45.melt$chemical[data45.melt$name == "CKid"] <- "Perc"
+data45.melt$chemical[data45.melt$name == "CPlasTCA"] <- "TCA"
+data45.melt$chemical[data45.melt$name == "CLivTCA"] <- "TCA"
+data45.melt$chemical[data45.melt$name == "CKidTCA"] <- "TCA"
+data45.melt$chemical[data45.melt$name == "CBldTCVG"] <- "TCVG"
+data45.melt$chemical[data45.melt$name == "CLivTCVG"] <- "TCVG"
+data45.melt$chemical[data45.melt$name == "CKidTCVG"] <- "TCVG"
+data45.melt$chemical[data45.melt$name == "CBldTCVC"] <- "TCVC"
+data45.melt$chemical[data45.melt$name == "CLivTCVC"] <- "TCVC"
+data45.melt$chemical[data45.melt$name == "CKidTCVC"] <- "TCVC"
+data45.melt$chemical[data45.melt$name == "CBldNAT"] <- "NAcTCVC"
+data45.melt$chemical[data45.melt$name == "CLivNAT"] <- "NAcTCVC"
+data45.melt$chemical[data45.melt$name == "CKidNAT"] <- "NAcTCVC"
+
+# data45.melt$tissue[data45.melt$name == "CVen"] <- "blood"
+data45.melt$tissue[data45.melt$name == "CLiv"] <- "liver"
+data45.melt$tissue[data45.melt$name == "CKid"] <- "kidney"
+data45.melt$tissue[data45.melt$name == "CPlasTCA"] <- "blood"
+data45.melt$tissue[data45.melt$name == "CLivTCA"] <- "liver"
+data45.melt$tissue[data45.melt$name == "CKidTCA"] <- "kidney"
+data45.melt$tissue[data45.melt$name == "CBldTCVG"] <- "blood"
+data45.melt$tissue[data45.melt$name == "CLivTCVG"] <- "liver"
+data45.melt$tissue[data45.melt$name == "CKidTCVG"] <- "kidney"
+data45.melt$tissue[data45.melt$name == "CBldTCVC"] <- "blood"
+data45.melt$tissue[data45.melt$name == "CLivTCVC"] <- "liver"
+data45.melt$tissue[data45.melt$name == "CKidTCVC"] <- "kidney"
+data45.melt$tissue[data45.melt$name == "CBldNAT"] <- "blood"
+data45.melt$tissue[data45.melt$name == "CLivNAT"] <- "liver"
+data45.melt$tissue[data45.melt$name == "CKidNAT"] <- "kidney"
+#** Order tissues ----------------------------------
+data45.melt$chemical <- factor(data45.melt$chemical, levels = c("Perc","TCA","TCVG","TCVC","NAcTCVC"), ordered=TRUE)
+data45.melt$tissue <- factor(data45.melt$tissue, levels = c("blood","liver","kidney"), ordered=TRUE)
+#----------------** Sum.iv.data for CC-45 in median and CIs -----------------------------------
+data45.sum = ddply(data45.melt, .(name,time), function(data45.melt){
+  c(median=median(data45.melt$value), 
+    low = quantile(data45.melt$value, 0.025),
+    up = quantile(data45.melt$value, 0.975))
+})
+colnames(data45.sum) <- c("name", "time" , "median", "low", "up")
+data45.sum$name <-as.character(levels(data45.sum$name))[data45.sum$name]
+#** Add blood Perc -------------------------------
+df <- data.frame(name="CVen", time=0, median=0, low=0, up=0)
+data45.sum = rbind(df,data45.sum)
+#** Create chemical and tissue names ----------------------------------
+data45.sum$chemical[data45.sum$name == "CVen"] <- "Perc"
+data45.sum$chemical[data45.sum$name == "CLiv"] <- "Perc"
+data45.sum$chemical[data45.sum$name == "CKid"] <- "Perc"
+data45.sum$chemical[data45.sum$name == "CPlasTCA"] <- "TCA"
+data45.sum$chemical[data45.sum$name == "CLivTCA"] <- "TCA"
+data45.sum$chemical[data45.sum$name == "CKidTCA"] <- "TCA"
+data45.sum$chemical[data45.sum$name == "CBldTCVG"] <- "TCVG"
+data45.sum$chemical[data45.sum$name == "CLivTCVG"] <- "TCVG"
+data45.sum$chemical[data45.sum$name == "CKidTCVG"] <- "TCVG"
+data45.sum$chemical[data45.sum$name == "CBldTCVC"] <- "TCVC"
+data45.sum$chemical[data45.sum$name == "CLivTCVC"] <- "TCVC"
+data45.sum$chemical[data45.sum$name == "CKidTCVC"] <- "TCVC"
+data45.sum$chemical[data45.sum$name == "CBldNAT"] <- "NAcTCVC"
+data45.sum$chemical[data45.sum$name == "CLivNAT"] <- "NAcTCVC"
+data45.sum$chemical[data45.sum$name == "CKidNAT"] <- "NAcTCVC"
+
+data45.sum$tissue[data45.sum$name == "CVen"] <- "blood"
+data45.sum$tissue[data45.sum$name == "CLiv"] <- "liver"
+data45.sum$tissue[data45.sum$name == "CKid"] <- "kidney"
+data45.sum$tissue[data45.sum$name == "CPlasTCA"] <- "blood"
+data45.sum$tissue[data45.sum$name == "CLivTCA"] <- "liver"
+data45.sum$tissue[data45.sum$name == "CKidTCA"] <- "kidney"
+data45.sum$tissue[data45.sum$name == "CBldTCVG"] <- "blood"
+data45.sum$tissue[data45.sum$name == "CLivTCVG"] <- "liver"
+data45.sum$tissue[data45.sum$name == "CKidTCVG"] <- "kidney"
+data45.sum$tissue[data45.sum$name == "CBldTCVC"] <- "blood"
+data45.sum$tissue[data45.sum$name == "CLivTCVC"] <- "liver"
+data45.sum$tissue[data45.sum$name == "CKidTCVC"] <- "kidney"
+data45.sum$tissue[data45.sum$name == "CBldNAT"] <- "blood"
+data45.sum$tissue[data45.sum$name == "CLivNAT"] <- "liver"
+data45.sum$tissue[data45.sum$name == "CKidNAT"] <- "kidney"
+#** Order tissues ----------------------------------
+data45.sum$chemical <- factor(data45.sum$chemical, levels = c("Perc","TCA","TCVG","TCVC","NAcTCVC"), ordered=TRUE)
+data45.sum$tissue <- factor(data45.sum$tissue, levels = c("blood","liver","kidney"), ordered=TRUE)
+#_______________________________________________________________________________________________________________________
+#-------------------------------Import LOD----------------------------------------------------------------------
+#_______________________________________________________________________________________________________________________
+LOD = read.table("LOD.v1.data", header = TRUE)
+#** Create chemical and tissue names ----------------------------------
+LOD$chemical[LOD$name == "CVen"] <- "Perc"
+LOD$chemical[LOD$name == "CLiv"] <- "Perc"
+LOD$chemical[LOD$name == "CKid"] <- "Perc"
+LOD$chemical[LOD$name == "CPlasTCA"] <- "TCA"
+LOD$chemical[LOD$name == "CLivTCA"] <- "TCA"
+LOD$chemical[LOD$name == "CKidTCA"] <- "TCA"
+LOD$chemical[LOD$name == "CBldTCVG"] <- "TCVG"
+LOD$chemical[LOD$name == "CLivTCVG"] <- "TCVG"
+LOD$chemical[LOD$name == "CKidTCVG"] <- "TCVG"
+LOD$chemical[LOD$name == "CBldTCVC"] <- "TCVC"
+LOD$chemical[LOD$name == "CLivTCVC"] <- "TCVC"
+LOD$chemical[LOD$name == "CKidTCVC"] <- "TCVC"
+LOD$chemical[LOD$name == "CBldNAT"] <- "NAcTCVC"
+LOD$chemical[LOD$name == "CLivNAT"] <- "NAcTCVC"
+LOD$chemical[LOD$name == "CKidNAT"] <- "NAcTCVC"
+
+LOD$tissue[LOD$name == "CVen"] <- "blood"
+LOD$tissue[LOD$name == "CLiv"] <- "liver"
+LOD$tissue[LOD$name == "CKid"] <- "kidney"
+LOD$tissue[LOD$name == "CPlasTCA"] <- "blood"
+LOD$tissue[LOD$name == "CLivTCA"] <- "liver"
+LOD$tissue[LOD$name == "CKidTCA"] <- "kidney"
+LOD$tissue[LOD$name == "CBldTCVG"] <- "blood"
+LOD$tissue[LOD$name == "CLivTCVG"] <- "liver"
+LOD$tissue[LOD$name == "CKidTCVG"] <- "kidney"
+LOD$tissue[LOD$name == "CBldTCVC"] <- "blood"
+LOD$tissue[LOD$name == "CLivTCVC"] <- "liver"
+LOD$tissue[LOD$name == "CKidTCVC"] <- "kidney"
+LOD$tissue[LOD$name == "CBldNAT"] <- "blood"
+LOD$tissue[LOD$name == "CLivNAT"] <- "liver"
+LOD$tissue[LOD$name == "CKidNAT"] <- "kidney"
+#** Order tissues ----------------------------------
+LOD$chemical <- factor(LOD$chemical, levels = c("Perc","TCA","TCVG","TCVC","NAcTCVC"), ordered=TRUE)
+LOD$tissue <- factor(LOD$tissue, levels = c("blood","liver","kidney"), ordered=TRUE)
+#_______________________________________________________________________________________________________________________
+#-------------------------------* Import Pop.setpoint results for CC mouse***---------------------------------
+sum.out = read.delim("perc.mouse.48strains.43p.set.pop.CC-45.sum.out")
+#**- Order tissues ----------------------------------
+sum.out$chemical <- factor(sum.out$chemical, levels = c("Perc","TCA","TCVG","TCVC","NAcTCVC"), ordered=TRUE)
+sum.out$tissue <- factor(sum.out$tissue, levels = c("blood","liver","kidney"), ordered=TRUE)
+#_______________________________________________________________________________________________________________________
+img <- readPNG("Fig.7.1.legend.png")
+g_pic <- rasterGrob(img, x = 0.14, y = 0.85, w=.18, interpolate=FALSE) # width = 2, height = 2, x=1:1.5, y=1:1.5,
+#-------------------------------Plot sum -----------------------------------------------------
+ggplot(data = sum.out, aes(x = time)) + 
+  scale_y_log10() +
+  scale_x_log10() +
+  geom_line(data = data45.melt, aes(x = time, y = value, group=factor(n.strain)), colour = "slategray2") + #slategray2
+  geom_point(data = data45.melt, aes(x = time, y = value), pch=1,size=2,col="slategray2") +
+  geom_ribbon(aes(ymin = low, ymax = up), fill = "cadetblue1", alpha=0.5,) + # colour = "pink", linetype=2 aquamarine2
+  geom_ribbon(aes(ymin = low.m, ymax = up.m), linetype=3, fill = NA, colour = "black") +#,alpha=0.3
+  geom_line(aes(y = median)) + #lightseagreen, size = 1
+  geom_point(data = data45.sum, aes(x = time, y = median),size=2.5) +
+  geom_errorbar(data = data45.sum, aes(ymin=low, ymax=up),  width=0.05) + 
+  geom_point(data = ND45.melt, aes(y = value), colour = "red", shape=6) + 
+  geom_hline(data = LOD, aes(yintercept = conc), colour = "red", linetype=2) + # 
+  facet_wrap(~ chemical+tissue, nrow = 3, dir = "v", scales = "free", labeller=label_wrap_gen(multi_line = F)) +
+  # theme_pubr() +
+  labs(y="Log scale of Concentration (mg/L)", x="Log scale of Time (hr)") + #hr days weeks 
+  theme(panel.grid.major = element_line(colour="grey90"), #blank , 
+        panel.grid.minor = element_blank(),
+        strip.text.y = element_text(size=8),
+        panel.background = element_rect(fill="white", colour="black"),
+        strip.background = element_rect(fill="white", colour="black"))
+# Add legend --------------------------------
+print(grid.draw(g_pic), newpage=FALSE)
+```
+
+
+### SS - each CC-45 
+
+
+#### PBPK model prediction vs. observation (using strain-specific parameter posteriori)
+
+
+```{r cont-time  plots 1,  fig.height = 7, fig.width = 19.5, echo = FALSE}
+library(scales)
+#Set drive---------------------
+#from labtop Dell
+# setwd("C:/MinGW/msys/1.0/home/chimka/Perc/48/43p/setpoint")
+setwd("C:/Users/d_chi/Documents/TAMU/PBPK modeling/Perc/48 strains/43p/setpoint")
+out.dat = read.delim("perc.mouse.48strains.43p.set.SS.CC-45.sum.out")
+#**- Order tissues ----------------------------------
+out.dat$chemical <- factor(out.dat$chemical, levels = c("Perc","TCA","TCVG","TCVC","NAcTCVC"), ordered=TRUE)
+out.dat$tissue <- factor(out.dat$tissue, levels = c("blood","liver","kidney"), ordered=TRUE)
+# ND45.melt1 <- subset(ND45.melt, name !="CVen")
+# ND45.melt1$strain <- as.numeric(as.character(ND45.melt1$strain))
+#_______________________________________________________________________________________________________________________
+# ~ Plot Mixed of Medians and 95% CIs of CC-population predictions & CC45.data & S-S predictions ***----------------
+#_______________________________________________________________________________________________________________________
+ggplot(data = out.dat, aes(x= time)) + 
+  # scale_y_log10() +
+  scale_x_log10() +
+  geom_point(data = data45.melt, aes(y = value)) + #, size=2
+  geom_ribbon(aes(ymin = low, ymax = up), fill = "dodgerblue1", alpha=0.4) +
+  geom_line(aes(y = median), colour = "dodgerblue3") + 
+  geom_point(data = ND45.melt, aes(y = value), colour = "red", shape=6) +
+  geom_hline(data = LOD, aes(yintercept = conc), colour = "red", linetype=3) +
+  facet_grid(chemical + tissue ~ strain, scales = "free", labeller=label_wrap_gen(multi_line = F)) +
+  scale_y_log10(breaks = trans_breaks("log10", function(x) 10^x),
+                labels = trans_format("log10", scales::math_format(10^.x))) +
+  labs(y="Log(Concentration (mg/L))", x="Time (hrs)", title = "CC strain") + 
+  theme(panel.grid = element_blank(),
+        axis.title  = element_text(size = 6), 
+        axis.text  = element_text(size = 4),
+        strip.text.y = element_text(size=8, angle = 0),
+        panel.background = element_rect(fill="white", colour="grey90"),
+        strip.background = element_rect(fill="white", colour=NA))
+```
+
+
+
+### 4 chains test - each CC-45
+
+
+#### PBPK model prediction vs. observation (test results of 60kth restart of 4 chains)
+
+
+```{r cont-time  plots 2,  fig.height = 7, fig.width = 19.5, echo = FALSE}
+library(scales)
+library(dplyr)
+#Set drive---------------------
+# setwd("C:/MinGW/msys/1.0/home/chimka/Perc/48/43p")
+setwd("C:/Users/d_chi/Documents/TAMU/PBPK modeling/Perc/48 strains/43p")
+# 1. Import CC-48.43p test.out------------------------------------------
+mcmc.1.out = read.delim("perc.mouse.48strains.43p.mcmc.1.50L.test.out")
+mcmc.2.out = read.delim("perc.mouse.48strains.43p.mcmc.2.50L.test.out")
+mcmc.3.out = read.delim("perc.mouse.48strains.43p.mcmc.3.50L.test.out")
+mcmc.4.out = read.delim("perc.mouse.48strains.43p.mcmc.4.50L.test.out")
+mcmc.1.out$chain <- 1
+mcmc.2.out$chain <- 2
+mcmc.3.out$chain <- 3
+mcmc.4.out$chain <- 4
+mcmc.results.out = rbind(mcmc.1.out, mcmc.2.out,mcmc.3.out,mcmc.4.out)
+# 2.Processing chains-----------------------------------------------*------------------------------------------------------------
+mcmc.results.out[mcmc.results.out == -1.0] <- NA
+# mcmc.results.out$Level <-as.character(levels(mcmc.results.out$Level))[mcmc.results.out$Level]
+#split1 Levels
+splt1 <- data.frame(do.call("rbind",strsplit(mcmc.results.out$Level, "_")),
+                   mcmc.results.out$Simulation, mcmc.results.out$Output_Var,mcmc.results.out$Time, 
+                   mcmc.results.out$Data, mcmc.results.out$Prediction,mcmc.results.out$chain) 
+#---------------*CC-48 strains---------------
+splt1$X1 <- NULL
+colnames(splt1) <- c("strain", "study", "dose", "experiment", "name", "time", "data", "prediction","chain") #
+splt <- subset(splt1, name != "CLiv_ND" &  name != "CKidTCA_ND" & 
+                 name !="CBldTCVG_ND" &  name !="CBldTCVC_ND" &
+                 name !="CLivTCVC_ND" &  name !="CKidTCVC_ND" & 
+                 name != "CBldNAT_ND" &  name != "CLivNAT_ND" & 
+                 name != "CKidNAT_ND")
+splt$strain <- as.numeric(splt$strain)
+#**Naming rows
+splt$Strains[splt$strain>3] <- "CC"
+splt$Strains[splt$strain==1] <- "B6C3F1"
+splt$Strains[splt$strain==2] <- "SW"
+splt$Strains[splt$strain==3] <- "C57Bl/6J"
+#Add categories for all----------------------------------------------------------------------
+splt$chemical[splt$name=="CVen"] <- "Perc"
+splt$chemical[splt$name=="CLiv"] <- "Perc"
+splt$chemical[splt$name=="CKid"] <- "Perc"
+splt$chemical[splt$name=="CFat"] <- "Perc"
+splt$chemical[splt$name=="zRAExh"] <- "Perc"
+splt$chemical[splt$name=="RetDose"] <- "Perc"
+splt$chemical[splt$name=="FracRetMetab"] <- "Perc"
+splt$chemical[splt$name=="CInhPPM"] <- "Perc"
+splt$chemical[splt$name=="CBldTCA"] <- "TCA"
+splt$chemical[splt$name=="CPlasTCA"] <- "TCA"
+splt$chemical[splt$name=="CLivTCA"] <- "TCA"
+splt$chemical[splt$name=="CKidTCA"] <- "TCA"
+splt$chemical[splt$name=="CBldTCVG"] <- "TCVG"
+splt$chemical[splt$name=="CLivTCVG"] <- "TCVG"
+splt$chemical[splt$name=="CKidTCVG"] <- "TCVG"
+splt$chemical[splt$name=="CBldTCVC"] <- "TCVC"
+splt$chemical[splt$name=="CLivTCVC"] <- "TCVC"
+splt$chemical[splt$name=="CKidTCVC"] <- "TCVC"
+splt$chemical[splt$name=="CBldNAT"] <- "NAcTCVC"
+splt$chemical[splt$name=="CLivNAT"] <- "NAcTCVC"
+splt$chemical[splt$name=="CKidNAT"] <- "NAcTCVC"
+
+splt$tissue[splt$name=="CVen"] <- "Blood"
+splt$tissue[splt$name=="CLiv"] <- "Liver"
+splt$tissue[splt$name=="CKid"] <- "Kidney"
+splt$tissue[splt$name=="CFat"] <- "Fat"
+splt$tissue[splt$name=="zRAExh"] <- "Exhal.Rate"
+splt$tissue[splt$name=="RetDose"] <- "Retained.dose"
+splt$tissue[splt$name=="FracRetMetab"] <- "Frac.Ret.dose.metabolized"
+splt$tissue[splt$name=="CInhPPM"] <- "Inhaled.conc"
+splt$tissue[splt$name=="CBldTCA"] <- "Blood"
+splt$tissue[splt$name=="CPlasTCA"] <- "Blood"
+splt$tissue[splt$name=="CLivTCA"] <- "Liver"
+splt$tissue[splt$name=="CKidTCA"] <- "Kidney"
+splt$tissue[splt$name=="CBldTCVG"] <- "Blood"
+splt$tissue[splt$name=="CLivTCVG"] <- "Liver"
+splt$tissue[splt$name=="CKidTCVG"] <- "Kidney"
+splt$tissue[splt$name=="CBldTCVC"] <- "Blood"
+splt$tissue[splt$name=="CLivTCVC"] <- "Liver"
+splt$tissue[splt$name=="CKidTCVC"] <- "Kidney"
+splt$tissue[splt$name=="CBldNAT"] <- "Blood"
+splt$tissue[splt$name=="CLivNAT"] <- "Liver"
+splt$tissue[splt$name=="CKidNAT"] <- "Kidney"
+# 2. Ordering variables---------------------------
+splt1 <- subset(splt, Strains != "NA")
+splt1$Strains <- factor(splt1$Strains, 
+                        levels = c("B6C3F1","SW","C57Bl/6J","CC"), ordered=TRUE) 
+#----------* Drop off all missing values---------------------------
+splt <- subset(splt1, data != "NA")
+#----------* Order variables---------------------------
+splt$chemical <- factor(splt$chemical, levels = c("Perc","TCA","TCVG","TCVC","NAcTCVC"), ordered=TRUE)
+splt$tissue <- factor(splt$tissue, levels = c("Blood","Liver","Kidney"), ordered=TRUE)
+#----------* Creat df for CC ---------------------------
+CC <- subset(splt, Strains == "CC")
+CC$strains <- CC$strain - 3
+#----------* Plot for each strain  ---------------------------
+ggplot(data = CC, aes(x = time)) + 
+  scale_x_log10() +
+  geom_line(aes(y = prediction, group=factor(chain)), colour = 8) + 
+  geom_point(aes(y = prediction), colour = 8, size=0.5) +
+  geom_point(aes(y = data), colour = 2, size=0.8) +
+  facet_grid(chemical + tissue ~ strains , scales = "free", labeller=label_wrap_gen(multi_line = F)) +
+  scale_y_log10(breaks = trans_breaks("log10", function(x) 10^x),
+                labels = trans_format("log10", scales::math_format(10^.x))) +
+  labs(y="Concentration (mg/L)", x="Time (hr)", title = "CC strain", shape = "Type") +
+  theme(#panel.grid.major = element_line(colour="grey90"), #blank , 
+    panel.grid = element_blank(),
+    axis.title  = element_text(size = 6), 
+    axis.text  = element_text(size = 4), #element_blank(),#
+    strip.text.y = element_text(size=8, angle = 0), #element_blank(), 
+    legend.position="bottom",
+    legend.title = element_text(face="bold",size=7),
+    legend.text = element_text(size=7),
+    panel.background = element_rect(fill="white", colour="grey90"),
+    strip.background = element_rect(fill="white", colour=NA))
+```
+
+
+
