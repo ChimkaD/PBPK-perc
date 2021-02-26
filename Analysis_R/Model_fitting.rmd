@@ -12,7 +12,6 @@ output:
 
 <style type="text/css">    
 
-
 body{ /* Normal  */
       font-size: 14px;
   }
@@ -270,14 +269,11 @@ p2 <-
         panel.grid = element_blank(),
         legend.title = element_text(face = "bold"))
 
-#```
 
 #### Posterior GSD of Estimated residual errors---------------------------
 
-# ```{r violin plot, out.width="90%", fig.height=3, fig.width=8, echo = FALSE}
 #-----------* Residual error input from posterior mcmc.out------------------------------------------------
 sim.out.m = read.delim("perc.mouse.48strains.43p.mcmc.random5000.out")
-# names(sim.out.m)
 Ve <- sim.out.m[,c(1,88:111)]
 GSD.Ve <- data.frame(exp(Ve))
 GSD.Ve$Study <- "current study"
@@ -298,10 +294,8 @@ melt.Ve$variable <- factor(melt.Ve$variable,
 #-----------* 3 strain 27p Ve data for comparison-------------------
 sim.out.3s = read.delim("perc.mouse.mcmc.3strains.random5000.out")
 Ve.27p <- sim.out.3s[,c(1,56:79)]
-# GSD.Ve.27p <- data.frame(exp(Ve.27p))
 SD.Ve.27p <- data.frame(sqrt(Ve.27p))
 GSD.Ve.27p <- data.frame(exp(SD.Ve.27p))
-# head(GSD.Ve.27p)
 GSD.Ve.27p$Study <- "Dalaijamts et al. (2018)"
 colnames(GSD.Ve.27p)<-c("iter","Inhaled.Perc.conc","Blood.Perc","Blood.TCA","Plasma.TCA","Plasma.TCA.free",
                         "Retained.dose","Frac.Ret.dose.metabolized","Perc.Exhal.Rate","Fat.Perc","Liver.Perc",
@@ -309,7 +303,6 @@ colnames(GSD.Ve.27p)<-c("iter","Inhaled.Perc.conc","Blood.Perc","Blood.TCA","Pla
                         "Kidney.TCVG","Blood.TCVC","Liver.TCVC","Kidney.TCVC","Blood.NATCVC","Liver.NATCVC",
                         "Kidney.NATCVC", "Study")
 melt.3s.27 <- melt(GSD.Ve.27p, id = c("iter", "Study"))
-
 #_____________________________________________________________________________________________________
 #-----------*--Combine GSD.Ve of 43p and 27p-------------------
 mix.GSD.Ve <- rbind(melt.Ve,melt.3s.27)
@@ -349,9 +342,7 @@ ggplot(data=mix.GSD.Ve, aes(x = value, y = variable)) +
 grid.arrange(p2, p3, widths =c(1.2/2,0.9/2), ncol=2, bottom = "") #heights =c(1.5/2,0.5/2), 
 ```
 
-
 #### Violin plot of residual errors
-
 
 ```{r violin plot, out.width="90%", fig.height=3, fig.width=8, echo = FALSE}
 ggplot(newdata, aes(Strains, res)) + 
@@ -372,10 +363,8 @@ ggplot(newdata, aes(Strains, res)) +
         panel.grid.major.x=element_blank())
 ```
 
-
 Column {data-width=500}
 --------------------------------------------------
-
 
 ### Prediction vs. Observation plot - **Each tissue-specific chemical**
 
@@ -417,11 +406,7 @@ Column {.tabset}
 
 #### PBPK model prediction vs. observation (using population-generated random strain parameter posteriori)
 
-
 ```{r cont-time plot, fig.height = 5, fig.width = 10, echo = FALSE}
-library(plyr)
-library(png)
-setwd("C:/Users/d_chi/Documents/TAMU/PBPK modeling/Perc/48 strains/43p")
 #-------------------------------in vivo -----------------------------------------------------
 #-------------------------------Import in vivo data-----------------------------------------------------
 #* Read data----------------
@@ -715,13 +700,7 @@ print(grid.draw(g_pic), newpage=FALSE)
 
 #### PBPK model prediction vs. observation (using strain-specific parameter posteriori)
 
-
 ```{r cont-time  plots 1,  fig.height = 7, fig.width = 19.5, echo = FALSE}
-library(scales)
-#Set drive---------------------
-#from labtop Dell
-# setwd("C:/MinGW/msys/1.0/home/chimka/Perc/48/43p/setpoint")
-setwd("C:/Users/d_chi/Documents/TAMU/PBPK modeling/Perc/48 strains/43p/setpoint")
 out.dat = read.delim("perc.mouse.48strains.43p.set.SS.CC-45.sum.out")
 #**- Order tissues ----------------------------------
 out.dat$chemical <- factor(out.dat$chemical, levels = c("Perc","TCA","TCVG","TCVC","NAcTCVC"), ordered=TRUE)
@@ -752,98 +731,12 @@ ggplot(data = out.dat, aes(x= time)) +
 ```
 
 
-
 ### 4 chains test - each CC-45
-
 
 #### PBPK model prediction vs. observation (test results of 60kth restart of 4 chains)
 
-
 ```{r cont-time  plots 2,  fig.height = 7, fig.width = 19.5, echo = FALSE}
-library(scales)
-library(dplyr)
-#Set drive---------------------
-# setwd("C:/MinGW/msys/1.0/home/chimka/Perc/48/43p")
-setwd("C:/Users/d_chi/Documents/TAMU/PBPK modeling/Perc/48 strains/43p")
-# 1. Import CC-48.43p test.out------------------------------------------
-mcmc.1.out = read.delim("perc.mouse.48strains.43p.mcmc.1.50L.test.out")
-mcmc.2.out = read.delim("perc.mouse.48strains.43p.mcmc.2.50L.test.out")
-mcmc.3.out = read.delim("perc.mouse.48strains.43p.mcmc.3.50L.test.out")
-mcmc.4.out = read.delim("perc.mouse.48strains.43p.mcmc.4.50L.test.out")
-mcmc.1.out$chain <- 1
-mcmc.2.out$chain <- 2
-mcmc.3.out$chain <- 3
-mcmc.4.out$chain <- 4
-mcmc.results.out = rbind(mcmc.1.out, mcmc.2.out,mcmc.3.out,mcmc.4.out)
-# 2.Processing chains-----------------------------------------------*------------------------------------------------------------
-mcmc.results.out[mcmc.results.out == -1.0] <- NA
-# mcmc.results.out$Level <-as.character(levels(mcmc.results.out$Level))[mcmc.results.out$Level]
-#split1 Levels
-splt1 <- data.frame(do.call("rbind",strsplit(mcmc.results.out$Level, "_")),
-                   mcmc.results.out$Simulation, mcmc.results.out$Output_Var,mcmc.results.out$Time, 
-                   mcmc.results.out$Data, mcmc.results.out$Prediction,mcmc.results.out$chain) 
-#---------------*CC-48 strains---------------
-splt1$X1 <- NULL
-colnames(splt1) <- c("strain", "study", "dose", "experiment", "name", "time", "data", "prediction","chain") #
-splt <- subset(splt1, name != "CLiv_ND" &  name != "CKidTCA_ND" & 
-                 name !="CBldTCVG_ND" &  name !="CBldTCVC_ND" &
-                 name !="CLivTCVC_ND" &  name !="CKidTCVC_ND" & 
-                 name != "CBldNAT_ND" &  name != "CLivNAT_ND" & 
-                 name != "CKidNAT_ND")
-splt$strain <- as.numeric(splt$strain)
-#**Naming rows
-splt$Strains[splt$strain>3] <- "CC"
-splt$Strains[splt$strain==1] <- "B6C3F1"
-splt$Strains[splt$strain==2] <- "SW"
-splt$Strains[splt$strain==3] <- "C57Bl/6J"
-#Add categories for all----------------------------------------------------------------------
-splt$chemical[splt$name=="CVen"] <- "Perc"
-splt$chemical[splt$name=="CLiv"] <- "Perc"
-splt$chemical[splt$name=="CKid"] <- "Perc"
-splt$chemical[splt$name=="CFat"] <- "Perc"
-splt$chemical[splt$name=="zRAExh"] <- "Perc"
-splt$chemical[splt$name=="RetDose"] <- "Perc"
-splt$chemical[splt$name=="FracRetMetab"] <- "Perc"
-splt$chemical[splt$name=="CInhPPM"] <- "Perc"
-splt$chemical[splt$name=="CBldTCA"] <- "TCA"
-splt$chemical[splt$name=="CPlasTCA"] <- "TCA"
-splt$chemical[splt$name=="CLivTCA"] <- "TCA"
-splt$chemical[splt$name=="CKidTCA"] <- "TCA"
-splt$chemical[splt$name=="CBldTCVG"] <- "TCVG"
-splt$chemical[splt$name=="CLivTCVG"] <- "TCVG"
-splt$chemical[splt$name=="CKidTCVG"] <- "TCVG"
-splt$chemical[splt$name=="CBldTCVC"] <- "TCVC"
-splt$chemical[splt$name=="CLivTCVC"] <- "TCVC"
-splt$chemical[splt$name=="CKidTCVC"] <- "TCVC"
-splt$chemical[splt$name=="CBldNAT"] <- "NAcTCVC"
-splt$chemical[splt$name=="CLivNAT"] <- "NAcTCVC"
-splt$chemical[splt$name=="CKidNAT"] <- "NAcTCVC"
-
-splt$tissue[splt$name=="CVen"] <- "Blood"
-splt$tissue[splt$name=="CLiv"] <- "Liver"
-splt$tissue[splt$name=="CKid"] <- "Kidney"
-splt$tissue[splt$name=="CFat"] <- "Fat"
-splt$tissue[splt$name=="zRAExh"] <- "Exhal.Rate"
-splt$tissue[splt$name=="RetDose"] <- "Retained.dose"
-splt$tissue[splt$name=="FracRetMetab"] <- "Frac.Ret.dose.metabolized"
-splt$tissue[splt$name=="CInhPPM"] <- "Inhaled.conc"
-splt$tissue[splt$name=="CBldTCA"] <- "Blood"
-splt$tissue[splt$name=="CPlasTCA"] <- "Blood"
-splt$tissue[splt$name=="CLivTCA"] <- "Liver"
-splt$tissue[splt$name=="CKidTCA"] <- "Kidney"
-splt$tissue[splt$name=="CBldTCVG"] <- "Blood"
-splt$tissue[splt$name=="CLivTCVG"] <- "Liver"
-splt$tissue[splt$name=="CKidTCVG"] <- "Kidney"
-splt$tissue[splt$name=="CBldTCVC"] <- "Blood"
-splt$tissue[splt$name=="CLivTCVC"] <- "Liver"
-splt$tissue[splt$name=="CKidTCVC"] <- "Kidney"
-splt$tissue[splt$name=="CBldNAT"] <- "Blood"
-splt$tissue[splt$name=="CLivNAT"] <- "Liver"
-splt$tissue[splt$name=="CKidNAT"] <- "Kidney"
-# 2. Ordering variables---------------------------
-splt1 <- subset(splt, Strains != "NA")
-splt1$Strains <- factor(splt1$Strains, 
-                        levels = c("B6C3F1","SW","C57Bl/6J","CC"), ordered=TRUE) 
+# Continue processing from Global evaluation
 #----------* Drop off all missing values---------------------------
 splt <- subset(splt1, data != "NA")
 #----------* Order variables---------------------------
