@@ -1,0 +1,169 @@
+#---------------------------------------- 
+# perc.GSA.setpoint.f.58p.in
+# (Created by generate_infile)
+#----------------------------------------
+
+#Integrate (Lsodes, 1e-06, 1e-06 , 1);
+
+SetPoints (
+"perc.f.58p.3strains.ci95.10k.4t.out", 
+"perc.f.58p.3strains.ci95.10k.4t.dat",
+0, 
+lnQCC, 
+lnVPRC, 
+QFatC, 
+QGutC, 
+QLivC, 
+QSlwC, 
+QKidC, 
+FracPlasC, 
+VFatC, 
+VGutC, 
+VLivC, 
+VRapC, 
+VRespLumC, 
+VRespEffC, 
+VKidC, 
+VBldC, 
+lnkTSD, 
+lnkAS, 
+lnkASAq, 
+lnkAD, 
+lnkTSDAq, 
+lnkADAq, 
+PBC, 
+PFatC, 
+lnPGutC, 
+lnPLivC, 
+lnPRapC, 
+lnPRespC, 
+lnPKidC, 
+lnPSlwC, 
+lnPBrnC, 
+lnPRBCPlasTCAC, 
+lnPKidTCAC, 
+lnPBrnTCAC, 
+lnPBodTCAC, 
+lnPLivTCAC, 
+lnkDissocC, 
+lnBMaxkDC, 
+lnPBodTCVGC, 
+lnPLivTCVGC, 
+lnPKidTCVGC, 
+lnPBodTCVCC, 
+lnPLivTCVCC, 
+lnPKidTCVCC, 
+lnPBodNATC, 
+lnPLivNATC, 
+lnPKidNATC, 
+lnKMC, 
+lnClC, 
+lnCl2OxC, 
+lnFracOtherC, 
+lnkUrnTCAC, 
+lnkMetTCAC, 
+lnClTCVGC, 
+lnkKidTCVCC, 
+lnkKidNATC, 
+lnkDCAC, 
+lnkUrnNATC);
+
+lnDRespC  = 0.83;
+#lnkAS	= -1.575;	
+#lnkTSD	= -1.467;	
+#lnkAD	= -3.502;	
+#lnkASAq	= 3.922;	
+#lnkTSDAq = 5.162;	
+#lnkADAq	= -1.762;
+lnVMaxTCVGC = 10.2;
+lnKM2C = 15;
+lnkTCVCC = -15.2;	
+lnkNATC = -15.2;
+#---------------------------------------------------------
+# The next 6 Simulations are run to predict concentration-time profiles of 
+# PERC, TCA and GSH-conjugates in blood and tissues at 3 diets.
+#---------------------------------------------------------
+Experiment {	### LFD  # Strain = C57Bl/6J Cichocki et al. (2017)
+Species = 3;
+# M C57Bl/6J mice 24-31.8 g
+# Aqueous Gavage 
+# 300 mg/kg dose group
+Male = 1.0;
+BWmeas=0.027;
+#VFatCmeas=0.00041;
+#VLivCmeas=0.001176;
+PDoseAq  = NDoses(  2  , 300 0  , 0 0.05  );
+TChng =  0.05 ;
+Print(	CVen,	#Perc in venus blood
+			CLiv,	#Perc in liver
+			CKid,	#Perc in kidney
+			CFat,	#Perc in fat
+			CPlasTCA, 	#TCA in blood
+			CLivTCA, 	#TCA in liver
+			CKidTCA,	#TCA in kidney
+	1, 2, 4, 12#, 24
+	#36 # 1 to 168 hrs, every 1 hr	
+	);  
+}
+Experiment {
+Species = 3;
+# M C57Bl/6J mice 24-31.8 g
+# Aqueous Gavage 
+# 300 mg/kg dose group
+Male = 1.0;
+BWmeas=0.027;
+#VFatCmeas=0.00041;
+#VLivCmeas=0.001176;
+PDoseAq  = NDoses(  2  , 300 0  , 0 0.05  );
+TChng =  0.05 ;
+Print(	CBldTCVG,
+			CLivTCVG,
+			CKidTCVG,
+			CBldTCVC,
+			CLivTCVC,
+			CKidTCVC,
+			CBldNAT,
+			CLivNAT,
+			CKidNAT,
+	1, 2, 4, 12#, 24 
+	#36 #  1 to 168 hrs, every 1 hr
+	);
+}# End LFD	# Strain = C57Bl/6J	# Joe et al. (2017) 
+
+Experiment {	### Strain = CC001/Unc M	Cichocki (2017)
+Species = 3;
+# Aqueous Gavage 
+# 1000 mg/kg dose group
+Male = 1.0;
+BWmeas=0.0257;
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );
+TChng =  0.05 ;
+Print(	CLiv,	#Perc in liver
+			CKid,	#Perc in kidney
+			CPlasTCA, 	#TCA in blood
+			CLivTCA, 	#TCA in liver
+			CKidTCA,	#TCA in kidney
+			CBldTCVG,
+			CLivTCVG,
+			CKidTCVG,
+	1, 2, 4, 12#, 24  # 1 to 48 hrs, every 1 hr
+	);
+}
+Experiment {	### Strain = CC001/Unc M
+Species = 3;
+# Aqueous Gavage 
+# 1000 mg/kg dose group
+Male = 1.0;
+BWmeas=0.0257;
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );
+TChng =  0.05 ;
+Print(	CBldTCVC,
+			CLivTCVC,
+			CKidTCVC,
+			CBldNAT,
+			CLivNAT,
+			CKidNAT,
+	1, 2, 4, 12#, 24  # 1 to 48 hrs, every 1 hr
+	);
+} # End Strain = CC001/Unc M
+End.
