@@ -1,5 +1,6 @@
 #---------------------------------------- 
 # perc.GSA.setpoint.f.58p.in
+# in.file for MC simulation of 58 parameters for GSA eFAST analysis
 # (Created by generate_infile)
 #----------------------------------------
 
@@ -80,8 +81,8 @@ lnKM2C = 15;
 lnkTCVCC = -15.2;	
 lnkNATC = -15.2;
 #---------------------------------------------------------
-# The next 6 Simulations are run to predict concentration-time profiles of 
-# PERC, TCA and GSH-conjugates in blood and tissues at 3 diets.
+# The next 6 Simulations are run to predict concentration-time course at 4 hr of measurement of 
+# PERC, TCA and GSH-conjugates in blood and tissues at 300 and 1000 mg/kg oral doses.
 #---------------------------------------------------------
 Experiment {	### LFD  # Strain = C57Bl/6J Cichocki et al. (2017)
 Species = 3;
