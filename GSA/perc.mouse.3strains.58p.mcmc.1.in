@@ -1,0 +1,709 @@
+# USEPA Perc Model version 3.2
+#
+Integrate(Lsodes, 0.3e-8, 1e-11 , 1)
+MCMC ("perc.mouse.3strains.58p.mcmc.4.test.out","perc.mouse.3strains.58p.mcmc.4.10.out","",
+		100000, 1, 10, 100000, 27852702); #17852702 #8527021 #2702121
+
+Level { # for MCMC in Population level
+# Run 3.1.1: 
+
+## Population means 
+## Flows
+Distrib(	M_lnQCC	TruncNormal	 0.0	0.2	-0.8	0.8	);#(v3.2)  prior of TCE, 2014
+Distrib(	M_lnVPRC	TruncNormal	 -0.319 0.141 -0.744 0.105	);
+# Blood Flows to Tissues
+Distrib(	M_QFatC	TruncNormal	 1.0 	0.46 	0.08 	1.92	);
+Distrib(	M_QGutC	TruncNormal	 1.0	0.17	0.66	1.34	);
+Distrib(	M_QLivC	TruncNormal	 1.0	0.17	0.66	1.34	);
+Distrib(	M_QSlwC	TruncNormal	 1.0	0.29	0.42	1.58	);
+Distrib(	M_QKidC	TruncNormal	 1.0	0.32	0.36	1.64	);
+Distrib(	M_FracPlasC	TruncNormal	0.87	0.0714	0.656	1.084	);
+# Volumes
+Distrib(	M_VFatC	TruncNormal	1.0	0.45	0.1	1.9	); #(v3.2)  prior of TCE, 2014
+Distrib(	M_VGutC	TruncNormal	1.0	0.13	0.74	1.26	); #(v3.2)  prior of TCE, 2014
+Distrib(	M_VLivC	TruncNormal	1.0	0.24	0.52	1.48	); #(v3.2)  prior of TCE, 2014
+Distrib(	M_VRapC	TruncNormal	1.0	0.1	0.8	1.2	); #(v3.2)  prior of TCE, 2014
+Distrib(	M_VRespLumC	TruncNormal	1.0	0.11	0.78	1.22	); #(v3.2)  prior of TCE, 2014
+Distrib(	M_VRespEffC	TruncNormal	1.0	0.11	0.78	1.22	); #(v3.2)  prior of TCE, 2014
+Distrib(	M_VKidC	TruncNormal	1.0	0.1	0.8	1.2	); #(v3.2)  prior of TCE, 2014
+Distrib(	M_VBldC	TruncNormal	1.0	0.12	0.76	1.24	); #(v3.2)  prior of TCE, 2014
+# Absorption parameters
+Distrib(	M_lnkTSD	Uniform	-6.571	7.244	);
+Distrib(	M_lnkAS	Uniform	-6.571	7.244	);
+Distrib(	M_lnkAD	Uniform	-7.195	6.62	);
+Distrib(	M_lnkASAq	Uniform	-6.571	7.244	); 
+Distrib(	M_lnkTSDAq	Uniform	-6.571	7.244	);
+Distrib(	M_lnkADAq	Uniform	-7.195	6.62	);
+# New parameters: Partition coefficients									#(v3.1)
+Distrib(	M_PBC	TruncNormal 1.0 1.284	0.472 2.12 ); 	#(v3.2) prior of TCE, 2014
+Distrib(	M_PFatC	TruncNormal 1.0 1.35	0.41 2.46 ); 	#(v3.2) prior of TCE, 2014
+Distrib(	M_lnPGutC	TruncNormal	0.0	0.4	-1.2 1.2 ); 	#(v3.2) prior of TCE, 2014
+Distrib(	M_lnPLivC	TruncNormal 0.0 0.4	-1.2 1.2 ); 	#(v3.2) prior of TCE, 2014
+Distrib(	M_lnPRapC	TruncNormal 0.0 0.4	-1.2 1.2 ); 	#(v3.2) prior of TCE, 2014
+Distrib(	M_lnPRespC	TruncNormal 0.0 0.4	-1.2 1.2 ); 	#(v3.2) prior of TCE, 2014
+Distrib(	M_lnPSlwC	TruncNormal 0.0 0.4	-1.2 1.2 ); 	#(v3.2) prior of TCE, 2014
+Distrib(	M_lnPKidC	TruncNormal 0.0 0.4	-1.2 1.2 ); 	#(v3.2) prior of TCE, 2014
+Distrib(	M_lnPBrnC	TruncNormal 0.0 0.4	-1.2 1.2 ); 
+Distrib(	M_lnPRBCPlasTCAC	Uniform	-0.19	1.873	);		#(v3.2) posterior of TCE, 2014
+Distrib(	M_lnPKidTCAC	TruncNormal 0.0 0.4	-1.2 1.2	); 	#(v3.2) prior of Perc, 2018
+Distrib(	M_lnPBrnTCAC	TruncNormal 0.0 0.4	-1.2 1.2	); 	#(v3.2) posterior of Perc, 2018
+Distrib(	M_lnPBodTCAC	TruncNormal 0.0 0.336	-1.008 1.008	); 	#(v3.2) prior of TCE, 2014
+Distrib(	M_lnPLivTCAC	TruncNormal 0.0 0.336	-1.008 1.008	); 	#(v3.2) prior of TCE, 2014
+Distrib(	M_lnPBodTCVGC	TruncNormal	0.0 1.5	-5.0 3.0	); 	# prior of Perc, 2018
+Distrib(	M_lnPLivTCVGC	TruncNormal	0.0 1.5	-5.0 3.0	); # prior of Perc, 2018
+Distrib(	M_lnPKidTCVGC	TruncNormal	0.0 1.5	-5.0 3.0	); # prior of Perc, 2018
+Distrib(	M_lnPBodTCVCC	TruncNormal	0.0 1.5	-5.0 3.0	); # prior of Perc, 2018
+Distrib(	M_lnPLivTCVCC	TruncNormal	0.0 1.5	-5.0 3.0	); # prior of Perc, 2018
+Distrib(	M_lnPKidTCVCC	TruncNormal	0.0 1.5	-5.0 3.0	); # prior of Perc, 2018
+Distrib(	M_lnPBodNATC	TruncNormal	0.0 1.5	-5.0 3.0	); # prior of Perc, 2018
+Distrib(	M_lnPLivNATC	TruncNormal	0.0 1.5	-5.0 3.0	); # prior of Perc, 2018
+Distrib(	M_lnPKidNATC	TruncNormal	0.0 1.5	-5.0 3.0	); # prior of Perc, 2018
+#Binding to blood plasma
+Distrib(	M_lnkDissocC	TruncNormal	0.535	0.624	-1.337	2.407	); #(v3.2) posterior of TCE, 2014
+Distrib(	M_lnBMaxkDC	TruncNormal	0.403 0.24	-0.329 1.135	); #(v3.2) posterior of TCE, 2014
+# Metabolism parameters
+Distrib(	M_lnKMC	Uniform	-6.909	6.909	);
+Distrib(	M_lnClC	Uniform	-6.909	6.909	);	# prior of Perc, 2018
+Distrib(	M_lnClTCVGC	Uniform	-13.8	10.203	);	# 10.203 prior of Perc, 2018	
+Distrib(	M_lnCl2OxC	Uniform	-6.909	6.909	);	# prior of Perc, 2018
+Distrib(	M_lnFracOtherC	Uniform	-6.909	6.909	);	# -6.701	-1.679 posterior of TCE, 2014
+Distrib(	M_lnkUrnTCAC	Uniform	-3.109	-1.194	);	# posterior of TCE, 2014
+Distrib(	M_lnkMetTCAC	Uniform	-1.309	0.205	);	# posterior of TCE, 2014
+# New parameters: Metabolism/Clearance					#values(v3.1)
+Distrib(	M_lnkKidTCVCC	Uniform	-6.909	6.909	);		
+Distrib(	M_lnkKidNATC	Uniform	-6.909	6.909	);		
+Distrib(	M_lnkDCAC	Uniform	-6.909	6.909	);		
+Distrib(	M_lnkUrnNATC	Uniform	-6.909	6.909	);		
+
+## Population variances
+## Flows
+Distrib(	V_lnQCC	InvGamma	2.25	0.0500	);
+Distrib(	V_lnVPRC	InvGamma	2.25	0.0500	);
+# Blood Flows to Tissues
+Distrib(	V_QFatC	InvGamma	6	1.0580	);
+Distrib(	V_QGutC	InvGamma	6	0.1445	);
+Distrib(	V_QLivC	InvGamma	6	0.1445	);
+Distrib(	V_QSlwC	InvGamma	6	0.4205	);
+Distrib(	V_QKidC	InvGamma	6	0.5120	);
+Distrib(	V_FracPlasC	InvGamma	6	0.2000	);
+## Volumes
+Distrib(	V_VFatC	InvGamma	6	1.0125	); #(v3.2)  prior of TCE, 2014
+Distrib(	V_VGutC	InvGamma	6	0.0845	);
+Distrib(	V_VLivC	InvGamma	6	0.2880	);
+Distrib(	V_VRapC	InvGamma	6	0.0500	);
+Distrib(	V_VRespLumC	InvGamma	6	0.0605	);
+Distrib(	V_VRespEffC	InvGamma	6	0.0605	);
+Distrib(	V_VKidC	InvGamma	6	0.0500	);
+Distrib(	V_VBldC	InvGamma	6	0.0720	);
+# Absorption parameters
+Distrib(	V_lnkTSD	InvGamma	2.25	5.0	);
+Distrib(	V_lnkAS	InvGamma	2.25	5.0	);
+Distrib(	V_lnkAD		InvGamma	2.25	5.0	);
+Distrib(	V_lnkASAq	InvGamma	2.25	5.0	);
+Distrib(	V_lnkTSDAq	InvGamma	2.25	5.0	);
+Distrib(	V_lnkADAq	InvGamma	2.25	5.0	);
+# New parameters: Partition coefficients											
+Distrib(	V_PBC	InvGamma	9.488	1.0812	); 			#(v3.2)  prior of TCE, 2014
+Distrib(	V_PFatC	InvGamma	9.488	1.119 ); 	#(v3.2) prior of TCE, 2014
+Distrib(	V_lnPGutC	InvGamma	2.25	0.2	); #(v3.2) prior of TCE, 2014
+Distrib(	V_lnPLivC	InvGamma	2.25	0.2 ); 	#(v3.2) prior of TCE, 2014
+Distrib(	V_lnPRapC	InvGamma	2.25	0.2	);
+Distrib(	V_lnPRespC	InvGamma	2.25	0.2	);
+Distrib(	V_lnPSlwC	InvGamma	2.25	0.2	);
+Distrib(	V_lnPKidC	InvGamma	2.25	0.2 ); 	#(v3.2) prior of TCE, 2014
+Distrib(	V_lnPBrnC	InvGamma	2.25	0.2 );
+Distrib(	V_lnPRBCPlasTCAC	InvGamma	2.25	0.1411	);		#(v3.2) posterior of TCE, 2014
+Distrib(	V_lnPKidTCAC	InvGamma	2.25	0.2	); 
+Distrib(	V_lnPBrnTCAC	InvGamma	2.25	0.2	); 
+Distrib(	V_lnPBodTCAC	InvGamma	2.25	0.2	); 
+Distrib(	V_lnPLivTCAC	InvGamma	2.25	0.2	); 
+Distrib(	V_lnPBodTCVGC	InvGamma	2.25	0.2	); 
+Distrib(	V_lnPLivTCVGC	InvGamma	2.25	0.2	); 
+Distrib(	V_lnPKidTCVGC	InvGamma	2.25	0.2	); 
+Distrib(	V_lnPBodTCVCC	InvGamma	2.25	0.2	); 
+Distrib(	V_lnPLivTCVCC	InvGamma	2.25	0.2	); 
+Distrib(	V_lnPKidTCVCC	InvGamma	2.25	0.2	); 
+Distrib(	V_lnPBodNATC	InvGamma	2.25	0.2	); 
+Distrib(	V_lnPLivNATC	InvGamma	2.25	0.2	); 
+Distrib(	V_lnPKidNATC	InvGamma	2.25	0.2	); 
+#Binding to blood plasma
+Distrib(	V_lnkDissocC	InvGamma	2.25	1.7731	);
+Distrib(	V_lnBMaxkDC	InvGamma	2.25	0.3063	); 
+# Metabolism parameters	
+Distrib(	V_lnKMC	InvGamma	2.25	0.3125	);				
+Distrib(	V_lnClC	InvGamma	2.25	0.3125	);
+Distrib(	V_lnClTCVGC	InvGamma	2.25	0.3125	);
+Distrib(	V_lnCl2OxC	InvGamma	2.25	0.3125 );
+Distrib(	V_lnFracOtherC	InvGamma	2.25	0.3125	);
+Distrib(	V_lnkUrnTCAC	InvGamma	2.25	0.3125	);
+Distrib(	V_lnkMetTCAC	InvGamma	2.25	0.3125	);
+# New parameters: Metabolism/Clearance
+Distrib(	V_lnkKidTCVCC	InvGamma	2.25	0.3125	);		
+Distrib(	V_lnkKidNATC	InvGamma	2.25	0.3125	);		
+Distrib(	V_lnkDCAC	InvGamma	2.25	0.3125	);		
+Distrib(	V_lnkUrnNATC	InvGamma	2.25	0.3125	);	
+
+## Error variances									
+Distrib(	Ve_CInhPPM	LogUniform	0.01	3.3	);
+Distrib(	Ve_CVen	LogUniform	0.01	3.3	);
+Distrib(	Ve_CBldTCA	LogUniform	0.01	3.3	);
+Distrib(	Ve_CPlasTCA	LogUniform	0.01	3.3	);	
+Distrib(	Ve_CPlasTCAfree	LogUniform	0.01	3.3	);		
+Distrib(	Ve_RetDose	LogUniform	0.01	3.3	);
+Distrib(	Ve_FracRetMetab	LogUniform	0.01	3.3	);
+Distrib(	Ve_zRAExh	LogUniform	0.01	3.3	);
+Distrib(	Ve_CFat	LogUniform	0.01	3.3	);	
+Distrib(	Ve_CLiv	LogUniform	0.01	3.3	);
+Distrib(	Ve_CKid	LogUniform	0.01	3.3	);
+Distrib(	Ve_CBrn	LogUniform	0.01	3.3	);		
+Distrib(	Ve_CLivTCA	LogUniform	0.01	3.3	);
+Distrib(	Ve_CKidTCA	LogUniform	0.01	3.3	);		
+Distrib(	Ve_CBrnTCA	LogUniform	0.01	3.3	);		
+Distrib(	Ve_CBldTCVG	LogUniform	0.01	3.3	);		
+Distrib(	Ve_CLivTCVG	LogUniform	0.01	3.3	);		
+Distrib(	Ve_CKidTCVG	LogUniform	0.01	3.3	);		
+Distrib(	Ve_CBldTCVC	LogUniform	0.01	3.3	);		
+Distrib(	Ve_CLivTCVC	LogUniform	0.01	3.3	);		
+Distrib(	Ve_CKidTCVC	LogUniform	0.01	3.3	);		
+Distrib(	Ve_CBldNAT	LogUniform	0.01	3.3	);		
+Distrib(	Ve_CLivNAT	LogUniform	0.01	3.3	);		
+Distrib(	Ve_CKidNAT	LogUniform	0.01	3.3	);		
+
+## Add any parameters that are fixed at something other than the “default”
+lnDRespC  = 	0.83; 		
+#FracPlasC =	0.874; 
+#lnkDissocC	= 	0.467; 		
+lnVMaxTCVGC = 10.2;
+lnKM2C = 15;
+lnkTCVCC = -15.2;	
+lnkNATC = -15.2;	
+
+Level { ## Group level – strains 
+## Flows
+Distrib(	lnQCC	TruncNormal_v	M_lnQCC	V_lnQCC	-0.8	0.8	);
+Distrib(	lnVPRC	TruncNormal_v	M_lnVPRC	V_lnVPRC	-0.744 0.105	);
+# Blood Flows to Tissues
+Distrib(	QFatC	TruncNormal_v	 M_QFatC	V_QFatC	0.08 	1.92	);
+Distrib(	QGutC	TruncNormal_v	 M_QGutC	V_QGutC	0.66	1.34	);
+Distrib(	QLivC	TruncNormal_v	 M_QLivC	V_QLivC	0.66	1.34	);
+Distrib(	QSlwC	TruncNormal_v	 M_QSlwC	V_QSlwC	0.42	1.58	);
+Distrib(	QKidC	TruncNormal_v	 M_QKidC	V_QKidC	0.36	1.64	);
+Distrib(	FracPlasC	TruncNormal_v	M_FracPlasC	V_FracPlasC	0.656	1.084	);
+# Volumes
+Distrib(	VFatC	TruncNormal_v	M_VFatC	V_VFatC	0.1	1.9	);
+Distrib(	VGutC	TruncNormal_v	M_VGutC	V_VGutC	0.74	1.26	); #(v3.2)  prior of TCE, 2014
+Distrib(	VLivC	TruncNormal_v	M_VLivC	V_VLivC	0.52	1.48	); #(v3.2)  prior of TCE, 2014
+Distrib(	VRapC	TruncNormal_v	M_VRapC	V_VRapC	0.8	1.2	); #(v3.2)  prior of TCE, 2014
+Distrib(	VRespLumC	TruncNormal_v	M_VRespLumC	V_VRespLumC	0.78	1.22	); #(v3.2)  prior of TCE, 2014
+Distrib(	VRespEffC	TruncNormal_v	M_VRespEffC	V_VRespEffC	0.78	1.22	); #(v3.2)  prior of TCE, 2014
+Distrib(	VKidC	TruncNormal_v	M_VKidC	V_VKidC	0.8	1.2	); #(v3.2)  prior of TCE, 2014
+Distrib(	VBldC	TruncNormal_v	M_VBldC	V_VBldC	0.76	1.24	);
+# Absorption parameters
+Distrib(	lnkTSD	TruncNormal_v	M_lnkTSD	V_lnkTSD	-6.571	7.244	);
+Distrib(	lnkAS	TruncNormal_v	M_lnkAS	V_lnkAS	-6.571	7.244	);
+Distrib(	lnkAD	TruncNormal_v	M_lnkAD	V_lnkAD	-7.195	6.62	);
+Distrib(	lnkASAq	TruncNormal_v	M_lnkASAq	V_lnkASAq	-6.571	7.244	);
+Distrib(	lnkTSDAq	TruncNormal_v	M_lnkTSDAq	V_lnkTSDAq	-6.571	7.244	);
+Distrib(	lnkADAq	TruncNormal_v	M_lnkADAq	V_lnkADAq	-7.195	6.62	);
+# New parameters: Partition coefficients	
+Distrib(	PBC	TruncNormal_v	M_PBC	V_PBC	0.472 2.12 ); 
+Distrib(	PFatC	TruncNormal_v	M_PFatC		V_PFatC	0.41 2.46 ); 
+Distrib(	lnPGutC	TruncNormal_v	M_lnPGutC	V_lnPGutC	-1.2 1.2 );
+Distrib(	lnPLivC	TruncNormal_v	M_lnPLivC	V_lnPLivC	-1.2 1.2 ); 
+Distrib(	lnPRapC	TruncNormal_v 	M_lnPRapC 	V_lnPRapC	-1.2 1.2 ); 	#(v3.2) prior of TCE, 2014
+Distrib(	lnPRespC	TruncNormal_v M_lnPRespC V_lnPRespC	-1.2 1.2 ); 	#(v3.2) prior of TCE, 2014
+Distrib(	lnPSlwC	TruncNormal_v 	M_lnPSlwC 	V_lnPSlwC	-1.2 1.2 );
+Distrib(	lnPKidC	TruncNormal_v	M_lnPKidC	V_lnPKidC	-1.2 1.2 ); 
+Distrib(	lnPBrnC	TruncNormal_v 	M_lnPBrnC 	V_lnPBrnC	-1.2 1.2 ); 
+Distrib(	lnPRBCPlasTCAC	TruncNormal_v	M_lnPRBCPlasTCAC	V_lnPRBCPlasTCAC	-0.19	1.873	);	
+Distrib(	lnPKidTCAC	TruncNormal_v	M_lnPKidTCAC	V_lnPKidTCAC	-1.2 1.2	); 
+Distrib(	lnPBrnTCAC	TruncNormal_v	M_lnPBrnTCAC	V_lnPBrnTCAC	-1.2 1.2	); 
+Distrib(	lnPBodTCAC	TruncNormal_v	M_lnPBodTCAC	V_lnPBodTCAC	-1.008 1.008	); 
+Distrib(	lnPLivTCAC	TruncNormal_v	M_lnPLivTCAC	V_lnPLivTCAC	-1.008 1.008	);
+Distrib(	lnPBodTCVGC	TruncNormal_v	M_lnPBodTCVGC	V_lnPBodTCVGC	-5.0 3.0	); 
+Distrib(	lnPLivTCVGC	TruncNormal_v	M_lnPLivTCVGC	V_lnPLivTCVGC	-5.0 3.0	); 
+Distrib(	lnPKidTCVGC	TruncNormal_v	M_lnPKidTCVGC	V_lnPKidTCVGC	-5.0 3.0	); 
+Distrib(	lnPBodTCVCC	TruncNormal_v	M_lnPBodTCVCC	V_lnPBodTCVCC	-5.0 3.0	); 
+Distrib(	lnPLivTCVCC	TruncNormal_v	M_lnPLivTCVCC	V_lnPLivTCVCC	-5.0 3.0	); 
+Distrib(	lnPKidTCVCC	TruncNormal_v	M_lnPKidTCVCC	V_lnPKidTCVCC	-5.0 3.0	); 
+Distrib(	lnPBodNATC	TruncNormal_v	M_lnPBodNATC	V_lnPBodNATC	-5.0 3.0	); 
+Distrib(	lnPLivNATC	TruncNormal_v	M_lnPLivNATC	V_lnPLivNATC	-5.0 3.0	); 
+Distrib(	lnPKidNATC	TruncNormal_v	M_lnPKidNATC	V_lnPKidNATC	-5.0 3.0	); 
+#Binding to blood plasma
+Distrib(	lnkDissocC	TruncNormal_v	M_lnkDissocC	V_lnkDissocC	-1.337	2.407	);
+Distrib(	lnBMaxkDC	TruncNormal_v	M_lnBMaxkDC	V_lnBMaxkDC	-0.329 1.135	);
+# Metabolism parameters						
+Distrib(	lnKMC		TruncNormal_v	M_lnKMC	V_lnKMC	-6.909	6.909	);
+Distrib(	lnClC	TruncNormal_v	M_lnClC	V_lnClC	-6.909	6.909	);
+Distrib(	lnClTCVGC	TruncNormal_v	M_lnClTCVGC	V_lnClTCVGC	-13.8	10.203	);	#0.0
+Distrib(	lnCl2OxC	TruncNormal_v	M_lnCl2OxC		V_lnCl2OxC	-6.909	6.909	);
+Distrib(	lnFracOtherC	TruncNormal_v	M_lnFracOtherC	V_lnFracOtherC	-6.909	6.909	); #-6.701	-1.679
+Distrib(	lnkUrnTCAC	TruncNormal_v	M_lnkUrnTCAC	V_lnkUrnTCAC	-3.109	-1.194	);
+Distrib(	lnkMetTCAC	TruncNormal_v	M_lnkMetTCAC	V_lnkMetTCAC	-1.309	0.205	);
+# New parameters: Metabolism/Clearance
+Distrib(	lnkKidTCVCC	TruncNormal_v	M_lnkKidTCVCC	V_lnkKidTCVCC	-6.909	6.909	);
+Distrib(	lnkKidNATC	TruncNormal_v	M_lnkKidNATC	V_lnkKidNATC	-6.909	6.909	);
+Distrib(	lnkDCAC	TruncNormal_v	M_lnkDCAC	V_lnkDCAC	-6.909	6.909	);				
+Distrib(	lnkUrnNATC	TruncNormal_v	M_lnkUrnNATC	V_lnkUrnNATC	-6.909	6.909	);
+
+
+Level { ## Strain 1 Strain = B6C3F1
+Level { ## Subgroup 1 of Strain 1	# Gearhart et al. (1993)
+
+#Likelihoods
+
+	Likelihood( CInhPPM , LogNormal_v , Prediction( CInhPPM )  , Ve_CInhPPM );
+	Likelihood( CVen , LogNormal_v , Prediction( CVen )  , Ve_CVen );
+	Likelihood( CBldTCA , LogNormal_v , Prediction( CBldTCA )  , Ve_CBldTCA );
+	
+Experiment {
+Species = 3;
+# 1 M B6C3F1 mice	
+# Closed chamber; 0.7 L volume	
+Male = 1.0;
+BWmeas=0.0325; # range 0.030 to 0.035	
+CC = 200; 
+NRodents = 1;	
+VChC = 0.7;	
+lnkLossC =  -3.912 ;	
+Print(	CVen	1	);
+Data(	CVen	-1	);
+Print(	CBldTCA	1	);
+Data(	CBldTCA	-1	);
+Print(	CInhPPM	0.001	0.002	0.050489922	0.057830505	0.126910324	0.1879683	0.21801189	0.287015068	0.309454087	0.317714371	0.385678626	0.431876607	0.439123516	0.500402902	0.523046299	0.568469346	0.622050488	0.629876468	0.697891818	0.743868389	0.782036011	0.796921554	0.880648475	0.933931565	0.949464306	1.154779202	1.19261471	1.413300548	1.413513442	1.664523889	1.679545684	1.938194766	1.938356565	2.2121126	2.42506613	);
+Data(	CInhPPM	192.0093699	172.3043669	120.7051272	153.4143459	85.87708162	70.22724192	98.69822572	59.23192467	83.24588433	45.8860518	70.75905918	42.13846034	58.31402846	38.99916081	45.52343273	54.80788307	39.91007699	32.63873022	48.04827682	34.98811522	30.6756418	41.15730995	38.38633591	36.6435473	27.31061072	27.51722633	32.62097537	28.37487417	23.38553408	22.14754781	26.25593656	24.10820145	20.81301306	20.96908403	20.4838528	);
+}
+Experiment {
+Species = 3;
+# 1 M B6C3F1 mice	
+# Closed chamber; 0.7 L volume	
+Male = 1.0;
+BWmeas=0.0325; # range 0.030 to 0.035	
+CC = 1000; 
+NRodents = 1;	
+VChC = 0.7;	
+lnkLossC =  -3.912 ;	
+Print(	CVen	1	);
+Data(	CVen	-1	);
+Print(	CBldTCA	1	);
+Data(	CBldTCA	-1	);
+Print(	CInhPPM	0.001	0.025376955	0.116819152	0.131909073	0.139811695	0.177723845	0.193120333	0.231270923	0.284298541	0.299618388	0.322542805	0.390932848	0.398682187	0.497635281	0.535819934	0.612214789	0.665191312	0.74145843	0.764152922	0.764425426	0.810129493	0.878315158	0.909125166	0.954931422	0.969646649	1.053765295	1.145181944	1.159999361	1.236479373	1.358195085	1.39593692	1.403907668	1.53327053	1.654713738	1.66255675	1.754118167	1.784212851	1.905749733	1.91354165	2.042759744	2.195055539	2.438359227	2.43857212	2.704638426	2.94806985	3.183862641	3.449928947	4.438650891	4.644085009	4.895325382	4.910338661	5.359204203	5.381813537	5.914346389	6.165195037	6.408626462	6.925626573	6.93352068	7.184216045	7.435226493	7.44301841	7.716757413	7.975389463	);
+Data(	CInhPPM	1257.967677	974.5208495	821.9484122	915.9477473	698.69268	772.5796866	651.6713751	580.2573989	698.5950733	631.7511962	571.2989605	598.3998687	524.6592971	481.8165706	415.9450017	302.8767017	381.9684526	312.3557058	348.0746445	271.7499508	253.46332	319.6467995	223.9350881	190.3505781	298.123935	194.8009561	168.160081	240.0225028	161.7660037	155.6104762	200.8562013	144.020731	133.2833998	164.2217029	132.2398379	100.0882761	134.285817	151.9604281	128.1796441	135.2947785	112.3543735	116.7575904	96.22733804	104.7468157	96.92682337	92.50989491	100.7002491	89.58254799	80.99610413	62.24964821	74.3700775	62.22173308	74.91343458	61.7091435	67.69517711	62.64131688	69.23357953	53.22206814	67.10738966	63.55485044	53.60894422	54.85303852	51.15132869	);
+}
+Experiment {
+Species = 3;
+# 1 M B6C3F1 mice	
+# Closed chamber; 0.7 L volume	
+Male = 1.0;
+BWmeas=0.0325; # range 0.030 to 0.035	
+CC = 3500; 
+NRodents = 1;	
+VChC = 0.7;	
+lnkLossC =  -3.912 ;	
+Print(	CVen	1	);
+Data(	CVen	-1	);
+Print(	CBldTCA	1	);
+Data(	CBldTCA	-1	);
+Print(	CInhPPM	0.001	0.023997403	0.05456897	0.077757375	0.115533273	0.161807895	0.207026564	0.245279343	0.329219158	0.359535253	0.428163737	0.473952961	0.542504803	0.633861842	0.687161964	0.694885756	0.808962834	0.862262956	0.862322566	0.900456125	0.961190503	1.144040833	1.166675715	1.379986907	1.410183781	1.630869618	1.631048449	1.866943429	1.889484637	2.14843177	2.155755321	2.437149989	2.65044415	2.657801764	2.901199125	2.901420535	3.175278758	3.411046001	3.418284394	3.646855823	3.90545381	4.384558804	4.399444347	4.878506762	4.886486026	5.357611756	5.365633599	5.874756636	5.897979104	6.384714217	6.39949757	6.901433308	6.916957533	7.42648081	7.433778814	7.951145103	);
+Data(	CInhPPM	3412.348492	3412.122677	2968.53022	2112.10443	2643.162939	1468.200457	2128.239824	1727.026553	1327.52296	1456.608568	1228.58686	1060.612767	959.0804783	873.9833066	821.4952472	737.1728586	731.4118119	687.4860455	651.2498329	588.923113	646.1697821	474.1233674	557.7384268	393.6997863	481.3916169	418.7313961	355.9481481	309.6116922	396.5616261	277.7580612	358.5302951	350.210614	251.0630776	314.1985457	299.8784001	245.244382	225.1800847	219.9644941	306.7654406	206.7177932	198.8254408	195.6824319	262.5458516	268.5853832	191.1008742	264.3396174	180.9444333	256.1575973	176.7027424	169.9188583	250.1546025	242.4152116	182.0762236	179.1927138	236.7325257	187.6103519	);
+}
+Experiment {
+# Oil Gavage 
+# 100 mg/kg dose group
+Species = 3;
+Male = 1.0;
+BWmeas=0.0325;
+PDose  = NDoses(  2  , 100 0  , 0 0.05  );
+TChng =  0.05 ;
+Print(	CVen	#0.5	0.857142857	1.5	
+2.785714286	4.642857143	6.714285714	11.64285714	#23.5	
+);	
+Data(	CVen	#8.341708543	15.1758794	12.26130653	
+7.035175879	3.819095477	2.110552764	0.703517588	#0.100502513 
+);	
+Print(	CBldTCA	#1.060151614	1.833969233	
+3.249532918	5.2420596	6.951831464	12.09045291	23.99264122	28.33954917	);
+Data(	CBldTCA	#5.89046293	13.12249607	
+19.81507596	21.14442925	20.86725795	13.06751994	7.375581914	5.744241704	);
+Print(	CInhPPM	1	);	
+Data(	CInhPPM	-1	);	
+}
+Experiment {
+# Oil Gavage 
+# 536 mg/kg dose group
+Species = 3;
+Male = 1.0;
+BWmeas=0.0325;
+PDose  = NDoses(  2  , 536 0  , 0 0.05  );
+TChng =  0.05 ;
+Print(	CVen	#0.214285714	1.071428571	
+2.714285714	4.785714286	5.857142857	7.285714286	#23.57142857	24.64285714	29.78571429	31.42857143	46.71428571	
+);
+Data(	CVen	#11.45728643	21.90954774	
+22.21105528	15.47738693	13.16582915	7.638190955	#3.115577889	3.216080402	1.005025126	1.809045226	4.32160804	
+);
+Print(	CBldTCA	#0.815693966	1.322147219	1.73733151	
+3.210877828	5.063458771	5.950020401	7.457926799	25.10039586	29.65775929	32.37650057	47.77482695	);
+Data(	CBldTCA	#28.94034947	23.04148741	32.15148977	
+48.76000678	48.21406329	77.69004822	68.56973784	31.22224052	32.00183254	22.87503191	12.60824022	);
+Print(	CInhPPM	1	);	
+Data(	CInhPPM	-1	);	
+}
+Experiment {
+# Oil Gavage 
+# 1072 mg/kg dose group
+Species = 3;
+Male = 1.0;
+BWmeas=0.0325;
+PDose  = NDoses(  2  , 1072 0  , 0 0.05  );
+TChng =  0.05 ;
+Print(	CVen	#0.285714286	0.714285714	
+2	3.142857143	5.071428571	6.571428571	#22.28571429	25.21428571	27.64285714	32.14285714	47.78571429	
+);
+Data(	CVen	#29.34673367	32.46231156	
+44.32160804	51.85929648	40.50251256	34.17085427	#4.824120603	5.125628141	2.010050251	6.231155779	6.331658291	
+);
+Print(	CBldTCA	#0.953492201	
+2.36261337	3.330422271	5.253870878	6.558480139	22.42961553	23.65405127	24.22671926	27.41290078	31.12343143	46.87287486	);
+Data(	CBldTCA	#85.75703129	
+97.27376632	119.2451281	118.9668115	155.4087298	111.1025529	100.9117352	98.76461198	112.9518887	54.50653915	47.98995922	);
+Print(	CInhPPM	1	);	
+Data(	CInhPPM	-1	);	
+}
+} ## End Subgroup 1 of Strain 1 # Gearhart
+
+Level { ## Subgroup 2 of Strain 1	# Odum et al. (1998)
+
+#Likelihoods
+	Likelihood( CBldTCA , LogNormal_v , Prediction( CBldTCA )  , Ve_CBldTCA );
+	
+Experiment {
+Species = 3;
+# Odum et al. (1998)
+# M/F B6C3F1 mice (23-28 g)
+# 6 hr exposure
+Male = 0.5; # mixed males and females
+BWmeas=0.0255;
+Conc=NDoses(2, 400 0 , 0 6 );
+Print(	CBldTCA	1	2	3	4	5	6	7	8	9	10	11	12	13.06506894	14.07527905	15.07514773	16.14238345	17.14963887	18.15659882	20.09665135	22.17793828	24.11592252	25.99126724	28.15617203	30.15915955	32.11250821	34.05551543	36.07268549	38.09458306	42.12065003	46.0054826	50.11753119	54	);
+Data(	CBldTCA	32.05	47.19	52.46	59.28	70.1	108.61	108.6679629	109.9501226	130.9301998	128.8235128	114.7197565	103.9969566	85.21416065	86.05334865	76.85177282	63.05860144	61.02899978	58.71251915	52.35981615	43.13525936	34.77440359	35.59520683	37.55739768	22.30991464	28.86676516	25.38285183	23.9055592	27.01833005	16.03113373	7.915791202	10.41037426	8.604836945	);
+}
+} ## End Subgroup 2 of Strain 1 # Odum et al. (1998)
+
+Level {	## Subgroup 3 of Strain 1 # Reitz et al. -- from Gargas
+
+#Likelihoods
+	Likelihood( CInhPPM , LogNormal_v , Prediction( CInhPPM )  , Ve_CInhPPM );
+	
+Experiment {
+Species = 3;
+# Reitz et al. (1996) -- from Gargas	
+# 13 M B6C3F1 mice	
+# Closed chamber; 9.1 L volume	
+Male = 1.0;
+CC = 1.5; # from Sweeney et al. (2009)	
+NRodents = 13;	
+VChC = 9.11;	
+lnkLossC =  -3.912 ;	
+Print(	CInhPPM	0.077250414	0.174231799	0.327808237	0.497449955	0.667091674	0.828621063	0.998183093	1.16784075	);
+Data(	CInhPPM	1.5	0.946857416	0.573975402	0.381090101	0.253024197	0.179862536	0.133808041	0.086843072	);
+}
+
+Experiment {
+Species = 3;
+# Reitz et al. (1996) -- from Gargas	
+# 13 M B6C3F1 mice	
+# Closed chamber; 9.1 L volume	
+Male = 1.0;
+CC = 4.5;	
+NRodents = 13;	
+VChC = 9.11;	
+lnkLossC =  -3.912 ;	
+Print(	CInhPPM	0.083694444	0.156489749	0.320953218	0.482720564	0.668753012	0.830520358	0.997679949	1.159447295	1.321214641	1.485678109	1.655533823	1.836174026	1.997941372	2.167797085	2.329564431	2.4940279	2.658491368	);
+Data(	CInhPPM	3.639897631	3.048610114	2.272145695	1.806956821	1.400229838	1.162777563	0.949034939	0.801851235	0.692306265	0.572424574	0.498521241	0.432290361	0.388049525	0.335039036	0.286775949	0.258543823	0.231083248	);
+}
+
+Experiment {
+Species = 3;
+# Reitz et al. (1996) -- from Gargas	
+# 13 M B6C3F1 mice	
+# Closed chamber; 9.1 L volume	
+Male = 1.0;
+CC = 20;	
+NRodents = 13;	
+VChC = 9.11;	
+lnkLossC =  -3.912 ;	
+Print(	CInhPPM	0.086390566	0.153793627	0.318257095	0.480024441	0.668753012	0.83321648	0.997679949	1.159447295	1.326606886	1.496462599	1.660926068	1.838870148	2.006029739	2.165100963	2.332260554	2.491331777	2.655795246	2.839131571	3.00359504	3.168058508	3.332521977	3.494289323	3.656056669	3.828608505	4.003856463	4.165623809	4.3327834	4.494550746	4.659014214	4.823477683	4.985245029	5.168581355	5.335740945	);
+Data(	CInhPPM	16.1182937	12.06386282	7.30548819	5.015213288	3.937113551	3.340945401	2.798498647	2.567021836	2.274615433	2.159955534	1.905651113	1.873322673	1.688905284	1.660219983	1.660519807	1.569991345	1.440134269	1.30401279	1.238272278	1.13094974	1.1608922	1.126465216	1.107335933	1.069871882	1.042659638	0.985818639	0.98599667	0.98616899	1.043397835	0.957096346	0.986691877	0.932923719	0.933092198	);
+}
+
+Experiment {
+Species = 3;
+# Reitz et al. (1996) -- from Gargas	
+# 13 M B6C3F1 mice	
+# Closed chamber; 9.1 L volume	
+Male = 1.0;
+CC = 100;	
+NRodents = 13;	
+VChC = 9.11;	
+lnkLossC =  -3.912 ;	
+Print(	CInhPPM	0.083694444	0.156489749	0.318257095	0.488112809	0.668753012	0.83321648	0.994983826	1.159447295	1.329303008	1.496462599	1.658229945	1.841566271	2.003333617	2.167797085	2.332260554	2.491331777	2.655795246	2.839131571	3.00359504	3.168058508	3.332521977	3.494289323	3.661448914	3.828608505	4.009248708	4.171016054	4.3327834	4.494550746	4.659014214	4.826173805	4.998725641	5.176669722	5.34113319	5.500204414	5.667364005	5.829131351	5.996290942	);
+Data(	CInhPPM	79.5262896	59.78044546	38.62774084	28.66537034	22.50309716	19.59770259	16.99370964	15.05793254	13.87241828	13.11623436	12.03132974	11.62441402	10.75555126	10.302061	9.867691412	9.533702937	9.013995632	8.822882553	8.27006804	7.819244808	7.854536109	7.621604928	7.331919906	7.2074535	6.814675276	6.360099564	6.225108853	6.040499357	5.861381643	5.565902112	5.354382258	4.911582281	4.912454971	4.808175966	4.64547582	4.626233253	4.647126783	);
+}
+
+Experiment {
+Species = 3;
+# Reitz et al. (1996) -- from Gargas	
+# 13 M B6C3F1 mice	
+# Closed chamber; 9.1 L volume	
+Male = 1.0;
+CC = 480;	
+NRodents = 13;	
+VChC = 9.11;	
+lnkLossC =  -3.912 ;	
+Print(	CInhPPM	0.156489749	0.320953218	0.490808931	0.674145257	0.83321648	0.994983826	1.162143417	1.326606886	1.496462599	1.655533823	1.838870148	2.003333617	2.165100963	2.332260554	2.491331777	2.658491368	2.836435449	3.00359504	3.165362386	3.329825854	3.50237769	3.661448914	3.828608505	4.003856463	4.168319931	4.335479522	4.494550746	4.659014214	4.828869928	4.996029519	5.173973599	5.338437068	5.500204414	5.667364005	5.829131351	5.993594819	);
+Data(	CInhPPM	310.666859	214.1977613	165.9811967	140.2428122	115.9572989	103.6408873	95.48093987	87.20549273	82.45217149	78.29497097	73.70889114	70.90712748	67.33221887	63.93791806	61.77383258	59.9422401	58.16563193	55.47286375	53.13378625	51.78172253	50.6832655	47.71327365	46.49927791	44.73230552	43.59402927	42.66901102	42.86134323	41.41087079	40.00971691	39.1607539	38.33025152	38.17159049	36.87971675	36.72716691	36.89282349	35.64433197	);
+}
+} ## End Subgroup 3 of Strain 1 #Reitz et al. -- from Gargas
+
+Level {	## Subgroup 4 of Strain 1 ## Reitz et al. (1996) Mice
+
+#Likelihoods
+	Likelihood( RetDose , LogNormal_v , Prediction( RetDose )  , Ve_RetDose );
+	Likelihood( FracRetMetab , LogNormal_v , Prediction( FracRetMetab )  , Ve_FracRetMetab );
+	Likelihood( zRAExh , LogNormal_v , Prediction( zRAExh )  , Ve_zRAExh );
+	
+Experiment {
+Species = 3;
+# Reitz et al. (1996)
+# M B6C3F1 mice
+# Flow rate of 0.45 l/min
+Male = 1.0;
+Conc = NDoses( 2 , 11 0 , 0 6 );
+CC = 1e-10;
+NRodents = 4;
+VChC = 6.1;
+lnkLossC =  1.4875 ;
+BWmeas=0.0325;
+# 1.5193 mg metabolites/4 mice/11.7 mg/kg = 0.0325 kg
+Print(	zRAExh	6.432309612	7.467791093	8.476332524	10.43930308	13.46403172	18.96931824	);
+Data(	zRAExh	0.020477053	0.011804158	0.007654849	0.004732535	0.002300618	0.000579615	);
+Print(	RetDose	6	);					
+Data(	RetDose	0.447025	); # 1.7881/4 mice					
+Print(	FracRetMetab	62.5	); # middle of range (48-65 hr post-exposure)					
+Data(	FracRetMetab	0.8497	);					
+}
+
+Experiment {
+Species = 3;
+# Reitz et al. (1996)
+# M B6C3F1 mice
+# Flow rate of 0.45 l/min 
+Male = 1.0;
+Conc = NDoses( 2 , 365 0 , 0 6 );
+CC = 1e-10;
+NRodents = 4;
+VChC = 6.1;
+lnkLossC =  1.4875 ;
+BWmeas=0.0246;
+# 12.326 mg metabolites/4 mice/125.2 mg/kg = 0.0246 kg
+Print(	zRAExh	6.470088709	7.506009723	9.01445764	10.9417431	13.49434291	16.46562269	21.49829108	);
+Data(	zRAExh	1.667299481	0.723740302	0.355387878	0.220890871	0.073417874	0.034193741	0.008077191	);
+Print(	RetDose	6	);						
+Data(	RetDose	7.03565	); # 28.1426/4 mice
+Print(	FracRetMetab	62.5	); # middle of range (48-65 hr post-exposure)
+Data(	FracRetMetab	0.438	);
+}
+
+Experiment {
+Species = 3;
+# Reitz et al. (1996)
+# M B6C3F1 mice
+# Flow rate of 0.45 l/min 
+Male = 1.0;
+Conc = NDoses( 2 , 1201 0 , 0 6 );
+CC = 1e-10;
+NRodents = 4;
+VChC = 6.1;
+lnkLossC =  1.4875 ;
+BWmeas=0.0297;
+# 12.6746 mg metabolites/4 mice/182.4 mg/kg = 0.0297 kg
+Print(	zRAExh	6.432504499	7.467911343	8.4585812	10.44892305	13.47440636	18.97067415	);
+Data(	zRAExh	5.710073944	3.454059339	2.288369253	0.952084253	0.284378449	0.076398346	);
+Print(	RetDose	6	);
+Data(	RetDose	21.1129	); # 84.4516/4 mice
+Print(	FracRetMetab	62.5	); # middle of range (48-65 hr post-exposure)
+Data(	FracRetMetab	0.2576	);
+}
+} ## End Subgroup 4	of Strain 1 # Reitz et al. (1996)
+}  # End Strain 1 # Strain = B6C3F1
+
+Level { ## Strain 2	Strain = SW	
+# Philip et al. (2007)	
+
+#Likelihoods
+	Likelihood( CVen , LogNormal_v , Prediction( CVen )  , Ve_CVen );
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CBldTCA , LogNormal_v , Prediction( CBldTCA )  , Ve_CBldTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	
+Experiment {
+Species = 3;
+# Philip et al. (2007)
+# M SW mice 25-29 g
+#
+Male = 1.0;
+BWmeas=0.027;
+PDoseAq  = NDoses(  2  , 150 0  , 0 0.05  );
+TChng =  0.05 ;
+Print(	CBldTCA	0.25	0.5	1	2	4	6	12	24	);
+Data(	CBldTCA	143.09	105.98	58.59	64.63	94.65	141.79	151.94	57.29	);
+Print(	CVen	0.25	0.5	1	2	4	6	);	
+Data(	CVen	15.32	10.63	6.21	4.803	2.85	0.347	);	
+Print(	CLiv	0.25	0.5	1	2	4	6	);	
+Data(	CLiv	45.82	35.23	10.85	9.44	8.038	2.04	);	
+Print(	CKid	0.25	0.5	1	2	4	6	12	);	
+Data(	CKid	33.55	30.26	14.47	10.53	7.89	1.97	1.97	);	
+Print(	CLivTCA	0.25	0.5	1	2	4	6	12	24	);
+Data(	CLivTCA	14.067	19.91	26.42	44.41	55.66	52.03	49.08	15.05	);
+}
+
+Experiment {
+Species = 3;
+# Philip et al. (2007)
+# M SW mice 25-29 g
+#
+Male = 1.0;
+BWmeas=0.027;
+PDoseAq  = NDoses(  2  , 500 0  , 0 0.05  );
+TChng =  0.05 ;
+Print(	CBldTCA	0.25	0.5	1	2	4	6	12	24	);
+Data(	CBldTCA	17.05	34.77	55.22	58.64	111.14	161.59	109.77	44.32	);
+Print(	CVen	0.25	0.5	1	2	4	6	12	);	
+Data(	CVen	42.45	62.07	37.17	8.639	10.79	8.018	0.311	);	
+Print(	CLiv	0.25	0.5	1	2	4	6	12	24	);
+Data(	CLiv	119.33	163.87	149.82	39.29	63.15	22.68	2.89	1.48	);
+Print(	CKid	0.25	0.5	1	2	4	6	12	24	);
+Data(	CKid	88.06	102.35	51.5	15.79	46.52	16.73	4.04	1.87	);
+Print(	CLivTCA	0.25	0.5	1	2	4	6	12	24	);
+Data(	CLivTCA	21.5	28.01	35.87	89.005	77.28	104.73	83.54	40.72	);
+}
+
+Experiment {
+Species = 3;
+# Philip et al. (2007)
+# M SW mice 25-29 g
+#
+Male = 1.0;
+BWmeas=0.027;
+PDoseAq  = NDoses(  2  , 1000 0  , 0 0.05  );
+TChng =  0.05 ;
+Print(	CBldTCA	0.25	0.5	1	2	4	6	12	24	);
+Data(	CBldTCA	24.55	26.59	34.77	94.09	119.32	168.41	139.77	143.18	);
+Print(	CVen	0.25	0.5	1	2	4	6	12	24	);
+Data(	CVen	73.13	59.95	53.88	40.42	20.66	21.72	3.872	0.274	);
+Print(	CLiv	0.25	0.5	1	2	4	6	12	24	);
+Data(	CLiv	297.37	324.68	272.73	138.08	70.05	67.48	43.1	3.79	);
+Print(	CKid	0.25	0.5	1	2	4	6	12	24	);
+Data(	CKid	167.67	149.06	139.001	131.58	74.81	77.91	27.06	3.19	);
+Print(	CLivTCA	0.25	0.5	1	2	4	6	12	24	);
+Data(	CLivTCA	51.97	42.38	53.75	98.9	109.58	175.68	135.69	135.57	);
+}
+} ## End Strain 2 # Strain = SW # Philip et al. (2007)	
+
+Level { ## Strain 3 # Strain = C57Bl/6J	# Joe et al. (2017) 
+#Likelihoods
+	Likelihood( CVen , LogNormal_v , Prediction( CVen )  , Ve_CVen );
+	Likelihood( CLiv , LogNormal_v , Prediction( CLiv )  , Ve_CLiv );
+	Likelihood( CFat , LogNormal_v , Prediction( CFat )  , Ve_CFat );
+	Likelihood( CKid , LogNormal_v , Prediction( CKid )  , Ve_CKid );
+	Likelihood( CPlasTCA , LogNormal_v , Prediction( CPlasTCA )  , Ve_CPlasTCA );
+	Likelihood( CLivTCA , LogNormal_v , Prediction( CLivTCA )  , Ve_CLivTCA );
+	Likelihood( CKidTCA , LogNormal_v , Prediction( CKidTCA )  , Ve_CKidTCA );
+	Likelihood( CBldTCVG , LogNormal_v , Prediction( CBldTCVG )  , Ve_CBldTCVG );
+	Likelihood( CLivTCVG , LogNormal_v , Prediction( CLivTCVG )  , Ve_CLivTCVG );
+	Likelihood( CKidTCVG , LogNormal_v , Prediction( CKidTCVG )  , Ve_CKidTCVG );
+	Likelihood( CBldTCVC , LogNormal_v , Prediction( CBldTCVC )  , Ve_CBldTCVC );
+	Likelihood( CLivTCVC , LogNormal_v , Prediction( CLivTCVC )  , Ve_CLivTCVC );
+	Likelihood( CKidTCVC , LogNormal_v , Prediction( CKidTCVC )  , Ve_CKidTCVC );
+	Likelihood( CBldNAT , LogNormal_v , Prediction( CBldNAT )  , Ve_CBldNAT );
+	Likelihood( CLivNAT , LogNormal_v , Prediction( CLivNAT )  , Ve_CLivNAT );
+	Likelihood( CKidNAT , LogNormal_v , Prediction( CKidNAT )  , Ve_CKidNAT );
+	Likelihood( CVen_ND , StudentT, 5 , Prediction(CVen_ND)	, 1.38E-04 );
+	Likelihood( CBldTCVG_ND , StudentT, 5 , Prediction(CBldTCVG_ND)	, 4.95E-05 );
+	Likelihood( CLivTCVG_ND , StudentT, 5 , Prediction(CLivTCVG_ND)	, 6.55E-05 );
+	Likelihood( CKidTCVG_ND , StudentT, 5 , Prediction(CKidTCVG_ND)	, 6.11E-05 );
+	Likelihood( CBldTCVC_ND , StudentT, 5 , Prediction(CBldTCVC_ND)	, 7.85E-05 );
+	Likelihood( CLivTCVC_ND , StudentT, 5 , Prediction(CLivTCVC_ND)	, 1.90E-04 );
+	Likelihood( CKidTCVC_ND , StudentT, 5 , Prediction(CKidTCVC_ND)	, 5.70E-04 );
+	Likelihood( CBldNAT_ND , StudentT, 5 , Prediction(CBldNAT_ND)	, 5.27E-05 );
+	Likelihood( CLivNAT_ND , StudentT, 5 , Prediction(CLivNAT_ND)	, 3.05E-04 );
+	Likelihood( CKidNAT_ND , StudentT, 5 , Prediction(CKidNAT_ND)	, 1.84E-04 );
+
+Experiment {	# Strain = C57Bl/6J
+Species = 3;
+# M C57Bl/6J mice 24-31.8 g
+# Aqueous Gavage 
+# 300 mg/kg dose group
+Male = 1.0;
+BWmeas=0.027;
+PDoseAq  = NDoses(  2  , 300 0  , 0 0.05  );
+TChng =  0.05 ;
+Print(	CVen	1	1.001	1.002	1.003	1.005	2	2.001	2.002	2.003	2.005	4	4.001	4.002	4.003	4.005	12	12.001	12.003	24	24.001	24.002	24.003	24.005	);
+Data(	CVen	4.493	6.306	4.589	4.578	4.807	3.863	4.436	5.962	3.436	5.561	3.125	3.895	2.199	2.126	3.327	0.587	0.113	0.625	0.041	0.017	0.069	0.323	0.041	);
+Print(	CLiv	1	1.001	1.002	1.003	1.005	2	2.001	2.002	2.003	2.005	4	4.001	4.002	4.003	4.005	12	12.001	12.003	24	24.001	24.002	24.003	24.005	36	36.001	36.002	36.003	);
+Data(	CLiv	29.1929	33.9743	14.8852	18.1006	18.7983	16.1503	22.0193	16.3832	12.1230	19.4501	15.3777	12.2679	6.7841	14.2875	23.5439	4.8999	0.8459	6.1365	0.3321	0.1769	0.5602	5.1441	0.3895	0.0355	0.0586	0.0179	0.0938	);
+Print(	CKid	1	1.001	1.002	1.003	1.005	2	2.001	2.002	2.003	2.005	4	4.001	4.002	4.003	4.005	12	12.001	12.003	24	24.001	24.002	24.003	24.005	36	36.001	36.002	36.003	);
+Data(	CKid	49.552	46.917	37.962	30.638	48.894	29.38	32.879	49.745	22.471	26.994	11.348	25.89	14.854	12.522	2.658	4.945	1.462	5.578	1.013	0.855	1.064	2.792	0.998	0.817	0.811	0.813	0.816	);
+Print(	CFat	1	1.001	1.002	1.003	1.005	2	2.001	2.002	2.003	2.005	4	4.001	4.002	4.003	4.005	12	12.001	12.003	24	24.001	24.002	24.003	24.005	36	36.001	36.002	36.003	);
+Data(	CFat	130.68	155.19	178.7	70.49	215.52	169.14	151.05	237.06	111.29	182.11	137.03	335.34	201.94	198.69	162.87	119.13	102.58	156.36	13.62	22.73	60.82	59.62	58.96	0.48	0.32	0.32	0.76	);
+Print(	CPlasTCA	1	1.001	1.002	1.003	1.005	2	2.001	2.002	2.003	2.005	4	4.001	4.002	4.003	4.005	12	12.001	12.003	24	24.001	24.002	24.003	24.005	36	36.001	36.002	36.003	);
+Data(	CPlasTCA	48.67	46.82	43.87	40.25	62.16	59.66	68.88	73.45	73.47	83.59	110.01	113.42	104.98	82.31	139.12	139.02	97.81	136.75	60.06	25.52	38.45	146.62	53.72	16.6	4.54	11.5	12.85	);
+Print(	CLivTCA	1	1.001	1.002	1.003	1.005	2	2.001	2.002	2.003	2.005	4	4.001	4.002	4.003	4.005	12	12.001	12.003	24	24.001	24.002	24.003	24.005	36	36.001	36.002	36.003	);
+Data(	CLivTCA	21.24	30.91	29.36	14.66	26.42	30.37	39.42	26.74	40.7	45.01	53.45	59.27	49.75	54.79	77.88	74.39	59.3	58.63	29.03	13.65	17.68	58.96	22.45	6.81	3.14	4.93	4.6	);
+Print(	CKidTCA	1	1.001	1.002	1.003	1.005	2	2.001	2.002	2.003	2.005	4	4.001	4.002	4.003	4.005	12	12.001	12.003	24	24.001	24.002	24.003	24.005	36	36.001	36.002	36.003	);
+Data(	CKidTCA	13.73	14.63	14.05	11.94	14.46	16.34	-1	25.79	23.22	24.25	43.42	38.05	40.7	36.12	33.75	50.15	38.83	42.19	16.87	9.95	12.04	36.01	12.69	5.38	0.86	2.63	3.7	);
+Print(	CBldTCVG	1	1.001	1.002	1.003	1.005	2	2.001	2.002	2.003	2.005	4	4.001	4.002	4.003	4.005	12	24	24.001	24.002	24.003	24.005	);						
+Data(	CBldTCVG	0.00209	0.00253	0.00193	0.00253	0.00276	0.00106	0.00124	0.00303	0.00125	0.00234	0.00114	0.0014	0.00071	0.00131	0.00156	0.000180985	-1	-1	-1	-1	-1	);						
+Print(	CLivTCVG	1	1.001	1.002	1.003	1.005	2	2.001	2.002	2.003	2.005	4	4.002	4.003	4.005	12	12.001	12.003	24	24.001	24.002	24.003	24.005	);					
+Data(	CLivTCVG	0.05916	0.09554	0.06937	0.0538	0.05254	0.03243	0.03642	0.07254	0.0565	0.01288	0.02389	0.02674	0.06323	0.05705	0.00761	0.00488	0.00983	-1	-1	-1	-1	-1	);					
+Print(	CKidTCVG	1	1.001	1.002	1.003	1.005	2	2.001	2.002	2.003	2.005	4	4.001	4.002	4.003	4.005	24	24.001	24.002	24.003	24.005	);							
+Data(	CKidTCVG	0.00238	0.00373	0.00331	0.00351	0.00304	0.0026	0.0031	0.00424	0.00293	0.00346	0.00214	0.00202	0.0021	0.00215	0.00305	-1	-1	-1	-1	-1	);							
+Print(	CBldTCVC	1	1.001	1.002	1.003	1.005	2	2.001	2.002	2.003	2.005	4	4.001	4.002	4.003	4.005	12	12.003	24	24.001	24.002	24.003	24.005	);					
+Data(	CBldTCVC	0.00332	0.00608	0.00419	0.00449	0.00342	0.0019	0.00331	0.0043	0.00216	0.00526	0.00205	0.00196	0.00128	0.00165	0.00263	0.0005	0.0005	-1	-1	-1	-1	-1	);					
+Print(	CLivTCVC	1	1.001	1.002	1.003	1.005	2.001	2.002	2.003	4	4.001	4.002	4.003	4.005	24	24.001	24.002	24.003	24.005	);									
+Data(	CLivTCVC	0.00594	0.00933	0.00776	0.00485	0.00906	0.00533	0.00674	0.00362	0.0012	0.00608	0.00115	0.00117	0.008	-1	-1	-1	-1	-1	);									
+Print(	CKidTCVC	1	1.001	1.002	1.003	1.005	2	2.001	2.002	2.003	2.005	4	4.001	4.003	4.005	24	24.001	24.002	24.003	24.005	);								
+Data(	CKidTCVC	0.00775	0.01219	0.00824	0.00826	0.00651	0.00749	0.00602	0.00867	0.00373	0.00978	0.00454	0.0052	0.00334	0.00448	-1	-1	-1	-1	-1	);								
+Print(	CBldNAT	1	1.001	1.002	1.003	1.005	2	2.001	2.002	2.003	2.005	4	4.001	4.002	4.003	4.005	12	12.001	12.003	24	24.001	24.002	24.003	24.005	);				
+Data(	CBldNAT	0.01374	0.02086	0.02035	0.0195	0.01958	0.01085	0.01189	0.02255	0.01006	0.02995	0.00854	0.01027	0.00512	0.00805	0.01378	0.00251	0.00023	0.00338	-1	-1	-1	-1	-1	);				
+Print(	CLivNAT	1	1.001	1.002	1.003	1.005	2	2.001	2.002	2.003	2.005	4	4.002	4.003	4.005	12.003	24	24.001	24.002	24.003	24.005	);							
+Data(	CLivNAT	0.01328	0.0201	0.01906	0.01367	0.02615	0.00312	0.01126	0.018	0.00969	0.00521	0.00566	0.00376	0.00512	0.02093	0.00174	-1	-1	-1	-1	-1	);							
+Print(	CKidNAT	1	1.001	1.002	1.003	1.005	2	2.001	2.002	2.003	2.005	4	4.001	4.003	4.005	24	24.001	24.002	24.003	24.005	);								
+Data(	CKidNAT	0.00333	0.00309	0.00388	0.00246	0.00287	0.00615	0.00226	0.00321	0.0018	0.00466	0.00152	0.00227	0.00136	0.00169	-1	-1	-1	-1	-1	);								
+Print(	CVen_ND	36	36.001	36.002	36.003	);
+Data(	CVen_ND	0	0	0	0	);
+Print(	CBldTCVG_ND	12.001	12.003	36	36.001	36.002	36.003	);																					
+Data(	CBldTCVG_ND	0	0	0	0	0	0	);																					
+Print(	CLivTCVG_ND	4.001	36	36.001	36.002	36.003	);																						
+Data(	CLivTCVG_ND	0	0	0	0	0	);																						
+Print(	CKidTCVG_ND	12	12.001	12.003	36	36.001	36.002	36.003	);																				
+Data(	CKidTCVG_ND	0	0	0	0	0	0	0	);																				
+Print(	CBldTCVC_ND	12.001	36	36.001	36.002	36.003	);																						
+Data(	CBldTCVC_ND	0	0	0	0	0	);																						
+Print(	CLivTCVC_ND	2	2.005	12	12.001	12.003	36	36.001	36.002	36.003	);																		
+Data(	CLivTCVC_ND	0	0	0	0	0	0	0	0	0	);																		
+Print(	CKidTCVC_ND	4.002	12	12.001	12.003	36	36.001	36.002	36.003	);																		
+Data(	CKidTCVC_ND	0.00097	0	0	0	0	0	0	0	);																		
+Print(	CBldNAT_ND	36	36.001	36.002	36.003	);																							
+Data(	CBldNAT_ND	0	0	0	0	);																							
+Print(	CLivNAT_ND	4.001	12	12.001	36	36.001	36.002	36.003	);																				
+Data(	CLivNAT_ND	0	0.00091	0.00013	0	0	0	0	);																				
+Print(	CKidNAT_ND	4.002	12	12.001	12.003	36	36.001	36.002	36.003	);																			
+Data(	CKidNAT_ND	0	0	0	0	0	0	0	0	);																			
+}	# # Strain = C57Bl/6J
+}	# End Strain 3	# Strain = C57Bl/6J	 # Cichocki, 2017-300
+}  # End Interstrain variability level
+} # Level for MCMC in Population level
+End.
