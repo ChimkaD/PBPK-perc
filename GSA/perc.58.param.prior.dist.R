@@ -1,5 +1,4 @@
-setwd("C:/MinGW/msys/1.0/home/wchiulab/mcsim-5.6.5/ChiuGinsbergPercModelFiles/GSA")
-setwd("C:/MinGW/msys/1.0/home/chimka/Perc/GSA")
+# 58 parameter prior distributions for Global sensitivity analysis
 
 # Parameters setting
 M_lnQCC <- 0.0  #0.152 #TruncNormal
