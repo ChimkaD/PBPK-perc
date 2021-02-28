@@ -1,5 +1,4 @@
-# setwd("C:/MinGW/msys/1.0/home/wchiulab/mcsim-5.6.5/ChiuGinsbergPercModelFiles/GSA")
-# setwd("C:/MinGW/msys/1.0/home/chimka/Perc/GSA")
+# 58 parameter MCMC posterior distributions for GSA
 
 # Parameters setting
 M_lnQCC <- 0.33 #TruncNormal
