@@ -1,5 +1,4 @@
 #---------------------------------- Dosimetry strain-specific model---------------------------------------------------
-
 #* Packages----------------
 install.packages("ggExtra")
 # install.packages("ggstance")
@@ -10,7 +9,6 @@ library(scales)
 library(ggExtra)
 library(EnvStats)
 library(plyr)
-
 library(tidyverse)
 library(data.table)
 library(rstan)
@@ -23,22 +21,7 @@ library(pksensi)
 library(bayestestR)
 library(grid)
 #*-------------------------------------------------------------------------------------------------*---------------------
-#*-------------------------------------------------------------------------------------------------*---------------------
 #---------------------------------* Set drive------------------------------------------------------
-#** From My account---------------------
-setwd("C:/MinGW/msys/1.0/home/CDalaijamts/45/terra")
-#** From Laptop---------------------
-setwd("C:/MinGW/msys/1.0/home/chimka/Perc/48/43p")
-setwd("C:/MinGW/msys/1.0/home/chimka/Perc/48/43p/files")
-setwd("C:/MinGW/msys/1.0/home/chimka/Perc/48/43p/AUC")
-#* from labtop Dellt-----------------
-setwd("C:/MinGW/msys/1.0/home/chimka/Perc/48/43p/Metabolism")
-#* from labtop Thinkpad-----------------
-setwd("C:/Users/d_chi/Documents/TAMU/PBPK modeling/Perc/48 strains/43p/AUC modeling")
-setwd("C:/Users/d_chi/Documents/TAMU/PBPK modeling/Perc/48 strains/43p/Metabolism/Met.1000")
-#* from My account-----------------
-setwd("C:/MinGW/msys/1.0/home/CDalaijamts/48/43p/Metabolism")
-#*-------------------------------------------------------------------------------------------------*---------------------
 #******************************************************************************************
 ###                   1. AUC                            ####
 #******************************************************************************************
@@ -76,7 +59,6 @@ for(i in 1:100){
               quote = F, sep = "\t", col.names = F, row.names = F)
   system(paste0("./mcsim.perc.48strains.model.R.exe  modeling/perc.mouse.48strains.43p.AUC.set.100mg.",i,".in.R"))
 }
-# system(paste0("./mcsim.perc.48strains.model.R.exe  modeling/perc.mouse.48strains.43p.AUC.set.1.in.R"))
 # mcsim("perc.48strains.model.R", "perc.mouse.48strains.43p.AUC.set.in.R")
 #1.1.3.-------------------------------------------------------------------------------------------------*---------------------
 #------------------------------AUC Setpoint results------------------------------------
@@ -305,7 +287,7 @@ write.table(format(AUC.sum1, digits = 3), file = "AUC.sum100.txt", row.names = F
 #--------2.1. ~ CC-45 ----------
 #* from labtop Thinkpad-----------------
 #* for Metabolism MCSim run------------------------------
-setwd("C:/Users/d_chi/Documents/TAMU/PBPK modeling/Perc/48 strains/43p/Metabolism")
+setwd("~")
 #2.1.1. -------------------------------------------------------------------------------------------------*---------------------
 #MCSim modeling-------------------------------
 source("MCSim/function.R")
@@ -328,10 +310,10 @@ for(i in 1:100){
 #2.1.3.-------------------------------------------------------------------------------------------------*---------------------
 #------------------------------Metabolism Setpoint results------------------------------------
 #------------------------------* Get the file list with------------------------------------
-temp = list.files(pattern="100mg.*.met.set.out")
+temp = list.files(pattern="10mg.*.met.set.out")
 temp = list.files(pattern="100mg.*.met.set.out")
 #---------------------------------* Read them all in-------------------
-myfiles = lapply(temp, read.delim) #, fread
+myfiles = lapply(temp, read.delim) 
 #----------------------------------* Create for loop for repeating functions--------------------------------------------------
 #* Add Number column to each of 100 files of Met.out -------------------------
 for (i in 1:length(myfiles)[[1]]) {
@@ -534,10 +516,6 @@ write.table(Met.sum1, file = "Met.sum100.txt", row.names = FALSE, col.names = TR
 #--------2.2. ~ 3-diet ----------
 #*-------------------------------------------------------------------------------------------------*---------------------
 #---------------------------------* Set drive------------------------------------------------------
-#** From My account---------------------
-setwd("C:/MinGW/msys/1.0/home/CDalaijamts/3-diet/27p")
-#** From Laptop---------------------
-setwd("C:/MinGW/msys/1.0/home/chimka/Perc/3-diet/terra/27p")
 #** from laptop-----------------------------
 out.B6 <- fread("perc.mouse.3strains.3diet.27p.s.met.set1000.B6.out")
 out.SW <- fread("perc.mouse.3strains.3diet.27p.s.met.set1000.SW.out") 
@@ -615,8 +593,6 @@ names(Met.var)
 #*-------------------------------------------------------------------------------------------------*---------------------
 #--------2.3. Met CC45+3diet Combined Plot  ----------
 #* Call Met.sum.1029.csv-----------------------------
-#* from labtop Dellt-----------------
-setwd("C:/MinGW/msys/1.0/home/chimka/Perc/48/43p/Metabolism")
 Met.sum = read.csv("Met.sum.1029.csv")
 # Met.sum$strains <- factor(Met.sum$strains, levels = c("Population mean","Population distribution",
 #                                                     "B6C3F1/J", "SW", "C57BL/6J-LFD", "C57BL/6J-HFD",
@@ -666,103 +642,10 @@ ggplot(data = Met.sum.sub, aes(y = strains, x = m, xmin=low, xmax=up, shape = St
         # legend.title = element_text(face = "bold"),
         # legend.text = element_text(size=12))
         strip.background = element_rect(fill="navy")) #
-
-#--------* Flipped ----------
-ggplot(data = Met.sum.sub, aes(x = strains, y = m, ymin=low, ymax=up, shape = Strain, fill = Diet)) + #colour = TKVF,
-  scale_shape_manual(values=c(17,22,19,3,23)) + #values=c(3,19,17,18,15,22,0)
-  scale_fill_manual(values=c(8,"white",1)) +
-  geom_errorbar(width=0.5,cex=1) +  #aes(ymin=low, ymax=up),
-  geom_pointrange(aes(shape = Strain, fill = Diet), size=1) + #, #fill = "white", pch = 22,#linetype = "dashed",, fatten = 3.2
-  # position = position_dodge(width = 0.5)) + #colour="paleturquoise2"
-  scale_y_log10() + #breaks = trans_breaks("log10", function(x) 10^x), limits = c(10^0,10^1.5), 
-  # labels = trans_format("log10", math_format(10^.x))) +
-  scale_x_discrete(position = "top") +
-  labs(y="Amount metabolized, mg", x="",  shape = "Strain:") + 
-  ggtitle("") + #B.
-  # annotation_logticks(scaled = TRUE, sides="b") +
-  
-  facet_wrap(chemical ~ ., strip.position = "top", dir = "v", scales = "free", nrow = 3) + #switch = ,
-  coord_flip() +
-  # guides(shape  = guide_legend(title.position = "left", direction = "horizontal", nrow = 2)) + #, label.position="bottom",
-  theme_pubr() +
-  theme(panel.grid.minor.y = element_blank(),
-        panel.border = element_rect(fill=NA), #"black"colour = NA, 
-        # axis.text = element_text(size=12), #angle = 1, hjust=10, 
-        # plot.title = element_text(size=18, face="bold"),
-        # plot.margin = unit(c(0,8,0,7), "cm"), #unit(c(0,1,0,2), "cm"),
-        legend.position = "none",
-        strip.placement = "outside",
-        strip.text = element_text(size=12, face = "bold"),
-        # legend.title = element_text(face = "bold"),
-        # legend.text = element_text(size=12))
-        strip.background = element_rect(fill="white")) #, colour="white"
-
-#--------* Common scale----------
-ggplot(data = Met.sum.sub, aes(y = strains, x = m, xmin=low, xmax=up, shape = Strain, fill = Diet)) + #colour = TKVF,
-  scale_shape_manual(values=c(17,22,19,3,23)) + #values=c(3,19,17,18,15,22,0)
-  scale_fill_manual(values=c(8,"white",1)) +
-  geom_pointrange(size=1, fatten = 3.2) + #, #fill = "white", pch = 22,#linetype = "dashed",
-  # position = position_dodge(width = 0.5)) + #colour="paleturquoise2"
-  scale_x_log10() + #breaks = trans_breaks("log10", function(x) 10^x), limits = c(10^0,10^1.5), 
-  # labels = trans_format("log10", math_format(10^.x))) +
-  scale_y_discrete(position = "right") +
-  labs(y="", x="Amount metabolized, mg",  shape = "Strain:") + 
-  ggtitle("") + #B.
-  # annotation_logticks(scaled = TRUE, sides="b") +
-  facet_wrap(chemical ~ ., strip.position = "left", nrow = 3) + #switch = ,scales = "free",
-  # coord_flip() +
-  # guides(shape  = guide_legend(title.position = "left", direction = "horizontal", nrow = 2)) + #, label.position="bottom",
-  theme_pubr() +
-  theme(panel.grid.minor.y = element_blank(),
-        panel.border = element_rect(colour = NA, fill=NA), #"black"
-        # axis.text = element_text(size=12), #angle = 1, hjust=10, 
-        # plot.title = element_text(size=18, face="bold"),
-        # plot.margin = unit(c(0,8,0,7), "cm"), #unit(c(0,1,0,2), "cm"),
-        legend.position = "none",
-        strip.text = element_text(size=12, face = "bold"),
-        # legend.title = element_text(face = "bold"),
-        # legend.text = element_text(size=12))
-        strip.background = element_rect(fill="white", colour="white")) #
-
-#*-------------------------------------------------------------------------------------------------*---------------------
-#*-------------------------------------------------------------------------------------------------*---------------------
-#*Plot errorbar of AUC of CC-45 ------------------------------
-#--------* Free scales----------
-ggplot(data = AUC.sum, aes(y = tissue, x = med.m, xmin=low01.low, xmax=up99.up, shape = tissue)) + #colour = TKVF, fill = Diet,
-  scale_shape_manual(values=c(17,22,19,3,23)) + #values=c(3,19,17,18,15,22,0)
-  # scale_fill_manual(values=c(8,"white",1)) +
-  geom_errorbar(width=0.3,cex=1) +  #aes(ymin=low, ymax=up),
-  geom_pointrange(size=0.7) + #, #fill = "white", pch = 22,#linetype = "dashed",, fatten = 3.2
-  scale_x_log10() + #breaks = trans_breaks("log10", function(x) 10^x), limits = c(10^0,10^1.5), 
-  # labels = trans_format("log10", math_format(10^.x))) +
-  scale_y_discrete(position = "right") +
-  labs(y="", x="Amount metabolized, mg", fill = "Diet:", shape = "Strain:") + 
-  ggtitle("") + #B.
-  annotation_logticks(scaled = TRUE, sides="b") +
-  facet_wrap(chemical ~ ., strip.position = "left", scales = "free", nrow = 3) + #switch = ,
-  # coord_flip() +
-  # guides(shape  = guide_legend(title.position = "left", direction = "horizontal", nrow = 2)) + #, label.position="bottom",
-  theme_pubr() +
-  theme(panel.grid.minor.y = element_blank(),
-        panel.border = element_rect(colour = "black", fill=NA), #
-        axis.text.x = element_text(size=10), #angle = 1, hjust=10,
-        # axis.text.y = element_blank(), #angle = 1, hjust=10,
-        axis.ticks.y = element_blank(), 
-        # plot.title = element_text(size=18, face="bold"),
-        # plot.margin = unit(c(0,8,0,7), "cm"), #unit(c(0,1,0,2), "cm"),
-        legend.position = "none",
-        strip.text = element_text(size=12, face = "bold"),
-        # legend.title = element_text(face = "bold"),
-        # legend.text = element_text(size=12))
-        strip.background = element_rect(fill="white")) #, colour="white"
 #*-------------------------------------------------------------------------------------------------*---------------------
 #--------1.2.~3-diet ----------
 #*-------------------------------------------------------------------------------------------------*---------------------
 #---------------------------------* Set drive------------------------------------------------------
-#** From My account---------------------
-setwd("C:/MinGW/msys/1.0/home/CDalaijamts/3-diet/27p")
-#** From Laptop---------------------
-setwd("C:/MinGW/msys/1.0/home/chimka/Perc/3-diet/terra/27p")
 #--------* Call outputs ----------
 #** from laptop-----------------------------
 out.B6 <- fread("perc.mouse.3strains.3diet.27p.s.AUC.set.1000.B6.out")
@@ -858,15 +741,8 @@ AUC.summ <- subset(AUC.sum.3d, tissue != "fat" & chemical != "TCAfree")
 head(AUC.summ)
 #* Write Summary of AUC file  -----------------------------
 write.csv(AUC.summ, file = "AUC.3-diet.1000.csv")
-#--------* Add study name----------
-# AUC.summ$Study <- "in silico for 3 strain/3 diet- Dalaijamts et al. (2020)"
 #*-------------------------------------------------------------------------------------------------*---------------------
 #* Call Combined AUC file -----------------------------
-setwd("C:/MinGW/msys/1.0/home/chimka/Perc/48/43p/AUC")
-#* from labtop Thinkpad-----------------
-setwd("C:/Users/d_chi/Documents/TAMU/PBPK modeling/Perc/48 strains/43p/AUC")
-setwd("C:/Users/d_chi/Documents/TAMU/PBPK modeling/Perc/48 strains/43p/Metabolism")
-
 Comb.AUC = fread("AUC.combined.1025.csv")
 Comb.AUC$tissues[Comb.AUC$tissue == "blood"] <- "Blood"
 Comb.AUC$tissues[Comb.AUC$tissue == "liver"] <- "Liver"
@@ -879,7 +755,6 @@ Comb.AUC$strains <- factor(Comb.AUC$strains, levels = c("C57BL/6J-NASH","C57BL/6
                                                               "Population distribution","Population mean"), ordered=TRUE)
 Comb.AUC$Strain <- factor(Comb.AUC$Strain, levels = c("C57BL/6J", "SW",  "B6C3F1/J",
                                                             "Population distribution","Population mean"), ordered=TRUE)
-head(Comb.AUC)
 #*-------------------------------------------------------------------------------------------------*---------------------
 #*Plot errorbar of AUC comparison ------------------------------
 #--------* Free scales----------
@@ -952,30 +827,14 @@ pMet36 <-
   plot_grid(pMet36, pAUC, rel_widths = c(0.16/2, 0.83/2))
 #*-------------------------------------------------------------------------------------------------*---------------------
 #*~/~ Combined AUC+Metabolism---------------
-pdf(paste("C:/Users/d_chi/Documents/TAMU/PERC/Manuscript_CC45/New figs&Tables/Figs_main text-upd/Figure 5.upd1.pdf",sep=""), #"C:/Users/chimka/Documents/TAMU/PERC/Manuscript_CC45/New figs&Tables/Fig. 5.1029.jpg",
+pdf(paste("~Figure 5.pdf",sep=""), 
      width = 15, height = 7, pointsize = 8, bg = "white")
 plot_grid(pMet36, pAUC, labels = c("A.", "B."), rel_widths = c(0.16/2, 0.83/2))
 dev.off()
-
-
-jpeg(filename = "C:/Users/d_chi/Documents/TAMU/PERC/Manuscript_CC45/New figs&Tables/Fig. 5.2-18-21.jpg", #"C:/Users/chimka/Documents/TAMU/PERC/Manuscript_CC45/New figs&Tables/Fig. 5.1029.jpg",
-width = 15, height = 6.2, units = "in", pointsize = 8,
-bg = "white", res = 300)
-plot_grid(pMet36, pAUC, labels = c("A.", "B."), rel_widths = c(0.16/2, 0.82/2))
-dev.off()
-
 #*-------------------------------------------------------------------------------------------------*---------------------
 #3.-------------------------------------------------------------------------------------------------*---------------------
 # --------3.1. TKVF-Met CC45+Luo19 Combined Plot  ----------
 #*-------------------------------------------------------------------------------------------------*---------------------
-#* from labtop Dellt-----------------
-setwd("C:/MinGW/msys/1.0/home/chimka/Perc/48/43p/Metabolism")
-#* from My account-----------------
-setwd("C:/MinGW/msys/1.0/home/CDalaijamts/48/43p/Metabolism")
-setwd("B:/TAMU/PBPK modeling/TCE")
-#* from labtop Thinkpad-----------------
-setwd("C:/Users/d_chi/Documents/TAMU/PBPK modeling/Perc/48 strains/43p/AUC")
-setwd("C:/Users/d_chi/Documents/TAMU/PBPK modeling/Perc/48 strains/43p/Metabolism")
 #* Call TKVF.Met.csv-----------------------------
 Met.sum = fread("Comb.TKVF.met.csv")
 tail(Met.sum)
@@ -990,7 +849,6 @@ Met.sum$Study <- factor(Met.sum$Study,
                         levels = c("Luo et al. (2019)", "Cichocki et al. (2017b)","This study - PO=1000 mg", 
                                    "This study - PO=100 mg", "This study - PO=10 mg"),
                         ordered=TRUE)
-
 #*-------------------------------------------------------------------------------------------------*---------------------
 #*Plot errorbar of Metabolism comparison ------------------------------
 #--------* Free scales----------
@@ -1025,18 +883,9 @@ pMet.TKVF99 <-
         # legend.title = element_text(face = "bold"),
         # legend.text = element_text(size=12))
         strip.background = element_rect(fill="navy")) #royalblue4, colour="white"
-
 #*-------------------------------------------------------------------------------------------------*---------------------
 #--------3.2. TKVF-AUC CC45+Luo, Cichock17b Combined Plot  ----------
 #*-------------------------------------------------------------------------------------------------*---------------------
-#** From My account---------------------
-setwd("C:/MinGW/msys/1.0/home/CDalaijamts/45/terra")
-#** From Laptop---------------------
-setwd("C:/MinGW/msys/1.0/home/chimka/Perc/48/43p/AUC")
-#** from labtop Thinkpad-----------------
-setwd("C:/Users/d_chi/Documents/TAMU/PBPK modeling/Perc/48 strains/43p/AUC modeling")
-# setwd("C:/Users/d_chi/Documents/TAMU/PBPK modeling/Perc/48 strains/43p/AUC")
-setwd("C:/Users/d_chi/Documents/TAMU/PBPK modeling/Perc/48 strains/43p/Metabolism")
 #* Call TKVF.AUC.csv-----------------------------
 AUC.sum = read.csv("TKVF.comb.AUC.1025.csv")
 AUC.sum = read.csv("TKVF.comb.AUC.10mg.csv")
@@ -1046,7 +895,6 @@ AUC.sum$tissues[AUC.sum$tissue == "blood"] <- "Blood"
 AUC.sum$tissues[AUC.sum$tissue == "liver"] <- "Liver"
 AUC.sum$tissues[AUC.sum$tissue == "kidney"] <- "Kidney"
 
-# names(AUC.sum)
 AUC.sum$tissue <- factor(AUC.sum$tissues, levels = c("Blood","Liver","Kidney"), ordered=TRUE) 
 AUC.sum$chemical <- factor(AUC.sum$chemical, levels = c("Perc","TCA","TCVG","TCVC","NAcTCVC"), ordered=TRUE)
 AUC.sum$Study <- factor(AUC.sum$Study,
@@ -1061,37 +909,6 @@ AUC.sum$Study <- factor(AUC.sum$Study,
                                    "This study - PO=10 mg"),
                         ordered=TRUE)
 #--------*~ pAUC.TKVF99----------
-# pAUC.TKVF99 <-
-  ggplot(data = AUC.sum[29:61,], aes(y = Study, x = m, xmin=low, xmax=up)) + #colour = TKVF,
-  scale_shape_manual(values=c(5,0,19)) + #values=c(3,19,17,18,15,22,0)
-  # scale_size_manual(values=c(2,2,1.8)) +
-  # scale_fill_manual(values=c(8,"white",1)) +
-  geom_vline(xintercept=10^0.5, linetype="dashed", col = 2) +
-  geom_errorbar(width=0.2, cex=0.8) +  #aes(ymin=low, ymax=up),
-  geom_point(aes(x = m, shape = Study), size = 2, stroke=1.5) + #, size=3, #fill = "white",
-  # xlim(1, 30) +
-  scale_x_log10(breaks = c(1, 3.16, 10, 30), limits = c(10^0,32), label = c(1, 3.16, 10, 30)) +
-  scale_y_discrete(position = "right") +
-  labs(y="", x=expression("AUC-TKVF"[99])) + #, shape = "Study:"
-  ggtitle("") + #B.
-  # annotation_logticks(scaled = TRUE, sides="b") +
-  facet_grid(tissue ~ chemical, switch="y", scales = "free") + #nrow = 3,strip.position = "left",
-  # coord_flip() +
-  # guides(shape  = guide_legend(title.position = "left", direction = "horizontal", nrow = 2)) + #, label.position="bottom",
-  theme_pubr() +
-  theme(panel.grid.minor.y = element_blank(),
-        panel.border = element_rect(colour = "black", fill=NA), #
-        axis.text.x = element_text(size=10), #angle = 1, hjust=10,
-        # axis.text.y = element_blank(), #angle = 1, hjust=10,
-        # axis.ticks.y = element_blank(), 
-        plot.title = element_text(size=14, face="bold"),
-        # plot.margin = unit(c(0,1,0.5,1), "cm"), #unit(c(0,1,0,2), "cm"),
-        legend.position = "none",
-        strip.text = element_text(size=11, face = "bold", colour="white"),
-        # legend.title = element_text(face = "bold"),
-        # legend.text = element_text(size=12))
-        strip.background = element_rect(fill="navy"))
-
 pAUC.TKVF99 <-
   ggplot(data = AUC.sum, aes(y = Study, x = m, xmin=low, xmax=up)) + #colour = TKVF,
   scale_shape_manual(values=c(5,0,21,21,21)) + #values=c(3,19,17,18,15,22,0)
@@ -1139,20 +956,10 @@ pAUC.TKVF99.1 <- ggdraw(pAUC.TKVF99) +
 #*~/~ Combined 99% AUC+Metabolism---------------
 plot_grid(pMet.TKVF99, pAUC.TKVF99, rel_widths = c(0.4/2, 1.1/2))
 #* Fig 6---------------------
-pdf(paste("C:/Users/d_chi/Documents/TAMU/PERC/Manuscript_CC45/New figs&Tables/Figs_main text-upd/Figure 6.upd1.pdf"),
+pdf(paste("~/Figure 6.upd1.pdf"),
     width = 12, height = 6,bg = "white") #, res = 300units = "in", pointsize = 8,
 plot_grid(pMet.TKVF99, pAUC.TKVF99, labels = c("A.", "B."), rel_widths = c(0.16/2,0.83/2))#0.24/2, 1.1/2
 dev.off()
-
-
-jpeg(filename = "C:/Users/d_chi/Documents/TAMU/PERC/Manuscript_CC45/New figs&Tables/Fig. 6.01-24-21.jpg",
-     width = 18, height = 6, units = "in", pointsize = 8,
-     bg = "white", res = 300)
-plot_grid(pMet.TKVF99, pAUC.TKVF99.1, labels = c("A.", "B."), rel_widths = c(0.4/2, 1/2))
-dev.off()
-
-ggarrange(p3, p4, ncol = 1,
-          common.legend = TRUE, legend = "bottom")
 #--------*~ pMet.TKVF95----------
 pMet.TKVF95 <-
   ggplot(data = Met.sum, aes(y = Study, x = TKVF95.m, xmin=TKVF95.low, xmax=TKVF95.up)) + #colour = TKVF,
@@ -1236,200 +1043,10 @@ rect <- rectGrob(
 pAUC.TKVF95.1 <- ggdraw(pAUC.TKVF95) +
   draw_grob(rect)
 #3.4. -------------------------------------------------------------------------------------------------*---------------------
-#*~/~ Combined 95% AUC+Metabolism---------------; 0.3/2, 0.9/2
+#*~/~ Combined 95% AUC+Metabolism---------------;
 plot_grid(pMet.TKVF95, pAUC.TKVF95.1, rel_widths = c(0.4/2, 1/2))
 #* Fig S-15---------------------
-pdf(paste("C:/Users/d_chi/Documents/TAMU/PERC/Manuscript_CC45/New figs&Tables/Figs_main text/Fig. S-14.pdf"),
+pdf(paste("~/Fig. S-14.pdf"),
      width = 16, height = 5.5,bg = "white") #, res = 300units = "in", pointsize = 8,
 plot_grid(pMet.TKVF95, pAUC.TKVF95.1, labels = c("A.", "B."), rel_widths = c(0.37/2, 1.7/2))
 dev.off()
-
-jpeg(filename = "C:/Users/d_chi/Documents/TAMU/PERC/Manuscript_CC45/New figs&Tables/Fig. S-15.01-18-21.jpg",
-     width = 18, height = 5.5, units = "in", pointsize = 8,
-     bg = "white", res = 300)
-plot_grid(pMet.TKVF95, pAUC.TKVF95.1, labels = c("A.", "B."), rel_widths = c(0.36/2, 1/2))
-dev.off()
-#*-------------------------------------------------------------------------------------------------*---------------------
-# ------------------------*Write table of AUC.var for Pop.mean-------------
-# write.csv(format(AUC.var, digits=2), file = "AUC.sum.3-diet.pop.csv")
-# ------------------------** AUC.var.3d-------------
-AUC.var.3d = ddply(AUC.sum.3d, .(chemical,tissue), function(AUC.sum.3d){
-  c(GM=geoMean(AUC.sum.3d$median, na.rm = TRUE),
-    GSD=geoSD(AUC.sum.3d$median, na.rm = TRUE),
-    med=median(AUC.sum.3d$median), 
-    med.low = quantile(AUC.sum.3d$median, 0.025),
-    med.up = quantile(AUC.sum.3d$median, 0.975),
-    low001.m=median(AUC.sum.3d$low001),
-    low001.low = quantile(AUC.sum.3d$low001, 0.025),
-    low001.up = quantile(AUC.sum.3d$low001, 0.975),
-    low0025.m=median(AUC.sum.3d$low0025),
-    low0025.low = quantile(AUC.sum.3d$low0025, 0.025),
-    low0025.up = quantile(AUC.sum.3d$low0025, 0.975),
-    low005.m = median(AUC.sum.3d$low005),
-    low005.low = quantile(AUC.sum.3d$low005, 0.025),
-    low005.up = quantile(AUC.sum.3d$low005, 0.975),
-    up095.m = median(AUC.sum.3d$up095),
-    up095.low = quantile(AUC.sum.3d$up095, 0.025),
-    up095.up = quantile(AUC.sum.3d$up095, 0.975),
-    up0975.m = median(AUC.sum.3d$up0975),
-    up0975.low = quantile(AUC.sum.3d$up0975, 0.025),
-    up0975.up = quantile(AUC.sum.3d$up0975, 0.975),
-    up099.m=median(AUC.sum.3d$up099), 
-    up099.low = quantile(AUC.sum.3d$up099, 0.025),
-    up99.up = quantile(AUC.sum.3d$up099, 0.975),
-    # TKVF95.mn=mean(AUC.sum.3d$TKVF95), 
-    TKVF95.m=median(AUC.sum.3d$TKVF95), 
-    TKVF95.low = quantile(AUC.sum.3d$TKVF95, 0.025),
-    TKVF95.up = quantile(AUC.sum.3d$TKVF95, 0.975),
-    # TKVF99.mn=mean(AUC.sum.3d$TKVF99), 
-    TKVF99.m=median(AUC.sum.3d$TKVF99), 
-    TKVF99.low = quantile(AUC.sum.3d$TKVF99, 0.025),
-    TKVF99.up = quantile(AUC.sum.3d$TKVF99, 0.975))
-})
-#--------* Rename AUC.sum.3d----------
-colnames(AUC.var.3d) <- c("strain","chemical","tissue","GM.m","GM.low","GM.up","GSD.m","GSD.low","GSD.up",
-                          "med.m", "med.low","med.up","low01.m","low01.low","low01.up",
-                          "low025.m","low025.low","low025.up","low05.m","low05.low","low05.up",
-                          "up95.m", "up95.low","up95.up","up975.m", "up975.low","up975.up",
-                          "up99.m","up99.low","up99.up",#"TKVF95.mn",
-                          "TKVF95.m","TKVF95.low","TKVF95.up",#"TKVF99.mn",
-                          "TKVF99.m","TKVF99.low","TKVF99.up")
-head(AUC.var.3d)
-# ------------------------* Compute TKVF ---------------------------------------
-AUC.var$TKVF95 <- AUC.var$up095 / AUC.var$median
-AUC.var$TKVF99 <- AUC.var$up099 / AUC.var$median
-AUC.sum.var3d <-AUC.summ[,c(1:2,31:33,35:37)]
-AUC.sum.var3d$tissue <- factor(AUC.sum.var3d$tissue, levels = c("blood","liver","kidney"), ordered=TRUE)
-#--------* Add study name----------
-AUC.sum.var3d$Study <- "in silico for 3 strain/3 diet- Dalaijamts et al. (2020)"
-#*-------------------------------------------------------------------------------------------------*---------------------
-#--------* Combine CC45+3diet AUC----------
-names(AUC.summ)
-Comb.AUC <- rbind(AUC.sum,AUC.summ)
-
-#* Write Summary of AUC file  -----------------------------
-write.csv(Comb.AUC, file = "AUC.combined.csv") #format(,  digits = 3)
-#--------* Combine CC45+3diet TKVF-AUC----------
-Comb.AUC <- rbind(AUC.sum.var,AUC.sum.var3d)
-#* Write Summary of AUC file  -----------------------------
-write.csv(Comb.AUC, file = "TKVF.combined.csv") #format(,  digits = 3)
-#* Call Combined TKVF file -----------------------------
-Comb.AUC = read.csv("TKVF.combined.csv")
-#*-------------------------------------------------------------------------------------------------*---------------------
-#*Plot errorbar of AUC comparison ------------------------------
-#--------* Free scales----------
-ggplot(data = AUC.sum, aes(y = tissue, x = med.m, xmin=low01.low, xmax=up99.up, shape = tissue)) + #colour = TKVF, fill = Diet,
-  scale_shape_manual(values=c(17,22,19,3,23)) + #values=c(3,19,17,18,15,22,0)
-  # scale_fill_manual(values=c(8,"white",1)) +
-  geom_errorbar(width=0.3,cex=1) +  #aes(ymin=low, ymax=up),
-  geom_pointrange(size=0.7) + #, #fill = "white", pch = 22,#linetype = "dashed",, fatten = 3.2
-  scale_x_log10() + #breaks = trans_breaks("log10", function(x) 10^x), limits = c(10^0,10^1.5), 
-  # labels = trans_format("log10", math_format(10^.x))) +
-  scale_y_discrete(position = "right") +
-  labs(y="", x="Amount metabolized, mg", fill = "Diet:", shape = "Strain:") + 
-  ggtitle("") + #B.
-  annotation_logticks(scaled = TRUE, sides="b") +
-  facet_wrap(chemical ~ ., strip.position = "left", scales = "free", nrow = 3) + #switch = ,
-  # coord_flip() +
-  # guides(shape  = guide_legend(title.position = "left", direction = "horizontal", nrow = 2)) + #, label.position="bottom",
-  theme_pubr() +
-  theme(panel.grid.minor.y = element_blank(),
-        panel.border = element_rect(colour = "black", fill=NA), #
-        axis.text.x = element_text(size=10), #angle = 1, hjust=10,
-        # axis.text.y = element_blank(), #angle = 1, hjust=10,
-        axis.ticks.y = element_blank(), 
-        # plot.title = element_text(size=18, face="bold"),
-        # plot.margin = unit(c(0,8,0,7), "cm"), #unit(c(0,1,0,2), "cm"),
-        legend.position = "none",
-        strip.text = element_text(size=12, face = "bold"),
-        # legend.title = element_text(face = "bold"),
-        # legend.text = element_text(size=12))
-        strip.background = element_rect(fill="white")) #, colour="white"
-
-#*----------------------------------------------------------------------------------------*---------------------
-#******************************************************************************************
-AUC.sum.var <-AUC.sum[,c(1:2,30:35)]
-AUC.sum.var$Study <- "in silico for CC strains- current study"
-#*-------------------------------------------------------------------------------------------------*---------------------
-#--------* Combine CC45+3diet TKVF-AUC----------
-Comb.AUC <- rbind(AUC.sum.var,AUC.sum.var3d)
-#* Write Summary of AUC file  -----------------------------
-write.csv(format(Comb.AUC, digits = 2), file = "TKVF.combined.csv")
-#* Call TKVF.combined1.csv -----------------------------
-Comb.AUC = read.csv("TKVF.combined1.csv")
-Comb.AUC$chemical <- factor(Comb.AUC$chemical, levels = c("Perc","TCA","TCAfree","TCVG","TCVC","NAcTCVC"), ordered=TRUE)
-Comb.AUC$tissue <- factor(Comb.AUC$tissue, levels = c("blood","liver","kidney"), ordered=TRUE)
-Comb.AUC$Study <- factor(Comb.AUC$Study, levels = c("in silico for CC strains- current study",
-                                                    "in silico for 3 strain/3 diet- Dalaijamts et al. (2020)","in vivo for CC strains - Luo et al. (2019)", 
-                                                    "in vivo for TCE conjugates in CC strains - Luo et al. (2018a)"), ordered=TRUE)
-head(Comb.AUC)
-tail(Comb.AUC)
-
-#*-------------------------------------------------------------------------------------------------*---------------------
-#*Plot errorbar of TKVFs for CC-45  ------------------------------
-#*-------------------------------------------------------------------------------------------------*---------------------
-#*~ TKVFs of AUC for CC-45  ------------------------------
-p1 <-
-  ggplot(data = Comb.AUC[c(1:15, 45:59),], aes(x = tissue,   shape = TKVF)) + #fill = TKVF, colour = TKVF,
-  scale_shape_manual(values=c(16,21)) +
-  geom_hline(yintercept=10^0.5, linetype="dashed") +
-  geom_pointrange(aes(y = m, ymin=low, ymax=up), size=1.2, fill = "white", fatten = 3.2, #pch = 22,#linetype = "dashed",
-                  position = position_dodge(width = 0.5)) + #colour="paleturquoise2"
-  scale_y_log10(breaks = trans_breaks("log10", function(x) 10^x), limits = c(10^-0.1,10^1.5), 
-                labels = trans_format("log10", math_format(10^.x))) +
-  labs(y="Variability", x="") + 
-  ggtitle("") + #A.
-  facet_wrap(~ chemical, nrow = 1, strip.position = "bottom") + #, scales = "free"
-  theme_pubr() +
-  theme(panel.grid.minor.y = element_blank(),
-        panel.border = element_rect(colour = NA, fill=NA), #black
-        plot.title = element_text(size=18, face="bold"),
-        strip.text.x = element_text(size=14, face="bold"),
-        legend.position = "none",
-        legend.title = element_text(face = "bold"),
-        legend.text = element_text(size=12),
-        strip.background = element_rect(fill="white", colour="white"))
-
-#* Write Summary of AUC file  -----------------------------
-write.csv(format(Met.100.var, digits = 3), file = "TKVF.Met.csv")
-#* Call TKVF.Met.csv-----------------------------
-Met.100.var = read.csv("TKVF.Met.csv")
-Met.100.var[1:3,]
-Met.100.var$chemical <- factor(Met.100.var$chemical, levels = c("Total oxidative metabolism",
-                                                                # "Total TCA produced", "TCA produced in liver", 
-                                                                "Total GSH conjugated",
-                                                                "TCVG produced in kidney","TCVC produced in kidney"), 
-                               ordered=TRUE)
-p2 <-
-  ggplot(data = Met.100.var, aes(x = chemical,   shape = TKVF)) + #fill = TKVF, colour = TKVF,
-  scale_shape_manual(values=c(16,21)) +
-  geom_hline(yintercept=10^0.5, linetype="dashed") +
-  geom_pointrange(aes(y = m, ymin=low, ymax=up), size=1.2, fill = "white", fatten = 3.2, #pch = 22,#linetype = "dashed",
-                  position = position_dodge(width = 0.5)) + #colour="paleturquoise2"
-  scale_y_log10(breaks = trans_breaks("log10", function(x) 10^x), limits = c(10^0,10^1.5), 
-                labels = trans_format("log10", math_format(10^.x))) +
-  labs(y="Variability", x="",  shape = "TKVF:") + 
-  ggtitle("") + #B.
-  # annotation_logticks(scaled = TRUE, sides="l") +
-  guides(shape  = guide_legend(title.position = "left", direction = "horizontal")) + #, label.position="bottom", 
-  theme_pubr() +
-  theme(panel.grid.minor.y = element_blank(),
-        panel.border = element_rect(colour = NA, fill=NA), #black
-        axis.text.x = element_text(size=12, angle = 10, hjust=1), 
-        plot.title = element_text(size=18, face="bold"),
-        plot.margin = unit(c(0,8,0,7), "cm"), #unit(c(0,1,0,2), "cm"),
-        # legend.position = "top",
-        legend.position=c(0.5, 0.9), #
-        legend.title = element_text(face = "bold"),
-        legend.text = element_text(size=12),
-        strip.background = element_rect(fill="white", colour="white"))
-
-#*~/~ Combined AUC+Metabolism---------------
-jpeg(filename = "C:/Users/chimka/Documents/TAMU/PERC/Manuscript_CC45/New figs&Tables/Fig. 10.1019.jpg",
-     width = 11, height = 8, units = "in", pointsize = 8,
-     bg = "white", res = 300)
-ggarrange(p1, p2, labels = c("A.", "B."), ncol = 1
-          # common.legend = TRUE, legend = "bottom"
-)
-dev.off()
-
