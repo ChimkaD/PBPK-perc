@@ -1,0 +1,200 @@
+---
+title: "Convergence-MCMC"
+author: "Chimeddulam Dalaijamts"
+date: "Mrch 1, 2021"
+output: 
+  flexdashboard::flex_dashboard:
+    theme: united
+    source_code: embed
+    storyboard: true
+    orientation: columns
+---
+
+<style type="text/css">    
+
+
+body{ /* Normal  */
+      font-size: 14px;
+  }
+td {  /* Table  */
+  font-size: 7px;
+}
+h1.title {
+  font-size: 12pt;
+  color: Maroon;
+}
+h1 { /* Header 1 */
+  font-size: 12px;
+  color: DarkBlue;
+}
+h2 { /* Header 2 */
+  font-size: 28px;
+  color: Maroon;
+}
+h3 { /* Header 3 */
+  font-size: 30px;
+  color: DarkRed;
+}
+code.r{ /* Code block */
+    font-size: 10px;
+}
+pre { /* Code block - determines code spacing between lines */
+    font-size: 12px;
+}
+</style>
+
+
+
+Overview {data-icon="fa-list"}
+=====================================
+
+##  Mouse PERC-PBPK modeling for 3 strains + CC 45 strains
+
+### MCMC convergence analysis
+
+* MCMC simulations of 43 parameter combined original + restarted:
+    + Original 60k + Restarted 60k (120k)
+    + Run on MCSim v.5.6.5 software in Terra cluster in the High Performance Research Center, TAMU
+
+
+* Convergence analysis:
+  + Gelman and Rubin’s convergence diagnostic - using 'coda' R package
+  + Trace plot of MCMC output - using 'coda' R package
+  + Kernel Density
+  + Cross correlation - usin 'corrplot' R package
+  + Likelihood of chains
+
+
+
+Convergence {data-icon="fa-table"}
+=====================================  
+
+
+Column {data-width=200}
+-------------------------------------
+
+
+### Gelman diagnosis -  original 60k + restarted 60k
+
+
+```{r Read MCMC 120k, echo= FALSE}
+library(coda)
+library(reshape2)
+library(ggplot2)
+library(corrplot)
+# Read MCMC chains
+x1 = as.mcmc(read.table(file="perc.mouse.48strains.43p.mcmc.1.60.out", header=T)[3001:12001,])
+x2 = as.mcmc(read.table(file="perc.mouse.48strains.43p.mcmc.2.60.out", header=T)[3001:12001,])
+x3 = as.mcmc(read.table(file="perc.mouse.48strains.43p.mcmc.3.60.out", header=T)[3001:12001,])
+x4 = as.mcmc(read.table(file="perc.mouse.48strains.43p.mcmc.4.60.out", header=T)[3001:12001,])
+x1m <- x1[,2:44, drop=FALSE]
+x2m <- x2[,2:44, drop=FALSE]
+x3m <- x3[,2:44, drop=FALSE]
+x4m <- x4[,2:44, drop=FALSE]
+combinedchains3 = mcmc.list(x1m, x2m, x3m, x4m)
+
+# Read MCMC chains for density
+mcmc.chain1 = read.delim("perc.mouse.48strains.43p.mcmc.1.60.out")[5001:12001,]
+mcmc.chain2 = read.delim("perc.mouse.48strains.43p.mcmc.2.60.out")[5001:12001,]
+mcmc.chain3 = read.delim("perc.mouse.48strains.43p.mcmc.3.60.out")[5001:12001,]
+mcmc.chain4 = read.delim("perc.mouse.48strains.43p.mcmc.4.60.out")[5001:12001,]
+M.chain1 <- mcmc.chain1[,c(2:44)]
+M.chain2 <- mcmc.chain2[,c(2:44)]
+M.chain3 <- mcmc.chain3[,c(2:44)]
+M.chain4 <- mcmc.chain4[,c(2:44)]
+M.chain1$chain <- 1
+M.chain2$chain <- 2
+M.chain3$chain <- 3
+M.chain4$chain <- 4
+Combined3 <- rbind(M.chain1, M.chain2, M.chain3, M.chain4)
+Param3 <- melt(Combined3, id = "chain")
+
+gelman.diag(combinedchains3)
+
+#Select LnData
+LnD.chain1 <- mcmc.chain1[,c(1,2177)]
+LnD.chain2 <- mcmc.chain2[,c(1,2177)]
+LnD.chain3 <- mcmc.chain3[,c(1,2177)]
+LnD.chain4 <- mcmc.chain4[,c(1,2177)]
+LnD.chain1$chain <- 1
+LnD.chain2$chain <- 2
+LnD.chain3$chain <- 3
+LnD.chain4$chain <- 4
+Combined.LnD.3 <- rbind(LnD.chain1, LnD.chain2, LnD.chain3, LnD.chain4)
+lnData3 <- melt(Combined.LnD.3, id = c("chain","iter"))
+```
+
+
+Column {data-width=500}
+--------------------------------------------------
+
+
+### 2 Original 60k + restarted 60k
+
+
+#### **Traceplot**
+
+```{r traceplot 2, out.width="90%", fig.show='hold', fig.height = 4.2, fig.width = 11, echo = FALSE}
+par(mfrow = c(5, 9), mar = c(2, 1.5, 1, 1) + 0.1, oma = c(0, 2, 0, 0), las = 1, #pty = "m",lab = "bottom"
+    xaxs = "i", yaxs = "i", cex.axis = 0.9, cex.main = 0.9)
+traceplot(combinedchains3,smooth = TRUE)
+```
+
+
+
+#### **Kernel Density**
+
+```{r density 2, out.width="90%", fig.height = 4.2, fig.width = 11, echo = FALSE}
+
+ggplot(data = Param3, aes(x = value, colour=factor(chain))) + 
+  # scale_x_log10() +
+  scale_colour_manual(values=c("black", "red", "green", "blue")) + 
+  geom_line(stat="density", size=1) + 
+  theme(legend.position="none") +
+  labs(x = "iterations", y = "Density", title = "") +
+  facet_wrap(~variable, scales = "free", ncol = 9, dir="h") +
+  theme(strip.background = element_rect(fill="white", colour="white"),
+        panel.background = element_rect(fill="white", colour="white"),
+        # plot.title = element_text(size=12, face="bold"),
+        axis.text = element_text(size=8))
+```
+
+
+
+Column {data-width=300}
+--------------------------------------------------
+
+
+### Restarted from 50kth
+
+
+#### Cross correlation
+
+
+```{r corrplot, echo = FALSE}
+Combined3$chain <- NULL
+Mean.cor3 <- cor(Combined3)
+par(mfrow = c(1, 1))
+corrplot.mixed(Mean.cor3, lower="number", upper="color", 
+               mar = c(0, 0, 0, 0), tl.cex=0.5, tl.pos = "lt", tl.col="black", number.cex = 0.4)
+```
+
+
+#### Likelihood of chains
+
+
+```{r plot lnData3, out.width="90%", fig.height=3, fig.width=8, echo = FALSE}
+ggplot(data = lnData3, aes(x = value, colour=factor(chain))) + 
+  scale_colour_manual(values=c("black","red", "green", "blue")) +
+  geom_line(stat="density", size=1.5) + 
+  theme(legend.position="bottom") +
+  labs(y="density", x="LnData", title = "") +
+  # facet_wrap(~variable, scales = "free", nrow = 11, dir="h") + #ncol
+  theme(strip.background = element_rect(fill="white", colour="white"),
+        axis.text = element_text(size=7), 
+        strip.text = element_text(size=8),
+        panel.background = element_rect(fill="white", colour="white"))
+```
+
+
+  
