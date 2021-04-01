@@ -1,8 +1,9 @@
 # PBPK model files for perc in 3 + CC-45 strains of mice
-This folder contains available files of PBPK modeling, MC/MCMC simulation and analysis of results of a manuscript titled 'Quantitative Characterization of Population-wide Tissue- and Metabolite-specific Variability in Perchloroethylene Toxicokinetics in Male Mice' submitted to Tox.Sci.
-
-Stages of the PBPK modeling run on softwares as follow:
-  - MCMC simulations of preliminary and final models were run on MCSim v.5.6.5 software on Linux/Unix environment in Terra cluster in the High Performance Research Center, Texas A&M University.
+This folder contains following PBPK model files: 
+  - Model files:
+    - an original model file 'perc.v3.4.model' from Dalaijamts et al. 2018, which was used in MC/MCMC simulations.
+    - a modified model file 'perc.v2.strain.48.model' added some parameters for Dose metric predictions.
+  - Input files for MC/MCMC simulations of preliminary and final models.
   - Global Sensitivity analysis was run on 'pksensi' version 1.2.0 R package developed by our lab.
   - Evaluation of model fits were run on MCSim v.5.6.5 software on Windows.
   - Dose metric predictions were run on MCSim under R on Windows.
