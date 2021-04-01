@@ -14,3 +14,14 @@ This folder contains following files:
       - eFAST test results.
 
 Global Sensitivity Analysis was conducted using eFAST test on 'pksensi' version 1.2.0 R package developed by our lab.
+'pksensi' package can be installed via CRAN or GitHub:
+ - To get pksensi from CRAN:
+    install.packages('pksensi')
+ - Development version from GitHub:
+    remotes::install_github('nanhung/pksensi')
+
+![](https://github.com/nanhung/pksensi/blob/master/man/figures/logo.png)
+
+## Reference
+Hsieh NH, Reisfeld B, Chiu WA. pksensi: an R package to apply sensitivity analysis in pharmacokinetic modeling. 58th SOT Annual Meeting, Baltimore, USA, March 10–14, 2019.
+
