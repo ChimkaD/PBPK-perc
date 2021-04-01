@@ -55,12 +55,6 @@ Overview {data-icon="fa-list"}
   + Violin of distribution of residual error
   + Scatterplot of prediction vs. observation - each chemical
 
-
-* Plot of prediction of concentration-time course using MCMC iteration at 68k of chain 3
-  + Concentration-time course prediction vs. observation for **combined** CC 45 strains
-  + Concentration-time course prediction vs. observation for **each** of CC 45 strains
-
-
 * PBPK model prediction of concentration-time course for:
   + Modeling Setpoint of toxicokinetics prediction
     + **Combined** CC 45 strains using Population-generated random strain parameter posteriori
