@@ -1,4 +1,4 @@
-# Files for Global Sensitivity Analysis (GSA).
+# Files for Global Sensitivity Analysis (GSA)
 
 This folder contains following files:
   - R script for:
