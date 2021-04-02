@@ -28,7 +28,7 @@ This folder contains R and R Markdown scripts for following analysis of MCMC sim
       - Test results of last iterations of each of 4 chains for Each of CC 45 strains
 
   ### in vivo data used for calibration and evaluation of model fitting:
-   - Toxicokinetic in vivo data from our lab
+   - Toxicokinetic data measured in vivo in 45 strains of CC mice obtained from our lab.
    - Limits of detection of the chemicals in tissues.
 
 
